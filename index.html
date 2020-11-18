@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- font family, font awesome, stylesheet -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Raleway&family=Satisfy&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6ef8eb0028.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/style.css">
     <title>Restaurant Booking App</title>
@@ -20,72 +22,83 @@
                 <!-- Div/section for the cities selection -->
                 <div class="cities">
             
-                    <input type="checkbox" name="toronto" id="toronto">
+                    <input type="checkbox" class="srOnly" name="toronto" id="toronto">
                     <label for="toronto">Toronto</label>
             
-                    <input type="checkbox" name="vancouver" id="vancouver">
+                    <input type="checkbox" name="vancouver" class="srOnly" id="vancouver">
                     <label for="vancouver">Vancouver</label>
             
-                    <input type="checkbox" name="calgary" id="calgary">
+                    <input type="checkbox" name="calgary" class="srOnly" id="calgary">
                     <label for="calgary">Calgary</label>
             
-                    <input type="checkbox" name="ottawa" id="ottawa">
+                    <input type="checkbox" name="ottawa" class="srOnly" id="ottawa">
                     <label for="ottawa">Ottawa</label>
             
-                    <input type="checkbox" name="montreal" id="montreal">
+                    <input type="checkbox" name="montreal" class="srOnly" id="montreal">
                     <label for="montreal">Montreal</label>
                 </div>
                 <!-- Div/section for the cuisin selection -->
                 <div class="cuisine">
-                    <input type="checkbox" name="indian" id="indian">
+                    <input type="checkbox" name="indian" class="srOnly" id="indian">
                     <label for="indian">Indian</label>
             
-                    <input type="checkbox" name="pizza" id="pizza">
+                    <input type="checkbox" name="pizza" class="srOnly" id="pizza">
                     <label for="pizza">Pizza</label>
             
-                    <input type="checkbox" name="chinese" id="chinese">
+                    <input type="checkbox" name="chinese" class="srOnly" id="chinese">
                     <label for="chinese">Chinese</label>
             
-                    <input type="checkbox" name="sushi" id="sushi">
+                    <input type="checkbox" name="sushi" class="srOnly" id="sushi">
                     <label for="sushi">Sushi</label>
             
-                    <input type="checkbox" name="middleEastern" id="middleEastern">
+                    <input type="checkbox" name="middleEastern" class="srOnly" id="middleEastern">
                     <label for="middleEastern">Middle Eastern</label>
             
-                    <input type="checkbox" name="desserts" id="desserts">
+                    <input type="checkbox" name="desserts" class="srOnly" id="desserts">
                     <label for="desserts">Desserts</label>
             
-                    <input type="checkbox" name="bubbleTea" id="bubbleTea">
+                    <input type="checkbox" name="bubbleTea" class="srOnly" id="bubbleTea">
                     <label for="bubbleTea">Bubble Tea</label>
             
-                    <input type="checkbox" name="other" id="other">
+                    <input type="checkbox" name="other" class="srOnly" id="other">
                     <label for="other">Other</label>
                 </div>
                 <!-- Div/section for the dine-in/delivery/takeout -->
                 <div class="preferences">
-                    <input type="checkbox" name="dineIn" id="dineIn">
+                    <input type="checkbox" name="dineIn" class="srOnly" id="dineIn">
                     <label for="dineIn">Dine In</label>
             
-                    <input type="checkbox" name="delivery" id="delivery">
+                    <input type="checkbox" name="delivery" class="srOnly" id="delivery">
                     <label for="delivery">Delivery</label>
             
-                    <input type="checkbox" name="takeout" id="takeout">
+                    <input type="checkbox" name="takeout" class="srOnly" id="takeout">
                     <label for="takeout">Takeout</label>
             
                 </div>
                 <!-- Div/section submit button -->
                 <div class="submission">
-                    <button>Search</button>
+                    <button type="submit" class="submit">Search</button>
+                    <!-- <button class="reset" type="reset">Reset</button> -->
                 </div>
             </section>
         </div>
         
         
         <!-- Recommendation section -->
-        <section class="recommendation">
+        <section class="recommendation wrapper">
+            <h2>Your Recommendations</h2>
             <!--Ul Display images as list items? 
                             //// or div containing the image for the restaurant and a section which takes input from the API for rating, expensive rating (currency),location and link for zomato?  -->
             <ul class="recommendationDisplay">
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
+                <li><a href="#"><img src="https://place-puppy.com/300x300 " alt="#">Cute Puppy</a></li>
                 <!-- will be added through JS <li><img src="" alt=""></li> -->
             </ul>
         </section>
