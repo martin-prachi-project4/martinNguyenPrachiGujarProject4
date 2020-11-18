@@ -1,5 +1,8 @@
+const bookingApp = {};
+bookingApp.zomatoURL = 'https://developers.zomato.com/api/v2.1/search';
+
 // $.ajax({
-//     url: 'https://developers.zomato.com/api/v2.1/search',
+//     url: bookingApp.zomatoURL,
 //     method: 'GET',
 //     dataType: 'json',
 //     data: {
