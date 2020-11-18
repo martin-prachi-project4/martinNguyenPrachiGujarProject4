@@ -1,9 +1,8 @@
-// // Create app namespace to hold all methods
-// const bookingApp = {};
-//  bookingApp.appUrl= `https://developers.zomato.com/api/v2.1/`;
+const bookingApp = {};
+bookingApp.zomatoURL = 'https://developers.zomato.com/api/v2.1/search';
 
 // $.ajax({
-//     url: `${bookingApp.appUrl}search`,
+//     url: bookingApp.zomatoURL,
 //     method: 'GET',
 //     dataType: 'json',
 //     data: {
