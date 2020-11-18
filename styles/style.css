@@ -377,7 +377,7 @@ main {
 
 .cities {
   background-color: rgba(181, 131, 141, 0.8);
-  border-top-left-radius: 5%;
+  border-top-left-radius: 50px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 130px 130px;
@@ -394,7 +394,7 @@ main {
 .cuisine {
   background-color: rgba(109, 104, 117, 0.8);
   opacity: 0.8;
-  border-top-right-radius: 10%;
+  border-top-right-radius: 50px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 170px 130px;
@@ -409,7 +409,7 @@ main {
 
 .preferences {
   background-color: rgba(109, 104, 117, 0.8);
-  border-bottom-left-radius: 10%;
+  border-bottom-left-radius: 50px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 100px;
@@ -425,7 +425,7 @@ main {
 .submission {
   background-color: rgba(181, 131, 141, 0.8);
   opacity: 0.8;
-  border-bottom-right-radius: 5%;
+  border-bottom-right-radius: 50px;
   display: -ms-grid;
   display: grid;
   -webkit-box-pack: center;
@@ -433,10 +433,6 @@ main {
           justify-content: center;
   -ms-flex-line-pack: center;
       align-content: center;
-}
-
-.recommendation {
-  display: none;
 }
 
 .recommendation h2 {
