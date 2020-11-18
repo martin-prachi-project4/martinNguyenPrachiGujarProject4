@@ -3,24 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TestDoc</title>
+    <!-- font family, font awesome, stylesheet -->
+    <script src="https://kit.fontawesome.com/6ef8eb0028.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../style.css">
+    <title>Restaurant Booking App</title>
 </head>
 <body>
     <header>
-
+        <h1>Restaurant Booking App</h1>
     </header>
 
     <main>
-        <!-- preference selection -->
+        <!-- preference selection// all 4 section take up same sizes and screen divides in 4  -->
+        <section class="options">
             <!-- Div/section for the cities selection -->
+            <div class="cities">
+
+                <input type="checkbox" name="toronto" id="toronto">
+                <label for="toronto">Toronto</label>
+
+                <input type="checkbox" name="vancouver" id="vancouver">
+                <label for="vancouver">Vancouver</label>
+
+                <input type="checkbox" name="calgary" id="calgary">
+                <label for="calgary">Calgary</label>
+
+                <input type="checkbox" name="ottawa" id="ottawa">
+                <label for="ottawa">Ottawa</label>
+
+                <input type="checkbox" name="montreal" id="montreal">
+                <label for="montreal">Montreal</label>
+            </div>
             <!-- Div/section for the cuisin selection -->
+            <div class="cuisine">
+                <input type="checkbox" name="indian" id="indian">
+                <label for="indian">Indian</label>
+
+                <input type="checkbox" name="pizza" id="pizza">
+                <label for="pizza">Pizza</label>
+
+                <input type="checkbox" name="chinese" id="chinese">
+                <label for="chinese">Chinese</label>
+
+                <input type="checkbox" name="sushi" id="sushi">
+                <label for="sushi">Sushi</label>
+
+                <input type="checkbox" name="middleEastern" id="middleEastern">
+                <label for="middleEastern">Middle Eastern</label>
+
+                <input type="checkbox" name="desserts" id="desserts">
+                <label for="desserts">Desserts</label>
+
+                <input type="checkbox" name="bubbleTea" id="bubbleTea">
+                <label for="bubbleTea">Bubble Tea</label>
+
+                <input type="checkbox" name="other" id="other">
+                <label for="other">Other</label>
+            </div>
             <!-- Div/section for the dine-in/delivery/takeout -->
-            <!-- submit button -->
+            <div class="preferences">
+                <input type="checkbox" name="dineIn" id="dineIn">
+                <label for="dineIn">Dine In</label>
+
+                <input type="checkbox" name="delivery" id="delivery">
+                <label for="delivery">Delivery</label>
+
+                <input type="checkbox" name="takeout" id="takeout">
+                <label for="takeout">Takeout</label>
+                
+            </div>
+            <!-- Div/section submit button -->
+            <div class="submission">
+                <button>Search</button>
+            </div>
+        </section>
         
         <!-- Recommendation section -->
+        <section class="recommendation">
             <!--Ul Display images as list items? 
-                //// or div containing the image for the restaurant and a section which takes input from the API for rating, expensive rating (currency),location and link for zomato?  -->
-        
+                            //// or div containing the image for the restaurant and a section which takes input from the API for rating, expensive rating (currency),location and link for zomato?  -->
+            <ul class="recommendationDisplay">
+                <!-- will be added through JS <li><img src="" alt=""></li> -->
+            </ul>
+        </section>
     </main>
 
     <footer>
