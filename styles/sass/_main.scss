@@ -1,0 +1,44 @@
+.options {
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, calc((75vh - 50px)/2));
+    grid-gap: 10px;
+    margin: 25px 0;
+}
+
+.cities {
+    background-color: saddlebrown;
+    border-top-left-radius: 5%;
+    display: grid;
+    grid-template-columns: 20px 100px;
+    grid-row-gap: 25px;
+    justify-content: center;
+    align-content: center;
+}
+
+.cuisine {
+    background-color: salmon;
+    border-top-right-radius: 10%;
+    display: grid;
+    grid-template-columns: 20px 50px 20px 50px;
+    justify-content: center;
+    align-content: space-evenly;
+}
+
+.preferences {
+    background-color: seagreen;
+    border-bottom-left-radius: 10%;
+    display: grid;
+    grid-template-columns: 20px 100px;
+    grid-row-gap: 25px;
+    justify-content: center;
+    align-content: center;
+}
+
+.submission {
+    background-color: black;
+    border-bottom-right-radius: 5%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}

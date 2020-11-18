@@ -1,18 +1,18 @@
 const bookingApp = {};
 bookingApp.zomatoURL = 'https://developers.zomato.com/api/v2.1/search';
 
-// $.ajax({
-//     url: bookingApp.zomatoURL,
-//     method: 'GET',
-//     dataType: 'json',
-//     data: {
-//         apikey: '51229140792268d47f96f56aabbde055',
-//     }
-// }).then(
-//     function(res){
-//         console.log(res);
-//     }    
-// );
+$.ajax({
+    url: bookingApp.zomatoURL,
+    method: 'GET',
+    dataType: 'json',
+    data: {
+        apikey: '51229140792268d47f96f56aabbde055',
+    }
+}).then(
+    function(res){
+        console.log(res);
+    }    
+);
 
 // MVP: Ask the users to select the city, Cuisine type, Dine-in/takeout/delivery and based on the selection we provide the recommendations and details for the restaurant including the rating, location etc.
 
