@@ -39,7 +39,7 @@ bookingApp.cuisine = {
     bubbleTea: 247,
     other: 381
     // canadian cuisine id for other
-}
+};
 
 
 bookingApp.cuisineLabel = [
@@ -51,7 +51,7 @@ bookingApp.cuisineLabel = [
     $('[for="desserts"]'),
     $('[for="bubbleTea"]'),
     $('[for="other"]'),
-]
+];
 
 bookingApp.cuisineCheckbox=[
     $('#indian'),
@@ -71,19 +71,22 @@ bookingApp.preferences ={
     dineIn: 2,
     delivery: 1,
     takeout: 5
-}
+};
+
 bookingApp.preferenceLabel = [
     $('[for="dineIn"]'),
     $('[for="delivery"]'),
     $('[for="takeout"]'),
 
-]
+];
 
 bookingApp.preferenceCheckbox=[
     $('#dineIn'),
     $('#delivery'),
     $('#takeout'),
-]
+];
+
+
 bookingApp.citiesSelection = $('.cities');
 bookingApp.cuisineSelection = $('.cuisine');
 bookingApp.preferencesSelection = $('.preferences');
@@ -100,7 +103,7 @@ bookingApp.resetStyles = function(element){
         'border-radius': '0',
         'box-shadow': '0px 0px transparent'
     })
-}
+};
 
 bookingApp.highlightStyles = function (element, shadowColor) {
     element.css({
@@ -109,15 +112,15 @@ bookingApp.highlightStyles = function (element, shadowColor) {
         'border-radius': '15px',
         'box-shadow': '5px 5px '+ shadowColor
     })
-}
+};
 
 // selection:cities, selectionLabel: bookingApp.citySelection , selectionCheckbox: bookingApp.cityCheckbox
 bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbox ){
     jquery.on('click', "label", function () {
         const selected = $(this).attr("for");
         selectionLabel.forEach(function (value, index) {
-            if (value[0].htmlFor !== selected) { 
-                selectionCheckbox[index].attr('checked', false); 
+            if (value[0].htmlFor !== selected) {
+                selectionCheckbox[index].attr('checked', false);
                 bookingApp.resetStyles(selectionLabel[index]);
             }
             else if (selectionCheckbox[index].attr('checked')) {
@@ -127,19 +130,26 @@ bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbo
             else {
                 selectionCheckbox[index].attr('checked', true);
                 bookingApp[`${selection}Id`] = bookingApp[selection][selected];
-                if (selection === 'cities'){
+                if (selection === 'cities') {
                     bookingApp.highlightStyles(selectionLabel[index], '#6D6875')
                 }
-                else{
+                else {
                     bookingApp.highlightStyles(selectionLabel[index], '#500808')
                 }
             }
         });
         bookingApp.checkSelection(selection, selectionCheckbox);
-        console.log(`${selection} ID is ${bookingApp[`${selection}Id`]}`)
-    })
-}
+        console.log(`${selection} ID is ${bookingApp[`${selection}Id`]}`);
+    });
+};
 
+// Selection method for cities, cuisine, preference.........
+bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
+bookingApp.select(bookingApp.cuisineSelection, 'cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
+bookingApp.select(bookingApp.preferencesSelection, 'preferences', bookingApp.preferenceLabel, bookingApp.preferenceCheckbox);
+
+
+// check if the selection is selected, if not then give an error to the user........
 bookingApp.checkSelection = function(selection, selectionCheckbox) {
     let nothingSelected = true;
     selectionCheckbox.forEach ( function(value) {
@@ -150,7 +160,8 @@ bookingApp.checkSelection = function(selection, selectionCheckbox) {
     if (nothingSelected) { 
         bookingApp[`${selection}Id`] = null;
     }
-}
+};
+
 
 bookingApp.handleButton = function(button) {
     button.on('click', function() {
@@ -165,9 +176,10 @@ bookingApp.handleButton = function(button) {
         }
         bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId);
     });
-}
+};
 
 
+// calling function for the API for the restaurance....
 bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, selectedCategoryId){
     $.ajax({
         url: bookingApp.zomatoURL,
@@ -182,22 +194,44 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
             category: selectedCategoryId
         }
     }).then(function (recommendationResponse) {
-          recommendationResponse.restaurants
+          bookingApp.processRecommendation(recommendationResponse.restaurants);
     })
 };
 
-// location, currency, featured image, name, zomato url, userRatings.aggregate_rating
-
+// location, currency, featured image, name, zomato url, userRatings.aggregate_rating........
+bookingApp.recommendationDisplay = $('.recommendationDisplay');
 bookingApp.processRecommendation = function(recommendations) {
-    recommendations.forEach( (value, index) => {
-        const location = value.
+    recommendations.forEach( (value) => {
+        const restaurant = value.restaurant;
+        const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
+        const currency = restaurant.currency;
+        const image = restaurant.thumb;
+        console.log(image);
+        const name = restaurant.name ;
+        const url = restaurant.url ;
+        const userRatings = restaurant.user_rating.aggregate_rating;
+        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
     });
 }
 
+// to display the image..........
+bookingApp.appendImage = function(display, image, name, url) {
+    display.append(`
+        <li>
+            <img src="${image}" alt="Featured image for ${name} restaurant from Zomato"/>
+            <a href="${url}">${name}</a>
+        </li>
+    `)
+}
+
+
+// init function to call the api function
 bookingApp.init = function() {
     bookingApp.handleButton(bookingApp.submitButton);
 }
 
+
+// calling the API function once the document loads.......
 $(document).ready(() => {
     bookingApp.init();
 });
@@ -211,10 +245,6 @@ $(document).ready(() => {
     // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
     // let cityId;
 
-bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
-   
-bookingApp.select(bookingApp.cuisineSelection, 'cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
-bookingApp.select(bookingApp.preferencesSelection, 'preferences', bookingApp.preferenceLabel, bookingApp.preferenceCheckbox )
 
     // $('.cities').on('click', "label", function () {
         
@@ -302,12 +332,3 @@ bookingApp.select(bookingApp.preferencesSelection, 'preferences', bookingApp.pre
 // While displaying the results, give the user an option to reserve a table using the calendar function for a particular date,time, no. of guests  
 // Check the weather for the day when we display the calendar (cloudy/rainy/sunny/snowy day)
 // Create an alert email/sends an alert notification, ex: 2 Days before the reservation 
-  $(document).ready(function() {
-
-    //   $('.options').on('click','.submit', function (e) {
-    //       e.preventDefault();
-    //       console.log("clicked");
-    //       const checkBox = $(this).find('.srOnly');
-    //       checkBox.removeAttr('checked');
-    //   });
-  });
