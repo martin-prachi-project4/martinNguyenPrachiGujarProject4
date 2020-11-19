@@ -281,6 +281,7 @@ h2 {
   text-align: center;
 }
 
+h3,
 p,
 footer,
 label,
@@ -296,6 +297,7 @@ label,
   list-style: none;
 }
 
+h3 a,
 p a,
 footer a,
 label a,
@@ -325,6 +327,16 @@ a:active {
   border-bottom: 2px solid #500808;
 }
 
+.recommendation ul li img {
+  border-radius: 50%;
+  -webkit-transition: border-radius 0.5s;
+  transition: border-radius 0.5s;
+}
+
+.recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
+  border-radius: 0;
+}
+
 .submit:hover,
 .submit:focus,
 .submit:active {
@@ -347,8 +359,6 @@ header h1 {
 
 main {
   padding: 25px 0;
-  margin-bottom: 20px;
-  height: calc(75vh - 20px);
 }
 
 .options {
@@ -359,6 +369,9 @@ main {
   -ms-grid-rows: (calc((75vh - 50px)/2))[2];
       grid-template-rows: repeat(2, calc((75vh - 50px)/2));
   grid-gap: 10px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .cities {
@@ -366,8 +379,8 @@ main {
   border-top-left-radius: 50px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 130px 130px;
-      grid-template-columns: 130px 130px;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
   grid-row-gap: 25px;
   grid-column-gap: 25px;
   -webkit-box-pack: center;
@@ -377,20 +390,52 @@ main {
       align-content: center;
 }
 
+.cities label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.cities label h3 {
+  padding: 0 5px;
+}
+
 .cuisine {
   background-color: rgba(109, 104, 117, 0.8);
   opacity: 0.8;
   border-top-right-radius: 50px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 170px 130px;
-      grid-template-columns: 170px 130px;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
   grid-column-gap: 25px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -ms-flex-line-pack: space-evenly;
       align-content: space-evenly;
+}
+
+.cuisine label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.cuisine label h3 {
+  padding: 0 5px;
 }
 
 .preferences {
@@ -408,6 +453,22 @@ main {
       align-content: center;
 }
 
+.preferences label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.preferences label h3 {
+  padding: 0 5px;
+}
+
 .submission {
   background-color: rgba(181, 131, 141, 0.8);
   opacity: 0.8;
@@ -421,22 +482,48 @@ main {
       align-content: center;
 }
 
+.recommendation {
+  background-color: rgba(109, 104, 117, 0.3);
+  overflow: scroll;
+  height: calc(75vh - 40px);
+  padding: 15px;
+  border-radius: 50px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-left: 50px;
+}
+
 .recommendation h2 {
   padding: 20px 0;
 }
 
 .recommendation ul {
   padding: 20px 0;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 2fr 2fr 2fr;
-      grid-template-columns: 2fr 2fr 2fr;
-  grid-column-gap: 50px;
-  grid-row-gap: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.recommendation ul li {
+  margin-right: 15px;
+  width: calc((100% - 45px) / 3);
+}
+
+.flexContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flexContainer .options {
+  width: 100vw;
 }
 
 footer {
-  height: 5vh;
+  min-height: 5vh;
   background-color: #E5989B;
   opacity: 0.7;
 }

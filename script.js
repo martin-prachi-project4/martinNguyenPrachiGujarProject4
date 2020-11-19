@@ -12,11 +12,11 @@ bookingApp.cities = {
 }
 
 bookingApp.cityLabel=[
-    $('[for="toronto"]'),
-    $('[for="vancouver"]'),
-    $('[for="calgary"]'),
-    $('[for="ottawa"]'),
-    $('[for="montreal"]'),
+    $('[for="toronto"] h3'),
+    $('[for="vancouver"] h3'),
+    $('[for="calgary"] h3'),
+    $('[for="ottawa"] h3'),
+    $('[for="montreal"] h3'),
 ];
 
 bookingApp.cityCheckbox=[
@@ -43,14 +43,14 @@ bookingApp.cuisine = {
 
 
 bookingApp.cuisineLabel = [
-    $('[for="indian"]'),
-    $('[for="pizza"]'),
-    $('[for="chinese"]'),
-    $('[for="sushi"]'),
-    $('[for="middleEastern"]'),
-    $('[for="desserts"]'),
-    $('[for="bubbleTea"]'),
-    $('[for="other"]'),
+    $('[for="indian"] h3'),
+    $('[for="pizza"] h3'),
+    $('[for="chinese"] h3'),
+    $('[for="sushi"] h3'),
+    $('[for="middleEastern"] h3'),
+    $('[for="desserts"] h3'),
+    $('[for="bubbleTea"] h3'),
+    $('[for="other"] h3'),
 ];
 
 bookingApp.cuisineCheckbox=[
@@ -74,9 +74,9 @@ bookingApp.preferences ={
 };
 
 bookingApp.preferenceLabel = [
-    $('[for="dineIn"]'),
-    $('[for="delivery"]'),
-    $('[for="takeout"]'),
+    $('[for="dineIn"] h3'),
+    $('[for="delivery"] h3'),
+    $('[for="takeout"] h3'),
 
 ];
 
@@ -94,6 +94,12 @@ bookingApp.submitButton = $('.submit');
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
+
+// to display recommendation...
+bookingApp.staticDiv = $('.options')
+bookingApp.slidingDiv = $('.recommendation')
+
+bookingApp.slidingDiv.hide();
 
 
 bookingApp.resetStyles = function(element){
@@ -119,7 +125,9 @@ bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbo
     jquery.on('click', "label", function () {
         const selected = $(this).attr("for");
         selectionLabel.forEach(function (value, index) {
-            if (value[0].htmlFor !== selected) {
+            console.log(value[0].parentNode.htmlFor);
+
+            if (value[0].parentNode.htmlFor !== selected) {
                 selectionCheckbox[index].attr('checked', false);
                 bookingApp.resetStyles(selectionLabel[index]);
             }
@@ -175,6 +183,15 @@ bookingApp.handleButton = function(button) {
             console.log('Please select a preference');
         }
         bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId);
+
+        // display: if else statement for media query: make it in a function and call it here
+        bookingApp.staticDiv.css({
+            'width': '50vw'
+        })
+        bookingApp.slidingDiv.animate({
+            'width': 'calc(50vw - 50px)',
+            'opacity': 'show'
+        }, 500)
     });
 };
 
