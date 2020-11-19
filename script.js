@@ -193,7 +193,7 @@ bookingApp.processRecommendation = function(recommendations) {
         const restaurant = value.restaurant;
         const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
-        const image = restaurant.featured_image;
+        const image = restaurant.thumb;
         console.log(image);
         const name = restaurant.name ;
         const url = restaurant.url ;
