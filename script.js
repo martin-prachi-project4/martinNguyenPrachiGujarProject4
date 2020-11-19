@@ -1,14 +1,35 @@
 const bookingApp = {};
 bookingApp.zomatoURL = 'https://developers.zomato.com/api/v2.1/search';
 
-bookingApp.cities ={
+// cities.......
+
+bookingApp.cities = {
     toronto: 89,
     vancouver: 256,
     calgary: 300,
     montreal: 294,
     ottawa: 295
 }
-bookingApp.cuisinesAvailable ={
+
+bookingApp.cityLabel=[
+    $('[for="toronto"]'),
+    $('[for="vancouver"]'),
+    $('[for="calgary"]'),
+    $('[for="ottawa"]'),
+    $('[for="montreal"]'),
+];
+
+bookingApp.cityCheckbox=[
+    $('#toronto'),
+    $('#vancouver'),
+    $('#calgary'),
+    $('#ottawa'),
+    $('#montreal'),
+];
+
+// cuisine...........
+
+bookingApp.cuisinesAvailable = {
     indian: 148,
     pizza: 82,
     chinese: 25,
@@ -16,13 +37,98 @@ bookingApp.cuisinesAvailable ={
     middleEastern: 137,
     desserts: 100,
     bubbleTea: 247,
-    other: 381 
+    other: 381
     // canadian cuisine id for other
 }
-bookingApp.categories ={
+
+
+bookingApp.cuisineLabel = [
+    $('[for="indian"]'),
+    $('[for="pizza"]'),
+    $('[for="chinese"]'),
+    $('[for="sushi"]'),
+    $('[for="middleEastern"]'),
+    $('[for="desserts"]'),
+    $('[for="bubbleTea"]'),
+    $('[for="other"]'),
+]
+
+bookingApp.cuisineCheckbox=[
+    $('#indian'),
+    $('#pizza'),
+    $('#chinese'),
+    $('#sushi'),
+    $('#middleEastern'),
+    $('#desserts'),
+    $('#bubbleTea'),
+    $('#other'),
+];
+
+
+
+// Preferences........
+bookingApp.preferences ={
     dineIn: 2,
     delivery: 1,
     takeout: 5
+}
+bookingApp.preferenceLabel = [
+    $('[for="dineIn"]'),
+    $('[for="delivery"]'),
+    $('[for="takeout"]'),
+
+]
+
+bookingApp.preferenceCheckbox=[
+    $('#dineIn'),
+    $('#delivery'),
+    $('#takeout'),
+]
+
+
+bookingApp.resetStyles = function(element){
+    element.css({
+        'background-color': 'transparent',
+        'opacity': 1,
+        'border-radius': '0',
+        'box-shadow': '0px 0px transparent'
+    })
+}
+
+bookingApp.highlightStyles = function (element, shadowColor) {
+    element.css({
+        'background-color': '#E5989B',
+        'opacity': 0.7,
+        'border-radius': '15px',
+        'box-shadow': '5px 5px '+ shadowColor
+    })
+}
+
+// selection:cities, selectionLabel: bookingApp.citySelection , selectionCheckbox: bookingApp.cityCheckbox
+bookingApp.select = function(selection, selectionLabel, selectionCheckbox ){
+    $(`.${selection}`).on('click', "label", function () {
+        const selected = $(this).attr("for");
+        selectionLabel.forEach(function (value, index) {
+            if (value[0].htmlFor !== selected) { 
+                selectionCheckbox[index].attr('checked', false) 
+                bookingApp.resetStyles(selectionLabel[index])
+            }
+            else if (selectionCheckbox[index].attr('checked')) {
+                selectionCheckbox[index].attr('checked', false)
+                bookingApp.resetStyles(selectionLabel[index])
+            }
+            else {
+                selectionCheckbox[index].attr('checked', true)
+                if (selection === 'cities'){
+                    bookingApp.highlightStyles(selectionLabel[index], '#6D6875')
+                }
+                else{
+                    bookingApp.highlightStyles(selectionLabel[index], '#500808')
+                }
+            }
+        });
+        return bookingApp[selection][selected];
+    })
 }
 
 
@@ -51,26 +157,58 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
 // $('button').on('click',function(){
     // console.log('clicked!');
     // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
-    let cityId;
-    $('.cities').on('click', "label", function () {
-        const selectedCity = $(this).attr("for");
-        cityId = bookingApp.cities[selectedCity];
-        console.log(cityId);
-        // selections.push(cityId); 
-        // gives the city_id  
-        // To use: this calls the function for he selected city ID: bookingApp.getRecommendation(cityId);
-    })
+    // let cityId;
+    bookingApp.select('cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
+    bookingApp.select('cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
+    bookingApp.select('preferences', bookingApp.preferenceLabel, bookingApp.preferenceCheckbox )
 
-    // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
-    let cuisineId;
-    $('.cuisine').on('click', "label", function () {
-        const selectedCuisine = $(this).attr("for");
-        cuisineId = bookingApp.cuisinesAvailable[selectedCuisine];
-        console.log(cuisineId);
-        // selections.push(cuisineId);
-        // gives the city_id  
-        // To use: this calls the function for he selected city ID: bookingApp.getRecommendation(cityId);
-    })
+    // $('.cities').on('click', "label", function () {
+        
+        
+    //     const selectedCity = $(this).attr("for");
+    //     bookingApp.citySelection.forEach(function(value, index){
+    //         console.log(index);
+    //         console.log(bookingApp.cityCheckbox[0]);
+    //         if(value[0].htmlFor !== selectedCity)
+    //         {bookingApp.cityCheckbox[index].attr('checked',false)}
+    //         else if(bookingApp.cityCheckbox[index].attr('checked')){
+    //             bookingApp.cityCheckbox[index].attr('checked', false)
+    //         }
+    //         else{
+    //                 bookingApp.cityCheckbox[index].attr('checked', true)
+    //             }
+    //         });
+    //         cityId = bookingApp.cities[selectedCity];
+    //         console.log(cityId); 
+    // })
+            
+            // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
+        // let cuisineId;
+        // $('.cuisine').on('click', "label", function () {
+        //     // console.log(bookingApp.cuisineCheckbox);
+        //     const selectedCuisine = $(this).attr("for");
+        //     bookingApp.cuisineSelection.forEach(function(value,index){
+        //         if(value[0].htmlFor !== selectedCuisine){
+        //             bookingApp.cuisineCheckbox[index].attr('checked',false)
+                   
+        //             bookingApp.resetStyles(bookingApp.cuisineSelection[index])
+        //         }
+        //         else if (bookingApp.cuisineCheckbox[index].attr('checked')){
+        //             bookingApp.cuisineCheckbox[index].attr('checked', false)
+        //             bookingApp.resetStyles(bookingApp.cuisineSelection[index])
+
+        //         }
+        //         else{
+        //             bookingApp.cuisineCheckbox[index].attr('checked', true)
+        //             bookingApp.highlightStyles(bookingApp.cuisineSelection[index], '#E5989B', '#500808')
+                   
+        //         }
+        //     });
+
+        //     cuisineId = bookingApp.cuisinesAvailable[selectedCuisine];
+        //     console.log(cuisineId);
+        
+        // })
 
     // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
     let categoryId;

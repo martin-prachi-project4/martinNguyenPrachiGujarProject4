@@ -319,20 +319,6 @@ footer p {
   text-align: right;
 }
 
-input:checked + label {
-  background-color: #E5989B;
-  opacity: 0.7;
-  border-radius: 15px;
-  -webkit-box-shadow: 5px 5px #6D6875;
-          box-shadow: 5px 5px #6D6875;
-}
-
-.cuisine input:checked + label,
-.preferences input:checked + label {
-  -webkit-box-shadow: 5px 5px #500808;
-          box-shadow: 5px 5px #500808;
-}
-
 a:hover,
 a:focus,
 a:active {

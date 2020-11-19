@@ -43,17 +43,17 @@ footer p{
 
 
 // Checkbox selection.....
-input:checked + label{
-    background-color: $primaryColor;
-    opacity: 0.7;
-    border-radius: 15px;
-    box-shadow: 5px 5px $secondAccentColor;
-}
+// input:checked + label{
+//     background-color: $primaryColor;
+//     opacity: 0.7;
+//     border-radius: 15px;
+//     box-shadow: 5px 5px $secondAccentColor;
+// }
 
-.cuisine input:checked + label,
-.preferences input:checked + label{
-    box-shadow: 5px 5px $secondaryColor;
-}
+// .cuisine input:checked + label,
+// .preferences input:checked + label{
+//     box-shadow: 5px 5px $secondaryColor;
+// }
 
 
 // HOVER styles....
