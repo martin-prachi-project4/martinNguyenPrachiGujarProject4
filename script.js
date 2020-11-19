@@ -29,7 +29,7 @@ bookingApp.cityCheckbox=[
 
 // cuisine...........
 
-bookingApp.cuisinesAvailable = {
+bookingApp.cuisine = {
     indian: 148,
     pizza: 82,
     chinese: 25,
@@ -84,6 +84,13 @@ bookingApp.preferenceCheckbox=[
     $('#delivery'),
     $('#takeout'),
 ]
+bookingApp.citiesSelection = $('.cities');
+bookingApp.cuisineSelection = $('.cuisine');
+bookingApp.preferencesSelection = $('.preferences');
+bookingApp.submitButton = $('.submit');
+bookingApp.citiesId;
+bookingApp.cuisineId;
+bookingApp.preferencesId;
 
 
 bookingApp.resetStyles = function(element){
@@ -105,20 +112,21 @@ bookingApp.highlightStyles = function (element, shadowColor) {
 }
 
 // selection:cities, selectionLabel: bookingApp.citySelection , selectionCheckbox: bookingApp.cityCheckbox
-bookingApp.select = function(selection, selectionLabel, selectionCheckbox ){
-    $(`.${selection}`).on('click', "label", function () {
+bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbox ){
+    jquery.on('click', "label", function () {
         const selected = $(this).attr("for");
         selectionLabel.forEach(function (value, index) {
             if (value[0].htmlFor !== selected) { 
-                selectionCheckbox[index].attr('checked', false) 
-                bookingApp.resetStyles(selectionLabel[index])
+                selectionCheckbox[index].attr('checked', false); 
+                bookingApp.resetStyles(selectionLabel[index]);
             }
             else if (selectionCheckbox[index].attr('checked')) {
-                selectionCheckbox[index].attr('checked', false)
-                bookingApp.resetStyles(selectionLabel[index])
+                selectionCheckbox[index].attr('checked', false);
+                bookingApp.resetStyles(selectionLabel[index]);
             }
             else {
-                selectionCheckbox[index].attr('checked', true)
+                selectionCheckbox[index].attr('checked', true);
+                bookingApp[`${selection}Id`] = bookingApp[selection][selected];
                 if (selection === 'cities'){
                     bookingApp.highlightStyles(selectionLabel[index], '#6D6875')
                 }
@@ -127,8 +135,36 @@ bookingApp.select = function(selection, selectionLabel, selectionCheckbox ){
                 }
             }
         });
-        return bookingApp[selection][selected];
+        bookingApp.checkSelection(selection, selectionCheckbox);
+        console.log(`${selection} ID is ${bookingApp[`${selection}Id`]}`)
     })
+}
+
+bookingApp.checkSelection = function(selection, selectionCheckbox) {
+    let nothingSelected = true;
+    selectionCheckbox.forEach ( function(value) {
+        if (value.attr('checked')) {
+            nothingSelected = false;
+        }
+    });
+    if (nothingSelected) { 
+        bookingApp[`${selection}Id`] = null;
+    }
+}
+
+bookingApp.handleButton = function(button) {
+    button.on('click', function() {
+        if (!bookingApp.citiesId) {
+            console.log('Please select a city');
+        }
+        if (!bookingApp.cuisineId) {
+            console.log('Please select a cuisine');
+        }
+        if (!bookingApp.preferencesId) {
+            console.log('Please select a preference');
+        }
+        bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId);
+    });
 }
 
 
@@ -139,16 +175,32 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
         dataType: 'json',
         data: {
             apikey: '51229140792268d47f96f56aabbde055',
-            count: 20,
+            count: 9,
             entity_id: selectedCityId,
             entity_type: 'city',
             cuisines: selectedCuisineId,
             category: selectedCategoryId
         }
     }).then(function (recommendationResponse) {
-        console.log(recommendationResponse);
+          recommendationResponse.restaurants
     })
 };
+
+// location, currency, featured image, name, zomato url, userRatings.aggregate_rating
+
+bookingApp.processRecommendation = function(recommendations) {
+    recommendations.forEach( (value, index) => {
+        const location = value.
+    });
+}
+
+bookingApp.init = function() {
+    bookingApp.handleButton(bookingApp.submitButton);
+}
+
+$(document).ready(() => {
+    bookingApp.init();
+});
 
 // create an array for the cuisines , cities, prefer.
 //forEach loop so it selects only one value for each and stores it in the selected variable
@@ -158,9 +210,11 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
     // console.log('clicked!');
     // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
     // let cityId;
-    bookingApp.select('cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
-    bookingApp.select('cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
-    bookingApp.select('preferences', bookingApp.preferenceLabel, bookingApp.preferenceCheckbox )
+
+bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
+   
+bookingApp.select(bookingApp.cuisineSelection, 'cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
+bookingApp.select(bookingApp.preferencesSelection, 'preferences', bookingApp.preferenceLabel, bookingApp.preferenceCheckbox )
 
     // $('.cities').on('click', "label", function () {
         
@@ -211,15 +265,15 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
         // })
 
     // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
-    let categoryId;
-    $('.preferences').on('click', "label", function () {
-        const selectedCategory = $(this).attr("for");
-        categoryId = bookingApp.categories[selectedCategory];
-        console.log(categoryId);
-        // selections.push(cuisineId);
-        // gives the city_id  
-        // To use: this calls the function for he selected city ID: bookingApp.getRecommendation(cityId);
-    });
+    // let categoryId;
+    // $('.preferences').on('click', "label", function () {
+    //     const selectedCategory = $(this).attr("for");
+    //     categoryId = bookingApp.categories[selectedCategory];
+    //     console.log(categoryId);
+    //     // selections.push(cuisineId);
+    //     // gives the city_id  
+    //     // To use: this calls the function for he selected city ID: bookingApp.getRecommendation(cityId);
+    // });
 
     // console.log(bookingApp.getRecommendation(cityId, cuisineId, categoryId));
     
