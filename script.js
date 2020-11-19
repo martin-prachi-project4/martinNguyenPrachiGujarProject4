@@ -198,7 +198,7 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
     })
 };
 
-// location, currency, featured image, name, zomato url, userRatings.aggregate_rating........
+// location, currency, featured image, name, zomato url, userRatings.aggregate_rating
 bookingApp.recommendationDisplay = $('.recommendationDisplay');
 bookingApp.processRecommendation = function(recommendations) {
     recommendations.forEach( (value) => {
