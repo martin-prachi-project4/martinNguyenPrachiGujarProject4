@@ -182,16 +182,33 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
             category: selectedCategoryId
         }
     }).then(function (recommendationResponse) {
-          recommendationResponse.restaurants
+          bookingApp.processRecommendation(recommendationResponse.restaurants);
     })
 };
 
 // location, currency, featured image, name, zomato url, userRatings.aggregate_rating
-
+bookingApp.recommendationDisplay = $('.recommendationDisplay');
 bookingApp.processRecommendation = function(recommendations) {
-    recommendations.forEach( (value, index) => {
-        const location = value.
+    recommendations.forEach( (value) => {
+        const restaurant = value.restaurant;
+        const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
+        const currency = restaurant.currency;
+        const image = restaurant.featured_image;
+        console.log(image);
+        const name = restaurant.name ;
+        const url = restaurant.url ;
+        const userRatings = restaurant.user_rating.aggregate_rating;
+        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
     });
+}
+
+bookingApp.appendImage = function(display, image, name, url) {
+    display.append(`
+        <li>
+            <img src="${image}" alt="Featured image for ${name} restaurant from Zomato"/>
+            <a href="${url}">${name}</a>
+        </li>
+    `)
 }
 
 bookingApp.init = function() {
