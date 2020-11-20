@@ -201,15 +201,17 @@ bookingApp.handleButton = function(button) {
         if (!bookingApp.preferencesId) {
             console.log('Please select a preference');
         }
-        bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId);
+        // bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, 9);
 
         // display: if else statement for media query: make it in a function and call it here
         if ($(window).width() > 890){
             bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
+            bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, 9);
         }
         else {
             console.log('small screen');
             bookingApp.splitScreen('none', '0', '2rem', '100vw');
+            bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, 8);
         }
         
     });
@@ -217,14 +219,14 @@ bookingApp.handleButton = function(button) {
 
 
 // calling function for the API for the restaurance....
-bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, selectedCategoryId){
+bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, selectedCategoryId, count){
     $.ajax({
         url: bookingApp.zomatoURL,
         method: 'GET',
         dataType: 'json',
         data: {
             apikey: '51229140792268d47f96f56aabbde055',
-            count: 9,
+            count: count,
             entity_id: selectedCityId,
             entity_type: 'city',
             cuisines: selectedCuisineId,
@@ -248,6 +250,7 @@ bookingApp.processRecommendation = function(recommendations) {
         const url = restaurant.url ;
         const userRatings = restaurant.user_rating.aggregate_rating;
         bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
+        
     });
 }
 
