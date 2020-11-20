@@ -12,11 +12,11 @@ bookingApp.cities = {
 }
 
 bookingApp.cityLabel=[
-    $('[for="toronto"] h3'),
-    $('[for="vancouver"] h3'),
-    $('[for="calgary"] h3'),
-    $('[for="ottawa"] h3'),
-    $('[for="montreal"] h3'),
+    $('[for="toronto"] h2'),
+    $('[for="vancouver"] h2'),
+    $('[for="calgary"] h2'),
+    $('[for="ottawa"] h2'),
+    $('[for="montreal"] h2'),
 ];
 
 bookingApp.cityCheckbox=[
@@ -43,14 +43,14 @@ bookingApp.cuisine = {
 
 
 bookingApp.cuisineLabel = [
-    $('[for="indian"] h3'),
-    $('[for="pizza"] h3'),
-    $('[for="chinese"] h3'),
-    $('[for="sushi"] h3'),
-    $('[for="middleEastern"] h3'),
-    $('[for="desserts"] h3'),
-    $('[for="bubbleTea"] h3'),
-    $('[for="other"] h3'),
+    $('[for="indian"] h2'),
+    $('[for="pizza"] h2'),
+    $('[for="chinese"] h2'),
+    $('[for="sushi"] h2'),
+    $('[for="middleEastern"] h2'),
+    $('[for="desserts"] h2'),
+    $('[for="bubbleTea"] h2'),
+    $('[for="other"] h2'),
 ];
 
 bookingApp.cuisineCheckbox=[
@@ -74,9 +74,9 @@ bookingApp.preferences ={
 };
 
 bookingApp.preferenceLabel = [
-    $('[for="dineIn"] h3'),
-    $('[for="delivery"] h3'),
-    $('[for="takeout"] h3'),
+    $('[for="dineIn"] h2'),
+    $('[for="delivery"] h2'),
+    $('[for="takeout"] h2'),
 
 ];
 
@@ -94,6 +94,7 @@ bookingApp.submitButton = $('.submit');
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
+bookingApp.heading = $('h2');
 
 // to display recommendation...
 bookingApp.staticDiv = $('.options')
@@ -119,6 +120,24 @@ bookingApp.highlightStyles = function (element, shadowColor) {
         'box-shadow': '5px 5px '+ shadowColor
     })
 };
+
+// styling function when the screen splits in half: 
+// width1:50vw for bigger screens, 0 for smaller
+// width2: 50vw - 30px for bigger screens and 100vw for smaller
+bookingApp.splitScreen = function(value1, width1, fontSize, width2){
+    bookingApp.staticDiv.css({
+        'display': value1,
+        'width': width1,
+    })
+    bookingApp.heading.css({
+        'font-size': fontSize
+    })
+    bookingApp.slidingDiv.animate({
+        'width': 'calc(' +width2+ ' - 30px)',
+        'opacity': 'show'
+    }, 500)
+}
+
 
 // selection:cities, selectionLabel: bookingApp.citySelection , selectionCheckbox: bookingApp.cityCheckbox
 bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbox ){
@@ -185,13 +204,14 @@ bookingApp.handleButton = function(button) {
         bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId);
 
         // display: if else statement for media query: make it in a function and call it here
-        bookingApp.staticDiv.css({
-            'width': '50vw'
-        })
-        bookingApp.slidingDiv.animate({
-            'width': 'calc(50vw - 50px)',
-            'opacity': 'show'
-        }, 500)
+        if ($(window).width() > 890){
+            bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
+        }
+        else {
+            console.log('small screen');
+            bookingApp.splitScreen('none', '0', '2rem', '100vw');
+        }
+        
     });
 };
 

@@ -2,6 +2,29 @@ main{
     padding: 25px 0;
     // margin-bottom: 20px;
     // height: calc(75vh - 20px);
+    position: relative;
+    a{
+        position: absolute;
+        top: -30px;
+        right: 100px ;
+        &:hover,
+        &:active,
+        &:focus{
+            background-color: transparent;
+        }
+    }
+    i{
+        font-size: 2.5rem;
+        text-align: center;
+        color: $secondaryColor;
+        background-color: $firstAccentGradient;
+        position: absolute;
+        top:0;
+        right: 0 ;
+        border-radius: 50%;
+        padding: 10px;
+
+    }
 }
 
 .options {
@@ -13,67 +36,48 @@ main{
     
 }
 
-.cities {
-    background-color: $firstAccentGradient;
-    border-top-left-radius: 50px;
+.cities,
+.cuisine,
+.preferences{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-row-gap: 25px;
-    grid-column-gap: 25px;
     justify-content: center;
     align-content: center;
+    grid-row-gap: 30px;
+    grid-column-gap: 10px;
+    overflow: scroll;
+    padding: 15px;
     label{
         display:flex;
         justify-content: center;
         align-items: center;
-        h3{
-            padding: 0 5px;
-        }
-     
+        h2{
+            padding: 5px;
+        }    
     }
 }
+
+.cities {
+    background-color: $firstAccentGradient;
+    border-top-left-radius: 50px;
+}
+
 
 
 .cuisine {
     background-color: $secondAccentGradient;
-    opacity: 0.8;
-    border-top-right-radius: 50px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 25px;
-    justify-content: center;
-    align-content: space-evenly;
-    label{
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        h3{
-            padding: 0 5px;
-        }    
-    }
+    border-top-right-radius: 50px;   
 }
 
 .preferences {
     background-color: $secondAccentGradient;
     border-bottom-left-radius: 50px;
-    display: grid;
     grid-template-columns: 100px;
-    grid-row-gap: 25px;
-    justify-content: center;
-    align-content: center;
-    label{
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        h3{
-            padding: 0 5px;
-        }    
-    }
 }
+
 
 .submission {
     background-color: $firstAccentGradient;
-    opacity: 0.8;
     border-bottom-right-radius: 50px;
     display: grid;
     justify-content: center;
@@ -83,31 +87,31 @@ main{
 
 // Recommendation section.....
 .recommendation{
-
-    background-color:rgba(109,104,117,0.3);
+    background-color: $thirdAccentGradient;
     overflow: scroll;
-    height: calc(75vh - 40px);
-    padding: 15px;
-    border-radius: 50px;
     flex: 1;
-    margin-left: 50px;
-
+    border-radius: 50px;
+    height: calc(75vh - 30px);
+    margin-left: 30px;
+    padding: 15px;
     h2{
         padding: 20px 0;
     }
 
     ul{
-        padding: 20px 0;
         display: flex;
         flex-wrap: wrap;
+        padding: 20px 0;
         li{
             margin-right: 15px;
-            width: calc((100% - 45px) / 3);    
+            width: calc((100% - 30px) / 3);
         }
     }
 }
 
-
+.recommendation li:nth-of-type(3n){
+    margin-right: 0;
+}
 
 .flexContainer{
     display: flex;
