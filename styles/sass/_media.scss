@@ -40,6 +40,7 @@
     }
 
     .submit:hover{
+        font-weight: 400;
         padding: 10px 40px;
         border-radius: 30px;
         background-color: $primaryColor;
@@ -50,9 +51,18 @@
 
 @media (max-width: 500px){
 
-    .cities{
+    main i{
+        right: 200px;
+    }
+    .cities,
+    .cuisine{
+        align-content: space-between;
         grid-template-columns: 1fr;
-        grid-row-gap: 15px;
+        grid-row-gap: 5px;
+    }
+    .submit,
+    .submit:hover{
+        padding: 10px 20px;
     }
 
     .recommendation ul li{

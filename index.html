@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- font family, font awesome, stylesheet -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Raleway&family=Satisfy&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Raleway&family=Satisfy&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6ef8eb0028.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/style.css">
     <title>Restaurant Booking App</title>
 </head>
+
 <body>
     <header>
         <h1>Restaurant App</h1>
@@ -18,64 +22,96 @@
 
     <main>
         <!-- <i class="lni lni-restaurant"></i> -->
-        <div><a href="./index.html"><i class="fas fa-redo"></i></a></div>
+        <div class = "icon"><a href="./index.html"><i class="fas fa-redo"></i></a></div>
         <div class="wrapper flexContainer">
             <!-- preference selection// all 4 section take up same sizes and screen divides in 4  -->
             <section class="options">
                 <!-- Div/section for the cities selection -->
                 <div class="cities">
                     <input type="checkbox" class="srOnly" name="toronto" id="toronto">
-                    <label for="toronto"><h2>Toronto</h2></label>
-            
+                    <label for="toronto">
+                        <h2>Toronto</h2>
+                    </label>
+
                     <input type="checkbox" name="vancouver" class="srOnly" id="vancouver">
-                    <label for="vancouver"><h2>Vancouver</h2></label>
-            
+                    <label for="vancouver">
+                        <h2>Vancouver</h2>
+                    </label>
+
                     <input type="checkbox" name="calgary" class="srOnly" id="calgary">
-                    <label for="calgary"><h2>Calgary</h2></label>
-            
+                    <label for="calgary">
+                        <h2>Calgary</h2>
+                    </label>
+
                     <input type="checkbox" name="ottawa" class="srOnly" id="ottawa">
-                    <label for="ottawa"><h2>Ottawa</h2></label>
-            
+                    <label for="ottawa">
+                        <h2>Ottawa</h2>
+                    </label>
+
                     <input type="checkbox" name="montreal" class="srOnly" id="montreal">
-                    <label for="montreal"><h2>Montreal</h2></label>
+                    <label for="montreal">
+                        <h2>Montreal</h2>
+                    </label>
                 </div>
                 <!-- Div/section for the cuisin selection -->
                 <div class="cuisine">
                     <input type="checkbox" name="indian" class="srOnly" id="indian">
-                    <label for="indian"><h2>Indian</h2></label>
-            
+                    <label for="indian">
+                        <h2>Indian</h2>
+                    </label>
+
                     <input type="checkbox" name="pizza" class="srOnly" id="pizza">
-                    <label for="pizza"><h2>Pizza</h2></label>
-            
+                    <label for="pizza">
+                        <h2>Pizza</h2>
+                    </label>
+
                     <input type="checkbox" name="chinese" class="srOnly" id="chinese">
-                    <label for="chinese"><h2>Chinese</h2></label>
-            
+                    <label for="chinese">
+                        <h2>Chinese</h2>
+                    </label>
+
                     <input type="checkbox" name="sushi" class="srOnly" id="sushi">
-                    <label for="sushi"><h2>Sushi</h2></label>
-            
+                    <label for="sushi">
+                        <h2>Sushi</h2>
+                    </label>
+
                     <input type="checkbox" name="middleEastern" class="srOnly" id="middleEastern">
-                    <label for="middleEastern"><h2>Middle Eastern</h2></label>
-            
+                    <label for="middleEastern">
+                        <h2>Middle Eastern</h2>
+                    </label>
+
                     <input type="checkbox" name="desserts" class="srOnly" id="desserts">
-                    <label for="desserts"><h2>Desserts</h2></label>
-            
+                    <label for="desserts">
+                        <h2>Desserts</h2>
+                    </label>
+
                     <input type="checkbox" name="bubbleTea" class="srOnly" id="bubbleTea">
-                    <label for="bubbleTea"><h2>Bubble Tea</h2></label>
-            
+                    <label for="bubbleTea">
+                        <h2>Bubble Tea</h2>
+                    </label>
+
                     <input type="checkbox" name="other" class="srOnly" id="other">
-                    <label for="other"><h2>Other</h2></label>
+                    <label for="other">
+                        <h2>Other</h2>
+                    </label>
                 </div>
                 <!-- Div/section for the dine-in/delivery/takeout -->
                 <div class="preferences">
                     <input type="checkbox" name="dineIn" class="srOnly" id="dineIn">
-                    <label for="dineIn"><h2>Dine In</h2></label>
-            
+                    <label for="dineIn">
+                        <h2>Dine In</h2>
+                    </label>
+
                     <input type="checkbox" name="delivery" class="srOnly" id="delivery">
-                    <label for="delivery"><h2>Delivery</h2></label>
-            
+                    <label for="delivery">
+                        <h2>Delivery</h2>
+                    </label>
+
                     <input type="checkbox" name="takeout" class="srOnly" id="takeout">
-                    <label for="takeout"><h2>Takeout</h2></label>
-            
+                    <label for="takeout">
+                        <h2>Takeout</h2>
+                    </label>
+
                 </div>
                 <!-- Div/section submit button -->
                 <div class="submission">
@@ -94,9 +130,9 @@
                 </ul>
             </section>
         </div>
-        
-        
-        
+
+
+
     </main>
 
     <footer>
@@ -104,9 +140,11 @@
                 href="https://junocollege.com/">Created at Juno College of Technology</a>
         </p>
     </footer>
-    
-    
-    <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+
+
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js'
+        integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
     <script src="./script.js"></script>
 </body>
+
 </html>

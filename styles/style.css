@@ -362,13 +362,13 @@ main {
   position: relative;
 }
 
-main a {
+main .icon a {
   position: absolute;
   top: -30px;
   right: 100px;
 }
 
-main a:hover, main a:active, main a:focus {
+main .icon a:hover, main .icon a:active, main .icon a:focus {
   background-color: transparent;
 }
 
@@ -548,6 +548,7 @@ footer {
     border-radius: 50%;
   }
   .submit:hover {
+    font-weight: 400;
     padding: 10px 40px;
     border-radius: 30px;
     background-color: #E5989B;
@@ -558,10 +559,20 @@ footer {
 }
 
 @media (max-width: 500px) {
-  .cities {
+  main i {
+    right: 200px;
+  }
+  .cities,
+  .cuisine {
+    -ms-flex-line-pack: justify;
+        align-content: space-between;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
-    grid-row-gap: 15px;
+    grid-row-gap: 5px;
+  }
+  .submit,
+  .submit:hover {
+    padding: 10px 20px;
   }
   .recommendation ul li {
     padding: 15px;
