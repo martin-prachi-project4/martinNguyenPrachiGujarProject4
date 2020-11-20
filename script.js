@@ -64,8 +64,6 @@ bookingApp.cuisineCheckbox=[
     $('#other'),
 ];
 
-
-
 // Preferences........
 bookingApp.preferences ={
     dineIn: 2,
@@ -95,12 +93,20 @@ bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
 bookingApp.heading = $('h2');
-
-// to display recommendation...
 bookingApp.staticDiv = $('.options')
 bookingApp.slidingDiv = $('.recommendation')
+bookingApp.information = $('.information')
 
 bookingApp.slidingDiv.hide();
+
+bookingApp.showInfo = function(element,element2){
+    element.on('click', 'i', function () {
+        console.log("clicked");
+        element2.toggleClass('hiddenInfo');
+    })
+}
+
+bookingApp.showInfo(bookingApp.slidingDiv, bookingApp.information);
 
 
 bookingApp.resetStyles = function(element){
@@ -201,7 +207,6 @@ bookingApp.handleButton = function(button) {
         if (!bookingApp.preferencesId) {
             console.log('Please select a preference');
         }
-        // bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, 9);
 
         // display: if else statement for media query: make it in a function and call it here
         if ($(window).width() > 890){
@@ -244,22 +249,31 @@ bookingApp.processRecommendation = function(recommendations) {
         const restaurant = value.restaurant;
         const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
-        const image = restaurant.thumb;
+        console.log(currency);
+        let image = restaurant.thumb;
         console.log(image);
         const name = restaurant.name ;
         const url = restaurant.url ;
         const userRatings = restaurant.user_rating.aggregate_rating;
-        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
-        
+        // if (image = "") {
+        //     image = './assets/chadMontanoPizza.jpg';
+        // };
+        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings, location);        
     });
 }
 
 // to display the image..........
-bookingApp.appendImage = function(display, image, name, url) {
+bookingApp.appendImage = function(display, image, name, url, currency, userRatings, location) {
     display.append(`
         <li>
             <img src="${image}" alt="Featured image for ${name} restaurant from Zomato"/>
+            <i class="fas fa-info-circle"></i>
             <a href="${url}">${name}</a>
+            <div class="information hiddenInfo">
+                <p><i class="fas fa-utensils"></i>Currency: ${currency}</p>
+                <p><i class="fas fa-utensils"></i>Ratings: ${userRatings}</p>
+                <p><i class="fas fa-utensils"></i>Location: ${location}</p>
+            </div>
         </li>
     `)
 }
@@ -268,6 +282,7 @@ bookingApp.appendImage = function(display, image, name, url) {
 // init function to call the api function
 bookingApp.init = function() {
     bookingApp.handleButton(bookingApp.submitButton);
+    
 }
 
 

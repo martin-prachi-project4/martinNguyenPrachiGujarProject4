@@ -1,7 +1,7 @@
 // Setting up SASS variables......
 $headingFont: 'Raleway', sans-serif;
 $bodyFont: 'Quicksand', sans-serif;
-$extraFont:'Satisfy', cursive;
+
 // colors...
 $primaryColor: #E5989B;
 $secondaryColor: #500808;
@@ -26,26 +26,3 @@ $letterSpacing: 1.1px) {
 }
 
 
-html {
-    font-size: 62.5%;
-}
-
-.wrapper {
-    width: calc(100vw - 50px);
-    max-width: 1280px;
-    margin: 0 auto;
-}
-body{
-    background-image: url('../assets/brookeLarkHeader.jpg');
-    // Image credits: unsplash: Brooke Lark
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
