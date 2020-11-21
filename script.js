@@ -102,16 +102,6 @@ bookingApp.information;
 
 bookingApp.slidingDiv.hide();
 
-// element1: .recommendation ul , elelemnt 2: div.information....... 
-bookingApp.showInfo = function(element,element2){
-    element.on('click', 'li', function () {
-        console.log("clicked");
-        console.log($(this));
-        element2.toggleClass('hiddenInfo');
-    })
-}
-
-
 
 
 bookingApp.resetStyles = function(element){
@@ -155,7 +145,7 @@ bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbo
     jquery.on('click', "label", function () {
         const selected = $(this).attr("for");
         selectionLabel.forEach(function (value, index) {
-            console.log(value[0].parentNode.htmlFor);
+            // console.log(value[0].parentNode.htmlFor);
 
             if (value[0].parentNode.htmlFor !== selected) {
                 selectionCheckbox[index].attr('checked', false);
@@ -177,7 +167,7 @@ bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbo
             }
         });
         bookingApp.checkSelection(selection, selectionCheckbox);
-        console.log(`${selection} ID is ${bookingApp[`${selection}Id`]}`);
+        // console.log(`${selection} ID is ${bookingApp[`${selection}Id`]}`);
     });
 };
 
@@ -256,26 +246,35 @@ bookingApp.processRecommendation = function(recommendations) {
         const restaurant = value.restaurant;
         const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
-        console.log(currency);
+        // console.log(currency);
         let image = restaurant.thumb;
-        console.log(image);
+        // console.log(image);
         const name = restaurant.name ;
         const url = restaurant.url ;
         const userRatings = restaurant.user_rating.aggregate_rating;
         
-        bookingApp.defaultImage(image);
+        image = bookingApp.defaultImage(image);
         bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings, location); 
         bookingApp.information = $('.information');
-        bookingApp.showInfo(bookingApp.recommendationDisplay, bookingApp.information); 
+        
 
     });
+    bookingApp.showInfo(); 
 }
 
 bookingApp.defaultImage = function(image){
     if (image === ""){
-        image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
-        console.log(`./assets/id${(bookingApp.cuisineId).toString()}.jpg`);
+        return `assets/id${bookingApp.cuisineId}.jpg`;
+    } else {
+        return image;
     }
+}
+
+// element1: .recommendation ul , elelemnt 2: div.information....... 
+bookingApp.showInfo = function () {
+    bookingApp.recommendationDisplay.on('click', 'li', function() {
+        $($(this)[0].childNodes[7]).toggleClass('hiddenInfo');
+    });
 }
 
 
@@ -293,7 +292,7 @@ bookingApp.appendImage = function(display, image, name, url, currency, userRatin
         </li>
     `)
 }
-
+// 
 // // <p><i class="fas fa-utensils"></i>Location: ${location}</p>
 // init function to call the api function........
 bookingApp.init = function() {
