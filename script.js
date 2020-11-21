@@ -10,13 +10,15 @@ bookingApp.cities = {
     montreal: 294,
     ottawa: 295
 }
+
 bookingApp.cityLabel=[
-    $('[for="toronto"] h3'),
-    $('[for="vancouver"] h3'),
-    $('[for="calgary"] h3'),
-    $('[for="ottawa"] h3'),
-    $('[for="montreal"] h3'),
-]
+    $('[for="toronto"] h2'),
+    $('[for="vancouver"] h2'),
+    $('[for="calgary"] h2'),
+    $('[for="ottawa"] h2'),
+    $('[for="montreal"] h2'),
+];
+
 bookingApp.cityCheckbox=[
     $('#toronto'),
     $('#vancouver'),
@@ -36,19 +38,19 @@ bookingApp.cuisine = {
     bubbleTea: 247,
     other: 381
     // canadian cuisine id for other
-}
+};
 
 
 bookingApp.cuisineLabel = [
-    $('[for="indian"] h3'),
-    $('[for="pizza"] h3'),
-    $('[for="chinese"] h3'),
-    $('[for="sushi"] h3'),
-    $('[for="middleEastern"] h3'),
-    $('[for="desserts"] h3'),
-    $('[for="bubbleTea"] h3'),
-    $('[for="other"] h3'),
-]
+    $('[for="indian"] h2'),
+    $('[for="pizza"] h2'),
+    $('[for="chinese"] h2'),
+    $('[for="sushi"] h2'),
+    $('[for="middleEastern"] h2'),
+    $('[for="desserts"] h2'),
+    $('[for="bubbleTea"] h2'),
+    $('[for="other"] h2'),
+];
 
 bookingApp.cuisineCheckbox=[
     $('#indian'),
@@ -66,13 +68,15 @@ bookingApp.preferences ={
     dineIn: 2,
     delivery: 1,
     takeout: 5
-}
-bookingApp.preferenceLabel = [
-    $('[for="dineIn"] h3'),
-    $('[for="delivery"] h3'),
-    $('[for="takeout"] h3'),
+};
 
-]
+bookingApp.preferenceLabel = [
+    $('[for="dineIn"] h2'),
+    $('[for="delivery"] h2'),
+    $('[for="takeout"] h2'),
+
+];
+
 bookingApp.preferenceCheckbox=[
     $('#dineIn'),
     $('#delivery'),
@@ -97,6 +101,21 @@ bookingApp.slidingDiv = $('.recommendation');
 
 bookingApp.slidingDiv.hide();
 
+bookingApp.citiesId;
+bookingApp.cuisineId;
+bookingApp.preferencesId;
+bookingApp.heading = $('h2');
+bookingApp.staticDiv = $('.options')
+bookingApp.slidingDiv = $('.recommendation')
+bookingApp.information = $('.information')
+
+bookingApp.showInfo = function(element,element2){
+    element.on('click', 'i', function () {
+        console.log("clicked");
+        element2.toggleClass('hiddenInfo');
+    })
+}
+bookingApp.showInfo(bookingApp.slidingDiv, bookingApp.information);
 
 bookingApp.resetStyles = function(element){
     element.css({
@@ -165,7 +184,6 @@ bookingApp.getUserSelections = function() {
 }
 
 bookingApp.handleButton = function(button, start) {
-  
     button.on('click', function () {
       if (!bookingApp.buttonClicked) {
         if (!bookingApp.citiesId) {
@@ -193,8 +211,7 @@ bookingApp.handleButton = function(button, start) {
           }, 500);
         }
       }
-    });
-    
+    });   
 }
 
 bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
@@ -271,40 +288,40 @@ $(document).ready(() => {
 
 bookingApp.animations = {}
 bookingApp.animations.timeout;
-bookingApp.animations.handleAnimations = function() {
-    if (!bookingApp.animations.isOn) {
-      bookingApp.animations.init();
-      bookingApp.animations.timeoutTransition(1200);
-    } else {
-      bookingApp.animations.reset();
-    }
-    bookingApp.animations.isOn = !bookingApp.animations.isOn;
-}
-bookingApp.animations.init = function() {
-    bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
-    bookingApp.animations.appendElements('tomato');
-    bookingApp.recommendationSection.css({
-        'overflow': 'hidden'
-    });
-    console.log(bookingApp.animations.animatedElements[0])
-    bookingApp.animations.animatedElements[0].animate({
-      'transform': 'rotate(0deg)',
-      'opacity': '0'
-    },{
-      'duration': 1500,
-      'step': function (now) {
-        bookingApp.animations.animatedElements[0].css({
-          'transform': `rotate(${now*300}deg)`
-        });
-      }
-    })
-}
-bookingApp.animations.reset = function() {
-    bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
-}
 bookingApp.animations.isOn = false;
 bookingApp.animations.canvas;
 bookingApp.animations.elements = [];
+bookingApp.animations.handleAnimations = function () {
+  if (!bookingApp.animations.isOn) {
+    bookingApp.animations.init();
+    bookingApp.animations.timeoutTransition(1200);
+  } else {
+    bookingApp.animations.reset();
+  }
+  bookingApp.animations.isOn = !bookingApp.animations.isOn;
+}
+bookingApp.animations.init = function () {
+  bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
+  bookingApp.animations.appendElements('tomato');
+  bookingApp.recommendationSection.css({
+    'overflow': 'hidden'
+  });
+  console.log(bookingApp.animations.animatedElements[0])
+  bookingApp.animations.animatedElements[0].animate({
+    'transform': 'rotate(0deg)',
+    'opacity': '0'
+  }, {
+    'duration': 1500,
+    'step': function (now) {
+      bookingApp.animations.animatedElements[0].css({
+        'transform': `rotate(${now * 300}deg)`
+      });
+    }
+  })
+}
+bookingApp.animations.reset = function () {
+  bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
+}
 bookingApp.animations.createCanvas = function(parentElement) {
     parentElement.append(`
         <div class="animationCanvas">

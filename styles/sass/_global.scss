@@ -1,7 +1,6 @@
 // Setting up SASS variables......
 $headingFont: 'Raleway', sans-serif;
 $bodyFont: 'Quicksand', sans-serif;
-$extraFont:'Satisfy', cursive;
 // colors...
 $primaryColor: #E5989B;
 $secondaryColor: #500808;
@@ -10,31 +9,19 @@ $firstAccentColor:#B5838D;
 $firstAccentGradient: rgba(181,131,141,0.8);
 $secondAccentColor: #6D6875;
 $secondAccentGradient: rgba(109,104,117,0.8);
+$thirdAccentGradient: rgba(109,104,117,0.9);
 
 
 
  // MIXIN for fonts.........
 @mixin fontDef($family: $headingFont,
 $sizeValue: 2rem, 
-$weight: 400, 
-$lineHeight: 6.4rem, 
+$weight: 400,  
 $letterSpacing: 1.1px) {
     font-family: $family;
     font-size: $sizeValue;
     font-weight: $weight;
-    line-height: $lineHeight;
     letter-spacing: $letterSpacing;
-}
-
-
-html {
-    font-size: 62.5%;
-}
-
-.wrapper {
-    width: calc(100vw - 50px);
-    max-width: 1280px;
-    margin: 0 auto;
 }
 body{
     background-image: url('./assets/brookeLarkHeader.jpg');
@@ -45,8 +32,4 @@ body{
     background-attachment: fixed;
 }
 
-img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
+
