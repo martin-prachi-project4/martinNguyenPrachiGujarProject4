@@ -1,29 +1,42 @@
 // HEADING styles........
 h1{
-    @include fontDef($headingFont, 6.4rem, 400, 6.4rem, 1.6px);
+    @include fontDef($headingFont, 6.4rem, 400, 1.6px);
     color: $secondaryColor;
     text-align: right;
 }
 
-h2{
-    @include fontDef($extraFont, 4.8rem, 400, 6.4rem, 1.6px);
-    color: $secondaryColor;
-    text-align: center;
-}
 
+h2,
 p,
 footer,
-label,
 .submit,
 .recommendation li{
-    @include fontDef($bodyFont, 2rem ,400 ,3.2rem ,1.1px);
+    @include fontDef($bodyFont, 2rem ,400 ,1.1px);
     color: $optionalColor;
     text-align: center;
     list-style: none;
     a{
+        padding: 5px 10px;
         text-decoration: none;
         color: $optionalColor;
     }
+}
+
+.recommendation li i{
+    font-size: 2rem;
+    background-color: transparent;
+    color: $optionalColor;
+    position: static;
+}
+
+main div a{
+    padding: 5px 10px;
+}
+
+.recommendation li a{
+    font-size: 1.8rem;
+    border-radius: 10px;
+    margin-bottom:  10px;
 }
 
 .submit{
@@ -38,29 +51,37 @@ label,
 
 footer p{
     text-align: right;
+    padding: 5px 0;
 }
-
-
-
-// Checkbox selection.....
-// input:checked + label{
-//     background-color: $primaryColor;
-//     opacity: 0.7;
-//     border-radius: 15px;
-//     box-shadow: 5px 5px $secondAccentColor;
-// }
-
-// .cuisine input:checked + label,
-// .preferences input:checked + label{
-//     box-shadow: 5px 5px $secondaryColor;
-// }
 
 
 // HOVER styles....
 a:hover,
 a:focus,
 a:active{
+    // border-bottom: 2px solid $secondaryColor;
+    padding: 5px 10px;
+    background-color: $firstAccentGradient;
+    border-radius: 10px;
+}
+
+footer p a:hover,
+footer p a:focus,
+footer p a:active{
+    background-color: transparent;
+    border-radius: 0;
     border-bottom: 2px solid $secondaryColor;
+}
+
+.recommendation ul li img{
+    border-radius: 50%;
+    transition: border-radius 0.5s;
+    margin: 10px 0;
+    &:hover,
+    &:active,
+    &:focus{
+        border-radius: 0;
+    }
 }
 
 .submit:hover,
