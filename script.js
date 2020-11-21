@@ -85,23 +85,13 @@ bookingApp.submitButton = $('.submit');
 bookingApp.buttonClicked = false;
 bookingApp.recommendationSection = $('.recommendation')
 bookingApp.recommendationDisplay = $('.recommendationDisplay');
-bookingApp.citiesId;
-bookingApp.cuisineId;
-bookingApp.preferencesId;
-
-// to display recommendation...
 bookingApp.staticDiv = $('.options');
-bookingApp.slidingDiv = $('.recommendation');
-
-bookingApp.slidingDiv.hide();
-
+bookingApp.heading = $('h2');
+// bookingApp.information;
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
-bookingApp.heading = $('h2');
-bookingApp.staticDiv = $('.options')
-bookingApp.slidingDiv = $('.recommendation')
-bookingApp.information = $('.information')
+bookingApp.resourceImage;
 
 bookingApp.getUserSelections = function() {
     bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
@@ -163,7 +153,8 @@ bookingApp.checkSelection = function(selection, selectionCheckbox) {
         bookingApp[`${selection}Id`] = null;
     }
 }
-// Prevent default from form submission then handle click event from button
+
+// Prevent default from form submission then handle click event from button.....
 bookingApp.handleButton = function(form, button, start) {
     form.on('submit', (e) => {
         e.preventDefault();
@@ -178,18 +169,36 @@ bookingApp.handleButton = function(form, button, start) {
                 bookingApp.animations.handleAnimations();
                 bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
                 // display: if else statement for media query: make it in a function and call it here
-                bookingApp.staticDiv.css({
-                    'width': '0'
-                });
-                bookingApp.slidingDiv.animate({
-                    'width': 'calc(100vw - 50px)',
-                    'opacity': 'show'
-                }, 500);
+                if ($(window).width() > 890) {
+                    bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
+                }
+                else {
+                    bookingApp.splitScreen('none', '0', '2rem', '100vw');
+                }
+
             }
         }
     });   
 }
-// Process errors and display them in a grammatically correct sentence
+
+// Hiding the recommendation Section before seletion.....
+bookingApp.recommendationSection.hide();
+
+// Function for the split screen to overlap for smaller screens and next to each other for the larger screen sizes.....
+bookingApp.splitScreen = function (value1, width1, fontSize, width2) {
+    bookingApp.staticDiv.css({
+        'display': value1,
+        'width': width1,
+    })
+    bookingApp.heading.css({
+        'font-size': fontSize
+    })
+    bookingApp.recommendationSection.animate({
+        'width': 'calc(' + width2 + ' - 30px)',
+        'opacity': 'show'
+    }, 1000)
+}
+// Process errors and display them in a grammatically correct sentence......
 bookingApp.displayErrorMessage = function(errors) {
     let message;
     if (errors.length === 1) {
@@ -208,7 +217,7 @@ bookingApp.displayErrorMessage = function(errors) {
     }
     console.log(message);
 }
-// Check for errors in the form of unselected options
+// Check for errors in the form of unselected options........
 bookingApp.checkErrors = function() {
     let errors = [];
     if (!bookingApp.citiesId) {
@@ -222,7 +231,9 @@ bookingApp.checkErrors = function() {
     }
     return errors;
 }
-// automatically append to the recommendation display when the scroll hits the bottom or when the display is longer than the origin 9 recommendations
+
+
+// automatically append to the recommendation display when the scroll hits the bottom or when the display is longer than the origin 9 recommendations........
 bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
     recommendationSection.on('scroll', () => {
         if(recommendationSection[0].scrollTop + recommendationSection[0].clientHeight >= recommendationSection[0].scrollHeight) {
@@ -259,20 +270,33 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
     });
 };
 
-// location, currency, featured image, name, zomato url, userRatings.aggregate_rating
+// location, currency, featured image, name, zomato url, userRatings.aggregate_rating......
 bookingApp.processRecommendation = function(recommendations) {
     recommendations.forEach( (value) => {
         const restaurant = value.restaurant;
         const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
-        const image = restaurant.thumb;
         const name = restaurant.name ;
         const url = restaurant.url ;
         const userRatings = restaurant.user_rating.aggregate_rating;
+        bookingApp.resourceImage = restaurant.thumb;
+        bookingApp.defaultImage(bookingApp.resourceImage);
+        // bookingApp.information= $('.information');
+        
         bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
     });
-    bookingApp.showInfo(bookingApp.slidingDiv, bookingApp.information);
+    bookingApp.showInfo(bookingApp.recommendationSection, bookingApp.information);
 }
+
+// Function to check if the zomato API is returning an empty image, if yes then changing the image to default image.....
+bookingApp.defaultImage = function (resourceImg) {
+    if (resourceImg === "") {
+        image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
+    } else {
+       image = resourceImg;
+    }
+}
+// const image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
 
 // to display the image..........
 bookingApp.appendImage = function(display, image, name, url) {
@@ -283,7 +307,9 @@ bookingApp.appendImage = function(display, image, name, url) {
     </li>
     `)
 }
-// to display the restaurant information when an icon is clicked
+
+
+// to display the restaurant information when an icon is clicked........
 bookingApp.showInfo = function(recommendationDisplay, informationTab){
     recommendationDisplay.on('click', 'i', function () {
         console.log("clicked");
@@ -291,8 +317,7 @@ bookingApp.showInfo = function(recommendationDisplay, informationTab){
     })
 }
 
-
-// init function to call the api function
+// init function to call the api function..........
 bookingApp.init = function() {
     bookingApp.getUserSelections();
     bookingApp.handleButton(bookingApp.staticDiv, bookingApp.submitButton, 0);
