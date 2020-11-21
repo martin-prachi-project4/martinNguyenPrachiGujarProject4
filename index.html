@@ -162,6 +162,36 @@
             </section>
         </div>
 
+        <div class="calendar">
+            <div class="calendarNav">
+                <i class="fas fa-chevron-left"></i>
+                <h3></h3>
+                <i class="fas fa-chevron-right"></i>
+            </div> <!-- closing calendarNav -->
+        
+            <div class="calendarDisplay">
+                <h3>Sun</h3>
+                <h3>Mon</h3>
+                <h3>Tue</h3>
+                <h3>Wed</h3>
+                <h3>Thu</h3>
+                <h3>Fri</h3>
+                <h3>Sat</h3>
+                <ul></ul>
+            </div> <!-- closing calendarDisplay -->
+        
+            <div class="timeSelection hidden">
+                <label for="hourInput" class="srOnly">Choose event time - hours</label>
+                <input type="hourInput" min="0" step="1" name="hourInput" id="hourInput" placeholder="12">
+                <h3>:</h3>
+                <label for="minuteInput" class="srOnly">Choose event time - minutes</label>
+                <input type="minuteInput" min="0" step="1" name="minuteInput" id="minuteInput" placeholder="00">
+                <h3 class="meridiem">AM</h3>
+            </div> <!-- closing timeSelection -->
+            <div class="submitButton hidden">
+                <h3>Submit</h3>
+            </div> <!-- closing submitButton -->
+        </div> <!-- closing calendar -->
 
 
     </main>

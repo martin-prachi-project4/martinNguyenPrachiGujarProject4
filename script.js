@@ -283,6 +283,7 @@ bookingApp.init = function() {
 // calling the API function once the document loads.......
 $(document).ready(() => {
     bookingApp.init();
+    bookingApp.calendar.init();
 });
 
 
@@ -355,4 +356,228 @@ bookingApp.animations.appendElements = function(...elements) {
     bookingApp.animations.animatedElements = elements.map( (value) => {
         return $(`img#${value}`);
     });
+}
+
+
+
+// CALENDAR MODULE
+bookingApp.calendar = {};
+bookingApp.calendar.calendar = $('.calendar');
+bookingApp.calendar.calendarNav = $('.calendarNav');
+bookingApp.calendar.previousButton = $('.fa-chevron-left');
+bookingApp.calendar.nextButton = $('.fa-chevron-right');
+bookingApp.calendar.calendarDisplay = $('.calendarDisplay ul');
+bookingApp.calendar.timeSelection = $('.timeSelection');
+bookingApp.calendar.hourInput = $('#hourInput');
+bookingApp.calendar.minuteInput = $('#minuteInput');
+bookingApp.calendar.meridiem = $('.meridiem');
+bookingApp.calendar.submitButton = $('.submitButton');
+bookingApp.calendar.calendarIcon = $('.calendarIcon');
+bookingApp.calendar.today = new Date();
+bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth(), null, null, null];
+bookingApp.calendar.userChosenDate;
+bookingApp.calendar.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// Function to display calendar icon
+bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
+    // put current date details on calendar icon to make it dynamic
+    // $(calendar[0].children[0]).text(bookingApp.calendar.months[today.getMonth()]);
+    // $(calendar[0].children[1]).text(today.getDate());
+    // $(calendar[0].children[2]).text(today.getMonth() + 1);
+    // Function to handle clicks on the calendar icon; once clicked the calendar will be shown and user can select future dates from it; if clicked again, will close the display
+    $('header').on('click', () => {
+        console.log('here')
+        bookingApp.calendar.calendar.toggleClass('hidden');
+        bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth()];
+        bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
+        bookingApp.calendar.show(bookingApp.calendar.calendarDisplay);
+        bookingApp.calendar.timeSelection.addClass('hidden');
+        bookingApp.calendar.submitButton.addClass('hidden');
+    });
+}
+// Function to navigate calendar
+bookingApp.calendar.changeMonth = function () {
+    bookingApp.calendar.previousButton.on('click', () => {
+        bookingApp.calendar.backward();
+        bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
+        bookingApp.calendar.show(bookingApp.calendar.calendarDisplay);
+    });
+    bookingApp.calendar.nextButton.on('click', () => {
+        bookingApp.calendar.forward();
+        bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
+        bookingApp.calendar.show(bookingApp.calendar.calendarDisplay);
+    });
+}
+// Function to display month and year on calendar nav bar
+bookingApp.calendar.calendarNavControl = function (calendarNav, insert) {
+    $(calendarNav[0].children[1]).text(`${bookingApp.calendar.months[bookingApp.calendar.chosenDate[1]]}${insert}${bookingApp.calendar.chosenDate[0]}`);
+}
+// Helper function to increase month
+bookingApp.calendar.forward = function () {
+    bookingApp.calendar.chosenDate[1]++;
+    if (bookingApp.calendar.chosenDate[1] > 11) {
+        bookingApp.calendar.chosenDate[1] = 0;
+        bookingApp.calendar.chosenDate[0]++;
+    }
+}
+// Helper function to decrease month
+bookingApp.calendar.backward = function () {
+    bookingApp.calendar.chosenDate[1]--;
+    if (bookingApp.calendar.chosenDate[1] < 0) {
+        bookingApp.calendar.chosenDate[1] = 11;
+        bookingApp.calendar.chosenDate[0]--;
+    }
+}
+bookingApp.calendar.toString = function (numericalValue) {
+    if (numericalValue < 10) {
+        return '0' + numericalValue;
+    } else {
+        return '' + numericalValue;
+    }
+}
+// Function to fill all days in a month; the month and year are specified in the calendar nav bar
+bookingApp.calendar.show = function (calendarDisplay) {
+    // clear calendar display for the new month
+    calendarDisplay.html('');
+    $(bookingApp.calendar.calendarDisplay.parent()).css('color', 'whitesmoke');
+    // gather information about the new month
+    let year = bookingApp.calendar.chosenDate[0];
+    let month = bookingApp.calendar.chosenDate[1];
+    let day = 1;
+    let firstDayInMonth = new Date(year, month, 1);
+    let weekday = firstDayInMonth.getDay();
+    let daysInMonth = new Date(year, month + 1, 0).getDate();
+    let maxNum = 35; /* default is a 5-week month display */
+    if (weekday + daysInMonth > 35) {
+        maxNum = 42; /* 6-week month display */
+    } else if (weekday + daysInMonth === 28) {
+        maxNum = 28; /* 4-week month display */
+    }
+
+    // for-loop to fill out the new month with the days in their correct places
+    for (let i = 0; i < maxNum; i++) {
+        if (i < weekday || i >= weekday + daysInMonth) {
+            bookingApp.calendar.fillDays(calendarDisplay, '');
+        } else {
+            stringDate = bookingApp.calendar.toString(day);
+            bookingApp.calendar.fillDays(calendarDisplay, stringDate);
+            day++;
+        }
+        if (day === (bookingApp.calendar.today.getDate() + 1) &&
+            month === bookingApp.calendar.today.getMonth() &&
+            year === bookingApp.calendar.today.getFullYear()) {
+            $(calendarDisplay[0].children[i].children).css({
+                'color': 'crimson'
+            });
+            $(calendarDisplay[0].children[i]).css({
+                'background-color': '#E5989B'
+            });
+        } else {
+            $(calendarDisplay[0].children[i]).css('background-color', '#6D6875');
+        }
+    }
+}
+// Helper function to put the day numbers as strings on the calendar display
+bookingApp.calendar.fillDays = function (calendarDisplay, stringDate) {
+    calendarDisplay.append(`
+        <li>
+            <span>${stringDate.charAt(0)}</span>
+            <span>${stringDate.charAt(1)}</span>
+        </li>
+    `);
+}
+// Function to search for a particular date; return the number of the 'li' child that holds the value of that date in the given year and month
+bookingApp.calendar.searchDate = function (year, month, day) {
+    let weekdayOfFirstDay = new Date(year, month, 1).getDay();
+    return weekdayOfFirstDay + parseInt(day) - 1;
+}
+// Function to handle user selection from calendar and start event countdown from current moment to selected future date and time
+bookingApp.calendar.getUserChosenDate = function () {
+    bookingApp.calendar.calendarDisplay.on('click', 'li', function () {
+        // Get user's chosen date and record it as new Date object
+        bookingApp.calendar.chosenDate[2] = bookingApp.calendar.parseUserChoice($(this));
+        // Insert chosen day into calendar nav
+        bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ' + bookingApp.calendar.chosenDate[2] + ' ');
+        // Hide contents of calendar display
+        bookingApp.calendar.previousButton.addClass('hidden');
+        bookingApp.calendar.nextButton.addClass('hidden');
+        bookingApp.calendar.calendarDisplay.html('');
+        $(bookingApp.calendar.calendarDisplay.parent()).css('color', '#3a3a3a');
+        // Show contents of time selection and submit button
+        bookingApp.calendar.timeSelection.toggleClass('hidden');
+        bookingApp.calendar.submitButton.toggleClass('hidden');
+
+    });
+}
+// Function to check user's chosen time
+bookingApp.calendar.checkUserChosenTime = function () {
+    if (bookingApp.calendar.hourInput.val() > 12) {
+        bookingApp.calendar.hourInput.val(12);
+    }
+    if (bookingApp.calendar.minuteInput.val() > 59) {
+        bookingApp.calendar.minuteInput.val(59);
+    }
+}
+// Function to get user's chosen time
+bookingApp.calendar.getUserChosenTime = function () {
+    bookingApp.calendar.submitButton.on('click', () => {
+        $(bookingApp.calendar.calendarDisplay.parent()).css('color', 'whitesmoke');
+        bookingApp.calendar.checkUserChosenTime();
+        let meridiem = bookingApp.calendar.meridiem.text();
+        let hour = parseInt(bookingApp.calendar.hourInput.val());
+        if (meridiem === 'PM' && hour !== 12) { hour += 12 }
+        if (!hour || (hour === 12 && meridiem === 'AM')) { hour = 0; }
+        let minute = parseInt(bookingApp.calendar.minuteInput.val());
+        if (!minute) { minute = 0; }
+        bookingApp.calendar.chosenDate[3] = hour;
+        bookingApp.calendar.chosenDate[4] = minute;
+        bookingApp.calendar.userChosenDate = new Date(bookingApp.calendar.chosenDate[0], bookingApp.calendar.chosenDate[1], bookingApp.calendar.chosenDate[2], bookingApp.calendar.chosenDate[3], bookingApp.calendar.chosenDate[4], 0);
+        // user timer.start() method to start the countdown timer if the countdown display is off. otherwise, clear the old setTimeout and start a new timer without toggling the countdown display
+        bookingApp.calendar.today = new Date();
+        if (bookingApp.timer.Off) {
+            bookingApp.timer.start(bookingApp.timer.convertUnits((bookingApp.calendar.userChosenDate - bookingApp.calendar.today.getTime()) / 1000));
+        } else {
+            bookingApp.timer.timeValues = bookingApp.timer.convertUnits((bookingApp.calendar.userChosenDate - bookingApp.calendar.today.getTime()) / 1000);
+            clearTimeout(bookingApp.timer.myTimer);
+            bookingApp.timer.startTimer(bookingApp.timer.timeValues);
+        }
+        bookingApp.calendar.resetDisplay();
+    });
+}
+// Function to reset calendar display after picking a future time
+bookingApp.calendar.resetDisplay = function () {
+    bookingApp.calendar.hourInput.val('');
+    bookingApp.calendar.minuteInput.val('');
+    bookingApp.calendar.calendar.addClass('hidden');
+    bookingApp.calendar.timeSelection.addClass('hidden');
+    bookingApp.calendar.submitButton.addClass('hidden');
+    bookingApp.calendar.previousButton.removeClass('hidden');
+    bookingApp.calendar.nextButton.removeClass('hidden');
+}
+// Function to toggle AM/PM
+bookingApp.calendar.toggleMeridiem = function () {
+    bookingApp.calendar.meridiem.on('click', () => {
+        let text = bookingApp.calendar.meridiem.text();
+        if (text === 'AM') {
+            text = 'PM';
+        } else {
+            text = 'AM';
+        }
+        bookingApp.calendar.meridiem.text(`${text}`);
+    });
+}
+// Function to get user's chosen date
+bookingApp.calendar.parseUserChoice = function (choice) {
+    let chosenDay = $(choice.find('span')[0]).text();
+    chosenDay += $(choice.find('span')[1]).text();
+    return chosenDay;
+}
+// Function to initialize calendar module
+bookingApp.calendar.init = function () {
+    bookingApp.calendar.calendarIconDisplay(bookingApp.calendar.calendarIcon, bookingApp.calendar.today);
+    bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
+    bookingApp.calendar.show(bookingApp.calendar.calendarDisplay);
+    bookingApp.calendar.changeMonth();
+    bookingApp.calendar.getUserChosenDate();
+    bookingApp.calendar.getUserChosenTime();
+    bookingApp.calendar.toggleMeridiem();
 }
