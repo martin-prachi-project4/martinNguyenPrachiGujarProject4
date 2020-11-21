@@ -247,21 +247,118 @@ html {
   margin: 0 auto;
 }
 
+body {
+  background-image: url("./assets/brookeLarkHeader.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
 img {
   display: block;
   width: 100%;
   height: auto;
 }
 
+h1 {
+  font-family: "Raleway", sans-serif;
+  font-size: 6.4rem;
+  font-weight: 400;
+  line-height: 6.4rem;
+  letter-spacing: 1.6px;
+  color: #500808;
+  text-align: right;
+}
+
+h2 {
+  font-family: "Satisfy", cursive;
+  font-size: 4.8rem;
+  font-weight: 400;
+  line-height: 6.4rem;
+  letter-spacing: 1.6px;
+  color: #500808;
+  text-align: center;
+}
+
+h3,
+p,
+footer,
+label,
+.submit,
+.recommendation li {
+  font-family: "Quicksand", sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 3.2rem;
+  letter-spacing: 1.1px;
+  color: #200202;
+  text-align: center;
+  list-style: none;
+}
+
+h3 a,
+p a,
+footer a,
+label a,
+.submit a,
+.recommendation li a {
+  text-decoration: none;
+  color: #200202;
+}
+
+.submit {
+  font-size: 2rem;
+  padding: 10px 40px;
+  border-radius: 30px;
+  background-color: #E5989B;
+  border: 2px solid #B5838D;
+  -webkit-box-shadow: 5px 5px #6D6875;
+          box-shadow: 5px 5px #6D6875;
+}
+
+footer p {
+  text-align: right;
+}
+
+a:hover,
+a:focus,
+a:active {
+  border-bottom: 2px solid #500808;
+}
+
+.recommendation ul li img {
+  border-radius: 50%;
+  -webkit-transition: border-radius 0.5s;
+  transition: border-radius 0.5s;
+}
+
+.recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
+  border-radius: 0;
+}
+
+.submit:hover,
+.submit:focus,
+.submit:active {
+  font-weight: bold;
+  color: #500808;
+  -webkit-box-shadow: 0 0 #6D6875;
+          box-shadow: 0 0 #6D6875;
+  background-color: #6D6875;
+  border: 2px solid #6D6875;
+}
+
 header {
   height: 20vh;
-  width: auto;
-  background: rebeccapurple;
 }
 
 header h1 {
-  color: red;
   margin: 0;
+  padding: 30px;
+}
+
+main {
+  padding: 25px 0;
 }
 
 .options {
@@ -272,17 +369,20 @@ header h1 {
   -ms-grid-rows: (calc((75vh - 50px)/2))[2];
       grid-template-rows: repeat(2, calc((75vh - 50px)/2));
   grid-gap: 10px;
-  margin: 25px 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .cities {
-  background-color: saddlebrown;
-  border-top-left-radius: 5%;
+  background-color: rgba(181, 131, 141, 0.8);
+  border-top-left-radius: 50px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 20px 100px;
-      grid-template-columns: 20px 100px;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
   grid-row-gap: 25px;
+  grid-column-gap: 25px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -290,13 +390,31 @@ header h1 {
       align-content: center;
 }
 
+.cities label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.cities label h3 {
+  padding: 0 5px;
+}
+
 .cuisine {
-  background-color: salmon;
-  border-top-right-radius: 10%;
+  background-color: rgba(109, 104, 117, 0.8);
+  opacity: 0.8;
+  border-top-right-radius: 50px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 20px 50px 20px 50px;
-      grid-template-columns: 20px 50px 20px 50px;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  grid-column-gap: 25px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -304,13 +422,29 @@ header h1 {
       align-content: space-evenly;
 }
 
+.cuisine label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.cuisine label h3 {
+  padding: 0 5px;
+}
+
 .preferences {
-  background-color: seagreen;
-  border-bottom-left-radius: 10%;
+  background-color: rgba(109, 104, 117, 0.8);
+  border-bottom-left-radius: 50px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 20px 100px;
-      grid-template-columns: 20px 100px;
+  -ms-grid-columns: 100px;
+      grid-template-columns: 100px;
   grid-row-gap: 25px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -319,9 +453,26 @@ header h1 {
       align-content: center;
 }
 
+.preferences label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.preferences label h3 {
+  padding: 0 5px;
+}
+
 .submission {
-  background-color: black;
-  border-bottom-right-radius: 5%;
+  background-color: rgba(181, 131, 141, 0.8);
+  opacity: 0.8;
+  border-bottom-right-radius: 50px;
   display: -ms-grid;
   display: grid;
   -webkit-box-pack: center;
@@ -331,7 +482,73 @@ header h1 {
       align-content: center;
 }
 
+.recommendation {
+  position: relative;
+  background-color: rgba(109, 104, 117, 0.3);
+  overflow: scroll;
+  height: calc(75vh - 40px);
+  padding: 15px;
+  border-radius: 50px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-left: 50px;
+}
+
+.recommendation h2 {
+  padding: 20px 0;
+}
+
+.recommendation ul {
+  padding: 20px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.recommendation ul li {
+  margin-right: 15px;
+  width: calc((100% - 45px) / 3);
+}
+
+.flexContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flexContainer .options {
+  width: 100vw;
+}
+
 footer {
-  height: 5vh;
-  background-color: royalblue;
+  min-height: 5vh;
+  background-color: #E5989B;
+  opacity: 0.7;
+}
+
+.animationCanvas {
+  position: absolute;
+  top: 0;
+  left: -2.5%;
+  width: 105%;
+  height: calc(75vh - 40px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #E5989B;
+  border-radius: 50px;
+}
+
+img#tomato {
+  width: 25%;
+  height: auto;
 }
