@@ -95,18 +95,23 @@ bookingApp.preferencesId;
 bookingApp.heading = $('h2');
 bookingApp.staticDiv = $('.options')
 bookingApp.slidingDiv = $('.recommendation')
-bookingApp.information = $('.information')
+bookingApp.recommendationDisplay = $('.recommendation ul');
+bookingApp.information;
+
+
 
 bookingApp.slidingDiv.hide();
 
+// element1: .recommendation ul , elelemnt 2: div.information....... 
 bookingApp.showInfo = function(element,element2){
-    element.on('click', 'i', function () {
+    element.on('click', 'li', function () {
         console.log("clicked");
+        console.log($(this));
         element2.toggleClass('hiddenInfo');
     })
 }
 
-bookingApp.showInfo(bookingApp.slidingDiv, bookingApp.information);
+
 
 
 bookingApp.resetStyles = function(element){
@@ -176,6 +181,8 @@ bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbo
     });
 };
 
+
+
 // Selection method for cities, cuisine, preference.........
 bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
 bookingApp.select(bookingApp.cuisineSelection, 'cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
@@ -242,8 +249,8 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
     })
 };
 
-// location, currency, featured image, name, zomato url, userRatings.aggregate_rating
-bookingApp.recommendationDisplay = $('.recommendationDisplay');
+// Function to get the location, currency, featured image, name, zomato url, userRatings.aggregate_rating.....
+
 bookingApp.processRecommendation = function(recommendations) {
     recommendations.forEach( (value) => {
         const restaurant = value.restaurant;
@@ -255,12 +262,22 @@ bookingApp.processRecommendation = function(recommendations) {
         const name = restaurant.name ;
         const url = restaurant.url ;
         const userRatings = restaurant.user_rating.aggregate_rating;
-        // if (image = "") {
-        //     image = './assets/chadMontanoPizza.jpg';
-        // };
-        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings, location);        
+        
+        bookingApp.defaultImage(image);
+        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings, location); 
+        bookingApp.information = $('.information');
+        bookingApp.showInfo(bookingApp.recommendationDisplay, bookingApp.information); 
+
     });
 }
+
+bookingApp.defaultImage = function(image){
+    if (image === ""){
+        image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
+        console.log(`./assets/id${(bookingApp.cuisineId).toString()}.jpg`);
+    }
+}
+
 
 // to display the image..........
 bookingApp.appendImage = function(display, image, name, url, currency, userRatings, location) {
@@ -272,14 +289,13 @@ bookingApp.appendImage = function(display, image, name, url, currency, userRatin
             <div class="information hiddenInfo">
                 <p><i class="fas fa-utensils"></i>Currency: ${currency}</p>
                 <p><i class="fas fa-utensils"></i>Ratings: ${userRatings}</p>
-                <p><i class="fas fa-utensils"></i>Location: ${location}</p>
             </div>
         </li>
     `)
 }
 
-
-// init function to call the api function
+// // <p><i class="fas fa-utensils"></i>Location: ${location}</p>
+// init function to call the api function........
 bookingApp.init = function() {
     bookingApp.handleButton(bookingApp.submitButton);
     
@@ -295,82 +311,8 @@ $(document).ready(() => {
 //forEach loop so it selects only one value for each and stores it in the selected variable
 
 // Need a method to call the getRecommendation which will take city id as an argument
-// $('button').on('click',function(){
-    // console.log('clicked!');
-    // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
-    // let cityId;
 
-
-    // $('.cities').on('click', "label", function () {
-        
-        
-    //     const selectedCity = $(this).attr("for");
-    //     bookingApp.citySelection.forEach(function(value, index){
-    //         console.log(index);
-    //         console.log(bookingApp.cityCheckbox[0]);
-    //         if(value[0].htmlFor !== selectedCity)
-    //         {bookingApp.cityCheckbox[index].attr('checked',false)}
-    //         else if(bookingApp.cityCheckbox[index].attr('checked')){
-    //             bookingApp.cityCheckbox[index].attr('checked', false)
-    //         }
-    //         else{
-    //                 bookingApp.cityCheckbox[index].attr('checked', true)
-    //             }
-    //         });
-    //         cityId = bookingApp.cities[selectedCity];
-    //         console.log(cityId); 
-    // })
-            
-            // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
-        // let cuisineId;
-        // $('.cuisine').on('click', "label", function () {
-        //     // console.log(bookingApp.cuisineCheckbox);
-        //     const selectedCuisine = $(this).attr("for");
-        //     bookingApp.cuisineSelection.forEach(function(value,index){
-        //         if(value[0].htmlFor !== selectedCuisine){
-        //             bookingApp.cuisineCheckbox[index].attr('checked',false)
-                   
-        //             bookingApp.resetStyles(bookingApp.cuisineSelection[index])
-        //         }
-        //         else if (bookingApp.cuisineCheckbox[index].attr('checked')){
-        //             bookingApp.cuisineCheckbox[index].attr('checked', false)
-        //             bookingApp.resetStyles(bookingApp.cuisineSelection[index])
-
-        //         }
-        //         else{
-        //             bookingApp.cuisineCheckbox[index].attr('checked', true)
-        //             bookingApp.highlightStyles(bookingApp.cuisineSelection[index], '#E5989B', '#500808')
-                   
-        //         }
-        //     });
-
-        //     cuisineId = bookingApp.cuisinesAvailable[selectedCuisine];
-        //     console.log(cuisineId);
-        
-        // })
-
-    // create a method to hold an event listenere which will listen for everytime the user selects a new city from the selections
-    // let categoryId;
-    // $('.preferences').on('click', "label", function () {
-    //     const selectedCategory = $(this).attr("for");
-    //     categoryId = bookingApp.categories[selectedCategory];
-    //     console.log(categoryId);
-    //     // selections.push(cuisineId);
-    //     // gives the city_id  
-    //     // To use: this calls the function for he selected city ID: bookingApp.getRecommendation(cityId);
-    // });
-
-    // console.log(bookingApp.getRecommendation(cityId, cuisineId, categoryId));
     
-// });
-    
-
-
-
-
-
-
-
 
 // MVP: Ask the users to select the city, Cuisine type, Dine-in/takeout/delivery and based on the selection we provide the recommendations and details for the restaurant including the rating, location etc.
 
