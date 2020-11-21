@@ -11,6 +11,7 @@ h2{
     text-align: center;
 }
 
+h3,
 p,
 footer,
 label,
@@ -41,26 +42,21 @@ footer p{
 }
 
 
-
-// Checkbox selection.....
-// input:checked + label{
-//     background-color: $primaryColor;
-//     opacity: 0.7;
-//     border-radius: 15px;
-//     box-shadow: 5px 5px $secondAccentColor;
-// }
-
-// .cuisine input:checked + label,
-// .preferences input:checked + label{
-//     box-shadow: 5px 5px $secondaryColor;
-// }
-
-
 // HOVER styles....
 a:hover,
 a:focus,
 a:active{
     border-bottom: 2px solid $secondaryColor;
+}
+
+.recommendation ul li img{
+    border-radius: 50%;
+    transition: border-radius 0.5s;
+    &:hover,
+    &:active,
+    &:focus{
+        border-radius: 0;
+    }
 }
 
 .submit:hover,

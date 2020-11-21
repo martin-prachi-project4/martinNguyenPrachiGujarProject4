@@ -1,7 +1,7 @@
 main{
     padding: 25px 0;
-    margin-bottom: 20px;
-    height: calc(75vh - 20px);
+    // margin-bottom: 20px;
+    // height: calc(75vh - 20px);
 }
 
 .options {
@@ -9,30 +9,47 @@ main{
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(2, calc((75vh - 50px)/2));
     grid-gap: 10px;
-    
+    flex: 1;
 }
 
 .cities {
     background-color: $firstAccentGradient;
     border-top-left-radius: 50px;
     display: grid;
-    grid-template-columns: 130px 130px;
+    grid-template-columns: 1fr 1fr;
     grid-row-gap: 25px;
     grid-column-gap: 25px;
     justify-content: center;
     align-content: center;
+    label{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        h3{
+            padding: 0 5px;
+        }
+     
+    }
 }
+
 
 .cuisine {
     background-color: $secondAccentGradient;
     opacity: 0.8;
     border-top-right-radius: 50px;
     display: grid;
-    grid-template-columns: 170px 130px;
+    grid-template-columns: 1fr 1fr;
     grid-column-gap: 25px;
     justify-content: center;
     align-content: space-evenly;
-    
+    label{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        h3{
+            padding: 0 5px;
+        }    
+    }
 }
 
 .preferences {
@@ -43,6 +60,14 @@ main{
     grid-row-gap: 25px;
     justify-content: center;
     align-content: center;
+    label{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        h3{
+            padding: 0 5px;
+        }    
+    }
 }
 
 .submission {
@@ -57,16 +82,34 @@ main{
 
 // Recommendation section.....
 .recommendation{
-    
+    position: relative;
+    background-color:rgba(109,104,117,0.3);
+    overflow: scroll;
+    height: calc(75vh - 40px);
+    padding: 15px;
+    border-radius: 50px;
+    flex: 1;
+    margin-left: 50px;
     h2{
         padding: 20px 0;
     }
 
     ul{
         padding: 20px 0;
-        display: grid;
-        grid-template-columns: 2fr 2fr 2fr;
-        grid-column-gap: 50px;
-        grid-row-gap: 50px ;
+        display: flex;
+        flex-wrap: wrap;
+        li{
+            margin-right: 15px;
+            width: calc((100% - 45px) / 3);    
+        }
+    }
+}
+
+
+
+.flexContainer{
+    display: flex;
+    .options{
+        width: 100vw;
     }
 }
