@@ -247,15 +247,14 @@ bookingApp.processRecommendation = function(recommendations) {
         const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
         // console.log(currency);
-        let image = restaurant.thumb;
+        
         // console.log(image);
         const name = restaurant.name ;
         const url = restaurant.url ;
         const userRatings = restaurant.user_rating.aggregate_rating;
-        
+        let image = restaurant.thumb;
         image = bookingApp.defaultImage(image);
-        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings, location); 
-        bookingApp.information = $('.information');
+        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings, location);
         
 
     });
@@ -273,6 +272,7 @@ bookingApp.defaultImage = function(image){
 // element1: .recommendation ul , elelemnt 2: div.information....... 
 bookingApp.showInfo = function () {
     bookingApp.recommendationDisplay.on('click', 'li', function() {
+        console.log('clicked')
         $($(this)[0].childNodes[7]).toggleClass('hiddenInfo');
     });
 }
