@@ -2,7 +2,6 @@ const bookingApp = {}
 bookingApp.zomatoURL = 'https://developers.zomato.com/api/v2.1/search';
 
 // cities.......
-
 bookingApp.cities = {
     toronto: 89,
     vancouver: 256,
@@ -10,14 +9,14 @@ bookingApp.cities = {
     montreal: 294,
     ottawa: 295
 };
-bookingApp.cityLabel=[
+bookingApp.cityLabel = [
     $('[for="toronto"] h2'),
     $('[for="vancouver"] h2'),
     $('[for="calgary"] h2'),
     $('[for="ottawa"] h2'),
     $('[for="montreal"] h2'),
 ];
-bookingApp.cityCheckbox=[
+bookingApp.cityCheckbox = [
     $('#toronto'),
     $('#vancouver'),
     $('#calgary'),
@@ -49,7 +48,7 @@ bookingApp.cuisineLabel = [
     $('[for="other"] h2'),
 ];
 
-bookingApp.cuisineCheckbox=[
+bookingApp.cuisineCheckbox = [
     $('#indian'),
     $('#pizza'),
     $('#chinese'),
@@ -61,7 +60,7 @@ bookingApp.cuisineCheckbox=[
 ]
 
 // Preferences........
-bookingApp.preferences ={
+bookingApp.preferences = {
     dineIn: 2,
     delivery: 1,
     takeout: 5
@@ -72,7 +71,7 @@ bookingApp.preferenceLabel = [
     $('[for="takeout"] h2'),
 
 ];
-bookingApp.preferenceCheckbox=[
+bookingApp.preferenceCheckbox = [
     $('#dineIn'),
     $('#delivery'),
     $('#takeout'),
@@ -85,32 +84,26 @@ bookingApp.submissionSection = $('.submission');
 bookingApp.submitButton = $('.submit');
 bookingApp.buttonClicked = false;
 bookingApp.recommendationSection = $('.recommendation')
-bookingApp.recommendationDisplay = $('.recommendationDisplay');
-bookingApp.citiesId;
-bookingApp.cuisineId;
-bookingApp.preferencesId;
-
-// to display recommendation...
+// bookingApp.recommendationDisplay = $('.recommendationDisplay');
 bookingApp.staticDiv = $('.options');
-bookingApp.slidingDiv = $('.recommendation');
-
-bookingApp.slidingDiv.hide();
-
+bookingApp.heading = $('h2');
+bookingApp.information;
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
-bookingApp.heading = $('h2');
-bookingApp.staticDiv = $('.options')
-bookingApp.slidingDiv = $('.recommendation')
-bookingApp.information = $('.information')
+bookingApp.resourceImage;
+bookingApp.recommendationDisplay = $('.recommendation ul');
+bookingApp.information;
 
-bookingApp.getUserSelections = function() {
+
+bookingApp.getUserSelections = function () {
     bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
     bookingApp.select(bookingApp.cuisineSelection, 'cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
     bookingApp.select(bookingApp.preferencesSelection, 'preferences', bookingApp.preferenceLabel, bookingApp.preferenceCheckbox);
 }
+
 // selection:cities, selectionLabel: bookingApp.citySelection , selectionCheckbox: bookingApp.cityCheckbox
-bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbox ){
+bookingApp.select = function (jquery, selection, selectionLabel, selectionCheckbox) {
     jquery.on('click', "label", function () {
         const selected = $(this).attr("for");
         selectionLabel.forEach(function (value, index) {
@@ -126,10 +119,10 @@ bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbo
                 selectionCheckbox[index].attr('checked', true);
                 bookingApp[`${selection}Id`] = bookingApp[selection][selected];
                 if (selection === 'cities') {
-                    bookingApp.highlightStyles(selectionLabel[index], '#6D6875')
+                    bookingApp.highlightStyles(selectionLabel[index], '#6D6875');
                 }
                 else {
-                    bookingApp.highlightStyles(selectionLabel[index], '#500808')
+                    bookingApp.highlightStyles(selectionLabel[index], '#500808');
                 }
             }
         });
@@ -153,19 +146,20 @@ bookingApp.highlightStyles = function (element, shadowColor) {
     });
 }
 // check if the selection is selected, if not then give an error to the user........
-bookingApp.checkSelection = function(selection, selectionCheckbox) {
+bookingApp.checkSelection = function (selection, selectionCheckbox) {
     let nothingSelected = true;
-    selectionCheckbox.forEach ( function(value) {
+    selectionCheckbox.forEach(function (value) {
         if (value.attr('checked')) {
             nothingSelected = false;
         }
     });
-    if (nothingSelected) { 
+    if (nothingSelected) {
         bookingApp[`${selection}Id`] = null;
     }
 }
-// Prevent default from form submission then handle click event from button
-bookingApp.handleButton = function(form, button, start) {
+
+// Prevent default from form submission then handle click event from button.....
+bookingApp.handleButton = function (form, button, start) {
     form.on('submit', (e) => {
         e.preventDefault();
     });
@@ -174,19 +168,40 @@ bookingApp.handleButton = function(form, button, start) {
             bookingApp.displayErrorMessage(bookingApp.parseErrors(bookingApp.checkErrors()));
             if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
                 bookingApp.buttonClicked = true;
-                bookingApp.displayRecommendations(start);
+                bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
+                bookingApp.showInfo();
+                // Toggle on/off loading animation
+                bookingApp.animations.handleAnimations();
+                bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
                 // display: if else statement for media query: make it in a function and call it here
-                bookingApp.slideInRecommendation(bookingApp.staticDiv, bookingApp.slidingDiv);
-            }
-        } else {
-            bookingApp.displayErrorMessage(bookingApp.parseErrors(bookingApp.checkErrors()));
-            if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
-                start = 0;
-                bookingApp.clearRecommendation();
-                bookingApp.displayRecommendations(start);
+                if ($(window).width() > 890) {
+                    bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
+                }
+                else {
+                    bookingApp.splitScreen('none', '0', '2rem', '100vw');
+                }
+
             }
         }
-    });   
+    })
+}
+
+// Hiding the recommendation Section before seletion.....
+bookingApp.recommendationSection.hide();
+
+// Function for the split screen to overlap for smaller screens and next to each other for the larger screen sizes.....
+bookingApp.splitScreen = function (value1, width1, fontSize, width2) {
+    bookingApp.staticDiv.css({
+        'display': value1,
+        'width': width1,
+    })
+    bookingApp.heading.css({
+        'font-size': fontSize
+    })
+    bookingApp.recommendationSection.animate({
+        'width': 'calc(' + width2 + ' - 30px)',
+        'opacity': 'show'
+    }, 1000)
 }
 bookingApp.displayRecommendations = function(start) {
     bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
@@ -217,8 +232,27 @@ bookingApp.displayErrorMessage = function(message) {
     } 
 }
 
-// Check for errors in the form of unselected options
-bookingApp.checkErrors = function() {
+// Process errors and display them in a grammatically correct sentence......
+bookingApp.displayErrorMessage = function (errors) {
+    let message;
+    if (errors.length === 1) {
+        message = `Please select a ${errors[0]}.`;
+    } else if (errors.length === 2) {
+        message = `Please select a ${errors[0]} and a ${errors[1]}.`;
+    } else {
+        message = `Please select `;
+        errors.forEach((error, index) => {
+            if (index === errors.length - 1) {
+                message += ' and a ' + error + '.';
+            } else {
+                message += ' a ' + error + ',';
+            }
+        });
+    }
+    console.log(message);
+}
+// Check for errors in the form of unselected options........
+bookingApp.checkErrors = function () {
     let errors = [];
     if (!bookingApp.citiesId) {
         errors.push('city');
@@ -265,7 +299,7 @@ bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
     }
 }
 
-bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, selectedCategoryId, start){
+bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, selectedCategoryId, start) {
     $.ajax({
         url: bookingApp.zomatoURL,
         method: 'GET',
@@ -284,48 +318,56 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
     });
 };
 
-// location, currency, featured image, name, zomato url, userRatings.aggregate_rating
+// Function to get the location, currency, featured image, name, zomato url, userRatings.aggregate_rating.....
+
 bookingApp.processRecommendation = function(recommendations) {
     recommendations.forEach( (value) => {
         const restaurant = value.restaurant;
-        const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
+        // const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
-        const name = restaurant.name ;
-        const url = restaurant.url ;
+        const name = restaurant.name;
+        const url = restaurant.url;
         const userRatings = restaurant.user_rating.aggregate_rating;
         let image = restaurant.thumb;
-        image = bookingApp.checkImageError(image);
-        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
-    });
-    bookingApp.showInfo(bookingApp.slidingDiv, bookingApp.information);
+        image = bookingApp.defaultImage(image);
+        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings);
+    });  
+}
+
+// Function to check if the zomato API is returning an empty image, if yes then changing the image to default image.....
+
+bookingApp.defaultImage = function (image) {
+    if (image === "") {
+        return `assets/id${bookingApp.cuisineId}.jpg`;
+    } else {
+        return image;
+    }
 }
 
 // to display the image..........
-bookingApp.appendImage = function(display, image, name, url) {
+bookingApp.appendImage = function (display, image, name, url,currency,userRatings) {
     display.append(`
     <li>
         <img src="${image}" alt="Featured image for ${name} restaurant from Zomato"/>
+        <i class="fas fa-info-circle"></i>
         <a href="${url}">${name}</a>
+        <div class="information hiddenInfo">
+            <p><i class="fas fa-utensils"></i>Currency: ${currency}</p>
+            <p><i class="fas fa-utensils"></i>Ratings: ${userRatings}</p>
+        </div>
     </li>
     `)
 }
-bookingApp.checkImageError = function(image) {
-    if (image === "") {
-        image = `assets/id${bookingApp.cuisineId}.jpg`;
-    }
-    return image;
-}
-// to display the restaurant information when an icon is clicked
-bookingApp.showInfo = function(recommendationDisplay, informationTab){
-    recommendationDisplay.on('click', 'li', function () {
-        console.log('clicked')
-        informationTab.toggleClass('hiddenInfo');
-    })
+
+bookingApp.showInfo = function () {
+    bookingApp.recommendationDisplay.on('click', 'li', function () {
+        console.log("click");
+        $($(this)[0].childNodes[7]).toggleClass('hiddenInfo');
+    });
 }
 
-
-// init function to call the api function
-bookingApp.init = function() {
+// init function to call the api function..........
+bookingApp.init = function () {
     bookingApp.getUserSelections();
     bookingApp.handleButton(bookingApp.staticDiv, bookingApp.submitButton, 0);
 }
@@ -365,39 +407,39 @@ bookingApp.animations.init = function () {
   })
 }
 bookingApp.animations.reset = function () {
-  bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
+    bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
 }
-bookingApp.animations.createCanvas = function(parentElement) {
+bookingApp.animations.createCanvas = function (parentElement) {
     parentElement.append(`
         <div class="animationCanvas">
         </div> <!-- closing animationCanvas -->
     `);
     bookingApp.animations.canvas = $('.animationCanvas');
 }
-bookingApp.animations.eraseCanvas = function(parentElement) {
+bookingApp.animations.eraseCanvas = function (parentElement) {
     parentElement.html('');
 }
-bookingApp.animations.timeoutTransition = function(timeoutDuration) {
+bookingApp.animations.timeoutTransition = function (timeoutDuration) {
     bookingApp.animations.timeout = setTimeout(() => {
-      bookingApp.recommendationSection.css({
-        'overflow': 'scroll'
-      });
-      bookingApp.animations.canvas.animate({
-        'width': '0',
-        'height': '0',
-        'top': '50%',
-        'left': '50%'
-      }, 700);
+        bookingApp.recommendationSection.css({
+            'overflow': 'scroll'
+        });
+        bookingApp.animations.canvas.animate({
+            'width': '0',
+            'height': '0',
+            'top': '50%',
+            'left': '50%'
+        }, 700);
     }, timeoutDuration);
 }
-bookingApp.animations.appendElements = function(...elements) {
-    bookingApp.animations.elements = elements.map( (value) => {
+bookingApp.animations.appendElements = function (...elements) {
+    bookingApp.animations.elements = elements.map((value) => {
         return `<img src="./assets/${value}.png" alt="picture of ${value}" id="${value}">`;
     });
-    bookingApp.animations.elements.forEach( (value) => {
+    bookingApp.animations.elements.forEach((value) => {
         bookingApp.animations.canvas.append(value);
     });
-    bookingApp.animations.animatedElements = elements.map( (value) => {
+    bookingApp.animations.animatedElements = elements.map((value) => {
         return $(`img#${value}`);
     });
 }

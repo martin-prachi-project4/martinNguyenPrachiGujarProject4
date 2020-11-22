@@ -1,32 +1,35 @@
 .calendar {
-    width: calc((100vw - 110px)/2);
-    position: absolute;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    top: 20px;
-    left: 25px;
+    position: absolute;
+    top: 0;
+    left: 15px;
     z-index: 1;
+    width: calc(100vw - 30px);
     a {
-        color: whitesmoke;
+        font-family: $headingFont;
+        color: $calendarPrimary;
     }
 }
 
 .calendarNav {
+    text-align: center;
+    color: $calendarPrimary;
+    background-color: $calendarTertiary;
     display: flex;
     justify-content: space-between;
     align-items: center;
     top: 0;
-    width: calc((100vw - 110px)/2);
-    text-align: center;
+    border-radius: 5px;
     padding: 10px;
     margin: 2px;
-    border-radius: 5px;
-    color: whitesmoke;
-    background-color: rgb(44, 44, 44);
+    width: 50vw;
     cursor: default;
     h3 {
-        background-color: rgb(44, 44, 44);
+        font-family: $headingFont;
+        font-size: 1.8rem;
+        background-color: $calendarTertiary;
         flex: 1 0 0;
     }
     .fas {
@@ -35,41 +38,61 @@
 }
 
 .calendarDisplay {
-    width: calc((100vw - 110px)/2);
-    padding: 10px;
+    color: $calendarPrimary;
+    background-color: $calendarSecondary;
     border-radius: 5px;
     margin: 2px;
-    display: grid;
-    grid-template-columns: repeat(7, calc(100%/7));
-    background-color: #3a3a3a;
-    color: whitesmoke;
-    h3 {
-        text-align: center;
-        padding-bottom: 10px;
-        background-color: #3a3a3a;
-        
-    }
-    ul {
-        margin: 0;
-        padding: 0;
-        width: calc((100vw - 150px)/2);
-        display: grid;
-        grid-template-columns: repeat(7, calc(100%/7));
-        grid-template-rows: repeat(6, calc((100vw - 110px)/14));
-        text-align: center;
-        li {
-            align-content: center;
+    // display: grid;
+    // grid-template-columns: repeat(7, calc(100% / 7));
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 50vh;
+    width: 50vw;
+    .dayHeading{
+        height: 10%; 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+            font-family: $headingFont;
+            text-transform: uppercase;
+            background-color: $calendarSecondary;
+            display: flex;
             justify-content: center;
-            display: grid;
-            grid-template-columns: repeat(2, 12px);
-            cursor: pointer;
-            &:nth-child(n) {
-                border: 1px solid #3a3a3a;
-            }
-            .chosenDate {
-                color: rgb(44, 172, 12);
-            }
+            text-align: center;
+            padding: 10px;
+            width: 100%;
         }
+    }
+
+    .dates{
+        height: 90%;
+        ul {
+            display: grid;
+            grid-template-columns: repeat(7, calc(100% / 7));
+            text-align: center;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            width: calc(50vw - 20px);
+        }
+    }      
+}
+
+.calendarDisplay li{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(2, 12px);
+    cursor: pointer;
+    &:nth-child(n) {
+        font-family: $bodyFont;
+        font-size: 1.3rem;
+        border: 1px solid $calendarSecondary;
+    }
+    .chosenDate {
+        color: rgb(44, 172, 12);
     }
 }
 
@@ -78,21 +101,23 @@
     align-items: center;
     transform: translateY(-200px);
     h3 {
-        display: block;
+        font-family: $headingFont;
         font-size: 4rem;
-        color: whitesmoke;
-        background-color: #3a3a3a;
+        color: $calendarPrimary;
+        background-color: $calendarSecondary;
+        display: block;
     }
     .meridiem {
         width: 80px;
     }
 }
 
-#hourInput, #minuteInput {
+#hourInput,
+#minuteInput {
     font-size: 5rem;
     text-align: center;
-    width: 90px;
     height: 90px;
+    width: 90px;
 }
 
 #minuteInput {
@@ -103,16 +128,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    height: 50px;
     border-radius: 5px;
-    background-color: whitesmoke;
+    background-color: $calendarPrimary;
     transform: translateY(-170px);
+    height: 50px;
+    width: 200px;
     h3 {
+        color: $calendarSecondary;
+        font-family: $bodyFont;
         font-size: 3rem;
         text-transform: uppercase;
-        color: grey;
-    } 
+    }
 }
 
 .hidden {

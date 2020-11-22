@@ -1,45 +1,45 @@
 // Media Queries.....
-@media (max-width: 790px){
-    h1{
+@media (max-width: 790px) {
+    h1 {
         font-size: 4.8rem;
         padding: 40px;
     }
 
-    main a{
-        right: 50px;
+    main .icon .calendarIcon {
+        right: 20%;
     }
 
-    .cuisine{
+    .cuisine {
         grid-row-gap: 15px;
     }
 
-    .recommendation ul li{
+    .recommendation ul li {
         width: calc((100% - 15px) / 2);
-        &:nth-of-type(2n){
+        &:nth-of-type(2n) {
             margin-right: 0;
         }
     }
 
-    footer p{
+    footer p {
         text-align: center;
         padding: 15px 0;
         font-size: 1.8rem;
-        a{
+        a {
             border-bottom: 2px solid transparent;
         }
     }
-    // Removing all hover styles: 
-    a:hover{
+    // Removing all hover styles:
+    a:hover {
         padding: 5px 10px;
         background-color: transparent;
         border-radius: 10px;
     }
 
-    .recommendation ul li img:hover{
-            border-radius: 50%;
+    .recommendation ul li img:hover {
+        border-radius: 50%;
     }
 
-    .submit:hover{
+    .submit:hover {
         font-weight: 400;
         padding: 10px 40px;
         border-radius: 30px;
@@ -49,25 +49,29 @@
     }
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
+    main {
+        .icon a {
+            right: 65%;
+        }
+        .icon .calendarIcon {
+            right: 80%;
+        }
+        .cities,
+        .cuisine {
+            align-content: space-between;
+            grid-template-columns: 1fr;
+            grid-row-gap: 5px;
+        }
+        .submit,
+        .submit:hover {
+            padding: 10px 20px;
+        }
 
-    main i{
-        right: 200px;
-    }
-    .cities,
-    .cuisine{
-        align-content: space-between;
-        grid-template-columns: 1fr;
-        grid-row-gap: 5px;
-    }
-    .submit,
-    .submit:hover{
-        padding: 10px 20px;
-    }
-
-    .recommendation ul li{
-        padding: 15px;
-        margin-right: 0;
-        width: 100%;   
+        .recommendation ul li {
+            padding: 15px;
+            margin-right: 0;
+            width: 100%;
+        }
     }
 }

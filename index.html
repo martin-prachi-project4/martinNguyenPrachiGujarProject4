@@ -16,12 +16,14 @@
 </head>
 
 <body>
-    <header>
+    <header class="wrapper">
         <h1>Restaurant App</h1>
     </header>
 
     <main>
         <!-- <i class="lni lni-restaurant"></i> -->
+        <div class="icon"><i class="far fa-calendar-alt calendarIcon"></i></div>
+        <div class="icon"><a href="./index.html"><i class="fas fa-redo resetIcon"></i></a></div>
         <div class="wrapper flexContainer">
             <!-- preference selection// all 4 section take up same sizes and screen divides in 4  -->
             <form class="options">
@@ -128,36 +130,15 @@
                     <!-- <li>
                     <img src="https://place-puppy.com/300x300 " alt="#">
                     
-                    <i class="fas fa-info-circle"></i><a href="#">Cute Puppy</a>
+                    <i class="fas fa-info-circle"></i>
+                    <a href="#">Cute Puppy</a>
                     <div class="information hiddenInfo">
                         <p><i class="fas fa-utensils"></i>Currency: "$"</p>
                         <p><i class="fas fa-utensils"></i>Ratings: "3.9"</p>
                         <p><i class="fas fa-utensils"></i>Location: 433 Queen st West</p>
                     </div>
                     </li>
-
-                    <li>
-                        <img src="https://place-puppy.com/300x300 " alt="#">
-                    
-                        <i class="fas fa-info-circle"></i><a href="#">Cute Puppy</a>
-                        <div class="information hiddenInfo">
-                            <p><i class="fas fa-utensils"></i>Currency: "$"</p>
-                            <p><i class="fas fa-utensils"></i>Ratings: "3.9"</p>
-                            <p><i class="fas fa-utensils"></i>Location: 433 Queen st West</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <img src="https://place-puppy.com/300x300 " alt="#">
-                    
-                        <i class="fas fa-info-circle"></i><a href="#">Cute Puppy</a>
-                        <div class="information hiddenInfo">
-                            <p><i class="fas fa-utensils"></i>Currency: "$"</p>
-                            <p><i class="fas fa-utensils"></i>Ratings: "3.9"</p>
-                            <p><i class="fas fa-utensils"></i>Location: 433 Queen st West</p>
-                        </div>
-                    </li> -->
-                     <!-- will be added through JS <li><img src="" alt=""></li> -->
+                    will be added through JS <li><img src="" alt=""></li> -->
                 </ul>
             </section>
         </div>
@@ -168,18 +149,23 @@
                 <h3></h3>
                 <i class="fas fa-chevron-right"></i>
             </div> <!-- closing calendarNav -->
-        
+
             <div class="calendarDisplay">
-                <h3>Sun</h3>
-                <h3>Mon</h3>
-                <h3>Tue</h3>
-                <h3>Wed</h3>
-                <h3>Thu</h3>
-                <h3>Fri</h3>
-                <h3>Sat</h3>
-                <ul></ul>
+                <div class="dayHeading">
+                    <h3>Sun</h3>
+                    <h3>Mon</h3>
+                    <h3>Tue</h3>
+                    <h3>Wed</h3>
+                    <h3>Thu</h3>
+                    <h3>Fri</h3>
+                    <h3>Sat</h3>
+                </div>
+                <div class="dates">
+                    <ul></ul>
+                </div>
+                
             </div> <!-- closing calendarDisplay -->
-        
+
             <div class="timeSelection hidden">
                 <label for="hourInput" class="srOnly">Choose event time - hours</label>
                 <input type="hourInput" min="0" step="1" name="hourInput" id="hourInput" placeholder="12">
@@ -198,7 +184,7 @@
 
     <footer>
         <p class="wrapper"> Copyright <i class="far fa-copyright"></i> 2019 HackerYou | <a
-                href="https://junocollege.com/">Created at Juno College of Technology</a>
+                href="https://junocollege.com/">Created by Martin & Prachi</a>
         </p>
     </footer>
 
