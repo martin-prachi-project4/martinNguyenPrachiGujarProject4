@@ -11,7 +11,22 @@
     border-radius: 50px;
     z-index: 1;
 }
+.tomatoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40vw;
+    min-width: 500px;
+    height: 40vw;
+    min-height: 500px;
+}
 img#tomato {
-    width: 25%;
+    width: 40%;
     height: auto;
+    object-fit: contain;
+    transform: translate(-6px, 11px);
+}
+
+.draggable {
+    position: absolute;
 }

@@ -84,16 +84,14 @@ bookingApp.submissionSection = $('.submission');
 bookingApp.submitButton = $('.submit');
 bookingApp.buttonClicked = false;
 bookingApp.recommendationSection = $('.recommendation')
-// bookingApp.recommendationDisplay = $('.recommendationDisplay');
+bookingApp.recommendationDisplay = $('.recommendation ul');
 bookingApp.staticDiv = $('.options');
 bookingApp.heading = $('h2');
 bookingApp.information;
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
-bookingApp.resourceImage;
-bookingApp.recommendationDisplay = $('.recommendation ul');
-bookingApp.information;
+bookingApp.restaurants = [];
 
 
 bookingApp.getUserSelections = function () {
@@ -172,24 +170,23 @@ bookingApp.handleButton = function (form, button, start) {
                 bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
                 bookingApp.showInfo();
                 // Toggle on/off loading animation
-                bookingApp.animations.handleAnimations();
+                bookingApp.animations.init();
                 bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
                 // display: if else statement for media query: make it in a function and call it here
                 if ($(window).width() > 890) {
                     bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
-                }
-                else {
+                } else {
                     bookingApp.splitScreen('none', '0', '2rem', '100vw');
                 }
             }
         } else {
             bookingApp.displayErrorMessage(bookingApp.parseErrors(bookingApp.checkErrors()));
             if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
+                start = 0;
                 bookingApp.clearRecommendation();
                 bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
-                bookingApp.showInfo();
                 // Toggle on/off loading animation
-                bookingApp.animations.handleAnimations();
+                bookingApp.animations.init();
                 bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
             }
         }
@@ -204,10 +201,10 @@ bookingApp.splitScreen = function (value1, width1, fontSize, width2) {
     bookingApp.staticDiv.css({
         'display': value1,
         'width': width1,
-    })
+    });
     bookingApp.heading.css({
         'font-size': fontSize
-    })
+    });
     bookingApp.recommendationSection.animate({
         'width': 'calc(' + width2 + ' - 30px)',
         'opacity': 'show'
@@ -216,7 +213,7 @@ bookingApp.splitScreen = function (value1, width1, fontSize, width2) {
 bookingApp.displayRecommendations = function(start) {
     bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
     // Toggle on/off loading animation
-    bookingApp.animations.handleAnimations();
+    bookingApp.animations.init();
     bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
 }
 bookingApp.clearRecommendation = function() {
@@ -233,7 +230,6 @@ bookingApp.slideInRecommendation = function(staticDiv, slidingDiv) {
 }
 // Process errors and display them in a grammatically correct sentence
 bookingApp.displayErrorMessage = function(message) {
-    console.log('here')
     if (message) {
         bookingApp.submissionSection.append(`
         <div class="popUpError"> 
@@ -325,15 +321,16 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
             category: selectedCategoryId
         }
     }).then(function (recommendationResponse) {
-        bookingApp.processRecommendation(recommendationResponse.restaurants);
+        bookingApp.processRecommendation(recommendationResponse.restaurants, start);
     });
 };
 
 // Function to get the location, currency, featured image, name, zomato url, userRatings.aggregate_rating.....
 
-bookingApp.processRecommendation = function(recommendations) {
-    recommendations.forEach( (value) => {
-        const restaurant = value.restaurant;
+bookingApp.processRecommendation = function(recommendations, start) {
+    recommendations.forEach( (recommendation, index) => {
+        index += start;
+        const restaurant = recommendation.restaurant;
         // const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
         const name = restaurant.name;
@@ -341,8 +338,8 @@ bookingApp.processRecommendation = function(recommendations) {
         const userRatings = restaurant.user_rating.aggregate_rating;
         let image = restaurant.thumb;
         image = bookingApp.defaultImage(image);
-        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings);
-    });  
+        bookingApp.appendImage(index, bookingApp.recommendationDisplay, image, name, url, currency, userRatings);
+    });
 }
 
 // Function to check if the zomato API is returning an empty image, if yes then changing the image to default image.....
@@ -356,26 +353,28 @@ bookingApp.defaultImage = function (image) {
 }
 
 // to display the image..........
-bookingApp.appendImage = function (display, image, name, url,currency,userRatings) {
+bookingApp.appendImage = function (index, display, image, name, url, currency, userRatings) {
     display.append(`
-    <li>
-        <img src="${image}" alt="Featured image for ${name} restaurant from Zomato"/>
-        <i class="fas fa-info-circle"></i>
-        <a href="${url}">${name}</a>
-        <div class="information hiddenInfo">
-            <p><i class="fas fa-utensils"></i>Currency: ${currency}</p>
-            <p><i class="fas fa-utensils"></i>Ratings: ${userRatings}</p>
-        </div>
-    </li>
-    `)
+        <li id="restaurant${index}" >
+            <img src="${image}" alt="Featured image for ${name} restaurant from Zomato" id="${name}"/>
+            <i class="fas fa-info-circle"></i>
+            <a href="${url}">${name}</a>
+            <div class="information hiddenInfo">
+                <p>Ratings: ${userRatings}/5.0 | ${currency}</p>
+                <i class="far fa-calendar-plus"></i>
+            </div>
+        </li>
+    `);
+    bookingApp.restaurants.push($(`#restaurant${index}`));
 }
 
 bookingApp.showInfo = function () {
     bookingApp.recommendationDisplay.on('click', 'li', function () {
-        console.log("click");
         $($(this)[0].childNodes[7]).toggleClass('hiddenInfo');
     });
 }
+
+
 
 // init function to call the api function..........
 bookingApp.init = function () {
@@ -390,32 +389,25 @@ $(document).ready(() => {
     bookingApp.calendar.init();
 });
 
+bookingApp.database = {};
+
+
+
 
 bookingApp.animations = {}
 bookingApp.animations.timeout;
 bookingApp.animations.canvas;
 bookingApp.animations.elements = [];
-bookingApp.animations.handleAnimations = function () {
-    bookingApp.animations.init();
+bookingApp.animations.init = function () {
+    bookingApp.animations.start();
     bookingApp.animations.timeoutTransition(1200);
 }
-bookingApp.animations.init = function () {
+bookingApp.animations.start = function () {
   bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
   bookingApp.animations.appendElements('tomato');
   bookingApp.recommendationSection.css({
     'overflow': 'hidden'
   });
-  bookingApp.animations.animatedElements[0].animate({
-    'transform': 'rotate(0deg)',
-    'opacity': '0'
-  }, {
-    'duration': 1500,
-    'step': function (now) {
-      bookingApp.animations.animatedElements[0].css({
-        'transform': `rotate(${now * 300}deg)`
-      });
-    }
-  })
 }
 bookingApp.animations.reset = function () {
     bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
@@ -431,27 +423,45 @@ bookingApp.animations.eraseCanvas = function (parentElement) {
     parentElement.html('');
 }
 bookingApp.animations.timeoutTransition = function (timeoutDuration) {
+    bookingApp.animations.animatedElements[0].animate({
+        'transform': 'rotate(0deg)',
+        'opacity': '0'
+    }, {
+        'duration': 1800,
+        'step': function (now) {
+            bookingApp.animations.animatedElements[0].css({
+                'transform': `rotate(${now * 300}deg)`
+            });
+        }
+    });
     bookingApp.animations.timeout = setTimeout(() => {
         bookingApp.recommendationSection.css({
-            'overflow': 'scroll'
+            'overflow-y': 'scroll',
+            'overflow-x': 'hidden'
         });
+        bookingApp.animations.canvas.animate({
+            'opacity': '0'
+        }, 700);
         bookingApp.animations.canvas.animate({
             'width': '0',
             'height': '0',
-            'top': '50%',
-            'left': '50%'
-        }, 700);
+            'z-index': '-1'
+        }, 50);
     }, timeoutDuration);
 }
 bookingApp.animations.appendElements = function (...elements) {
-    bookingApp.animations.elements = elements.map((value) => {
-        return `<img src="./assets/${value}.png" alt="picture of ${value}" id="${value}">`;
+    bookingApp.animations.elements = elements.map( (value) => {
+        return `
+            <div class="${value}Container">
+                <img src="./assets/${value}.png" alt="picture of ${value}" id="${value}">
+            </div>
+        `;
     });
     bookingApp.animations.elements.forEach((value) => {
         bookingApp.animations.canvas.append(value);
     });
-    bookingApp.animations.animatedElements = elements.map((value) => {
-        return $(`img#${value}`);
+    bookingApp.animations.animatedElements = elements.map( (value) => {
+        return $(`.${value}Container`);
     });
 }
 

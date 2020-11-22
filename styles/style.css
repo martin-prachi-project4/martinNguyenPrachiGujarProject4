@@ -241,6 +241,7 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  position: relative;
 }
 
 img {
@@ -340,14 +341,15 @@ footer p a:active {
 }
 
 .recommendation ul li img {
-  border-radius: 50%;
-  -webkit-transition: border-radius 0.5s;
-  transition: border-radius 0.5s;
+  border-radius: 10px;
+  border: 5px solid #e5989b;
+  -webkit-transition: border 0.2s;
+  transition: border 0.2s;
   margin: 10px 0;
 }
 
 .recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
-  border-radius: 10px;
+  border: 5px solid #500808;
 }
 
 .submit:hover,
@@ -546,7 +548,7 @@ main .icon .resetIcon {
   bottom: 15%;
   left: 0;
   padding: 10%;
-  border-radius: 30px;
+  border-radius: 15px;
 }
 
 .recommendation li .information p {
@@ -598,9 +600,33 @@ footer {
   z-index: 1;
 }
 
+.tomatoContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 40vw;
+  min-width: 500px;
+  height: 40vw;
+  min-height: 500px;
+}
+
 img#tomato {
-  width: 25%;
+  width: 40%;
   height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -webkit-transform: translate(-6px, 11px);
+          transform: translate(-6px, 11px);
+}
+
+.draggable {
+  position: absolute;
 }
 
 .calendar {
