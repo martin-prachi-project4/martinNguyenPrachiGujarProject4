@@ -84,7 +84,6 @@ bookingApp.submissionSection = $('.submission');
 bookingApp.submitButton = $('.submit');
 bookingApp.buttonClicked = false;
 bookingApp.recommendationSection = $('.recommendation')
-// bookingApp.recommendationDisplay = $('.recommendationDisplay');
 bookingApp.staticDiv = $('.options');
 bookingApp.heading = $('h2');
 bookingApp.information;
@@ -179,7 +178,7 @@ bookingApp.handleButton = function (form, button, start) {
                     bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
                 }
                 else {
-                    bookingApp.splitScreen('none', '0', '2rem', '100vw');
+                    bookingApp.splitScreen('none', '0', '2rem',  '100vw');
                 }
             }
         } else {
@@ -233,11 +232,10 @@ bookingApp.slideInRecommendation = function(staticDiv, slidingDiv) {
 }
 // Process errors and display them in a grammatically correct sentence
 bookingApp.displayErrorMessage = function(message) {
-    console.log('here')
     if (message) {
         bookingApp.submissionSection.append(`
         <div class="popUpError"> 
-            <h2>${message}</h2>
+            <h2>** ${message}</h2>
         </div>
     `);
     } 
@@ -299,7 +297,6 @@ bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
     recommendationSection.on('scroll', () => {
         if(recommendationSection[0].scrollTop + recommendationSection[0].clientHeight >= recommendationSection[0].scrollHeight - 10) {
             start += 9;
-            // bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
             setTimeout(bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start), 100);
         }
     });
@@ -334,7 +331,6 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
 bookingApp.processRecommendation = function(recommendations) {
     recommendations.forEach( (value) => {
         const restaurant = value.restaurant;
-        // const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
         const name = restaurant.name;
         const url = restaurant.url;
@@ -372,8 +368,7 @@ bookingApp.appendImage = function (display, image, name, url,currency,userRating
 
 bookingApp.showInfo = function () {
     bookingApp.recommendationDisplay.on('click', 'li', function () {
-        console.log("click");
-        $($(this)[0].childNodes[7]).toggleClass('hiddenInfo');
+        $($(this)[0].childNodes[7]).toggleClass('hiddenInfo flexInfo');
     });
 }
 
@@ -384,11 +379,7 @@ bookingApp.init = function () {
 }
 
 
-// calling the API function once the document loads.......
-$(document).ready(() => {
-    bookingApp.init();
-    bookingApp.calendar.init();
-});
+
 
 
 bookingApp.animations = {}
@@ -400,30 +391,30 @@ bookingApp.animations.handleAnimations = function () {
     bookingApp.animations.timeoutTransition(1200);
 }
 bookingApp.animations.init = function () {
-  bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
-  bookingApp.animations.appendElements('tomato');
-  bookingApp.recommendationSection.css({
-    'overflow': 'hidden'
-  });
-  bookingApp.animations.animatedElements[0].animate({
-    'transform': 'rotate(0deg)',
-    'opacity': '0'
-  }, {
-    'duration': 1500,
-    'step': function (now) {
-      bookingApp.animations.animatedElements[0].css({
-        'transform': `rotate(${now * 300}deg)`
-      });
-    }
-  })
+    bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
+    bookingApp.animations.appendElements('tomato');
+    bookingApp.recommendationSection.css({
+        'overflow': 'hidden'
+    });
+    bookingApp.animations.animatedElements[0].animate({
+        'transform': 'rotate(0deg)',
+        'opacity': '0'
+    }, {
+        'duration': 1500,
+        'step': function (now) {
+            bookingApp.animations.animatedElements[0].css({
+                'transform': `rotate(${now * 300}deg)`
+            });
+        }
+    })
 }
 bookingApp.animations.reset = function () {
     bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
 }
 bookingApp.animations.createCanvas = function (parentElement) {
     parentElement.append(`
-        <div class="animationCanvas">
-        </div> <!-- closing animationCanvas -->
+    <div class="animationCanvas">
+    </div> <!-- closing animationCanvas -->
     `);
     bookingApp.animations.canvas = $('.animationCanvas');
 }
@@ -481,7 +472,7 @@ bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
     // $(calendar[0].children[1]).text(today.getDate());
     // $(calendar[0].children[2]).text(today.getMonth() + 1);
     // Function to handle clicks on the calendar icon; once clicked the calendar will be shown and user can select future dates from it; if clicked again, will close the display
-    $('header').on('click', () => {
+    $('.calendarIcon').on('click', () => {
         bookingApp.calendar.calendar.toggleClass('hidden');
         bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth()];
         bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
@@ -677,3 +668,9 @@ bookingApp.calendar.init = function () {
     bookingApp.calendar.getUserChosenTime();
     bookingApp.calendar.toggleMeridiem();
 }
+
+// calling the API function once the document loads.......
+$(document).ready(() => {
+    bookingApp.init();
+    bookingApp.calendar.init();
+});

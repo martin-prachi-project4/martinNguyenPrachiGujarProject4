@@ -3,33 +3,22 @@
     flex-flow: column nowrap;
     align-items: center;
     position: absolute;
-    top: 0;
-    left: 15px;
+    top: 23px;
+    left: -2px;
     z-index: 1;
-    width: calc(100vw - 30px);
-    a {
-        font-family: $headingFont;
-        color: $calendarPrimary;
-    }
+    width: calc(50vw - 105px);
 }
 
 .calendarNav {
-    text-align: center;
-    color: $calendarPrimary;
-    background-color: $calendarTertiary;
     display: flex;
     justify-content: space-between;
     align-items: center;
     top: 0;
-    border-radius: 5px;
     padding: 10px;
     margin: 2px;
-    width: 50vw;
+    width: 100%;
     cursor: default;
     h3 {
-        font-family: $headingFont;
-        font-size: 1.8rem;
-        background-color: $calendarTertiary;
         flex: 1 0 0;
     }
     .fas {
@@ -38,26 +27,18 @@
 }
 
 .calendarDisplay {
-    color: $calendarPrimary;
-    background-color: $calendarSecondary;
-    border-radius: 5px;
-    margin: 2px;
-    // display: grid;
-    // grid-template-columns: repeat(7, calc(100% / 7));
     display: flex;
     flex-direction: column;
-    padding: 10px;
     height: 50vh;
-    width: 50vw;
-    .dayHeading{
-        height: 10%; 
+    padding: 10px;
+    margin: 2px;
+    width: 100%;
+    .dayHeading {
+        height: 10%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         h3 {
-            font-family: $headingFont;
-            text-transform: uppercase;
-            background-color: $calendarSecondary;
             display: flex;
             justify-content: center;
             text-align: center;
@@ -66,7 +47,7 @@
         }
     }
 
-    .dates{
+    .dates {
         height: 90%;
         ul {
             display: grid;
@@ -75,22 +56,16 @@
             height: 100%;
             padding: 0;
             margin: 0;
-            width: calc(50vw - 20px);
         }
-    }      
+    }
 }
 
-.calendarDisplay li{
+.calendarDisplay li {
     display: grid;
     justify-content: center;
     align-content: center;
     grid-template-columns: repeat(2, 12px);
     cursor: pointer;
-    &:nth-child(n) {
-        font-family: $bodyFont;
-        font-size: 1.3rem;
-        border: 1px solid $calendarSecondary;
-    }
     .chosenDate {
         color: rgb(44, 172, 12);
     }
@@ -101,10 +76,6 @@
     align-items: center;
     transform: translateY(-200px);
     h3 {
-        font-family: $headingFont;
-        font-size: 4rem;
-        color: $calendarPrimary;
-        background-color: $calendarSecondary;
         display: block;
     }
     .meridiem {
@@ -112,33 +83,18 @@
     }
 }
 
-#hourInput,
-#minuteInput {
-    font-size: 5rem;
-    text-align: center;
-    height: 90px;
-    width: 90px;
-}
-
 #minuteInput {
     margin-right: 10px;
 }
-
 .submitButton {
+    border-radius: 5px;
+    background-color: $calendarPrimary;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
-    background-color: $calendarPrimary;
     transform: translateY(-170px);
     height: 50px;
     width: 200px;
-    h3 {
-        color: $calendarSecondary;
-        font-family: $bodyFont;
-        font-size: 3rem;
-        text-transform: uppercase;
-    }
 }
 
 .hidden {

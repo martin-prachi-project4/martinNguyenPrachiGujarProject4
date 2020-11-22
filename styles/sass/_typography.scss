@@ -5,8 +5,11 @@ h1 {
     text-align: right;
 }
 
+// Common styles........
 h2,
 p,
+a,
+li,
 footer,
 .submit,
 .recommendation li {
@@ -14,48 +17,106 @@ footer,
     color: $optionalColor;
     text-align: center;
     list-style: none;
-    a {
-        padding: 5px 10px;
-        text-decoration: none;
-        color: $optionalColor;
-    }
+    text-decoration: none;
 }
 
-.recommendation li i {
-    font-size: 2rem;
-    background-color: transparent;
-    color: $optionalColor;
-    position: static;
+h3 {
+    @include fontDef($headingFont, 1.8rem, 400, 1.1px);
+    color: $calendarPrimary;
+    text-align: center;
 }
 
-main div a {
+// MAIN styles.........
+
+// MAIN icons........
+main .icon a {
     padding: 5px 10px;
 }
 
-.recommendation li a {
-    font-size: 1.8rem;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
+// SUBMIT section.......
 .submit {
-    font-size: 2rem;
     padding: 10px 40px;
-    border-radius: 30px;
     background-color: $primaryColor;
+    border-radius: 30px;
     border: 2px solid $firstAccentColor;
     box-shadow: 5px 5px $secondAccentColor;
     &:hover,
     &:focus,
-    &:active{
+    &:active {
         font-weight: bold;
         color: $secondaryColor;
         box-shadow: 0 0 $secondAccentColor;
         background-color: $secondAccentColor;
-        border: 2px solid $secondAccentColor
+        border: 2px solid $secondAccentColor;
     }
 }
 
+.popUpError h2 {
+    font-size: 1.5rem;
+    padding: 15px 20px;
+}
+
+// Recommendation styles..........
+.recommendation li {
+    i {
+        font-size: 2rem;
+        background-color: transparent;
+        color: $optionalColor;
+        position: static;
+    }
+    a {
+        font-size: 1.8rem;
+        border-radius: 10px;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+    }
+}
+
+// CALENDAR styles....
+.calendar {
+    .calendarNav {
+        background-color: $calendarTertiary;
+        border-radius: 5px;
+        i {
+            color: $calendarPrimary;
+        }
+    }
+    .calendarDisplay {
+        background-color: $calendarSecondary;
+        border-radius: 5px;
+        .dayHeading h3 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+        li:nth-child(n) {
+            font-family: $bodyFont;
+            color: $calendarPrimary;
+            font-size: 1.3rem;
+            border: 1px solid $calendarSecondary;
+        }
+    }
+    .timeSelection h3 {
+        font-size: 4rem;
+        background-color: $calendarSecondary;
+    }
+
+    .submitButton h3 {
+        font-family: $bodyFont;
+        font-size: 3rem;
+        color: $calendarSecondary;
+        text-transform: uppercase;
+    }
+}
+
+#hourInput,
+#minuteInput {
+    font-size: 5rem;
+    text-align: center;
+    height: 90px;
+    width: 90px;
+}
+
+// FOOTER Section......
 footer p {
     text-align: right;
     padding: 5px 0;

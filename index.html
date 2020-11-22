@@ -20,7 +20,7 @@
         <h1>Restaurant App</h1>
     </header>
 
-    <main>
+    <main class="wrapper">
         <!-- <i class="lni lni-restaurant"></i> -->
         <div class="icon"><i class="far fa-calendar-alt calendarIcon"></i></div>
         <div class="icon"><a href="./index.html"><i class="fas fa-redo resetIcon"></i></a></div>
@@ -122,27 +122,13 @@
 
             <!-- Recommendation section -->
             <section class="recommendation ">
-                <!-- <h2>Your Recommendations</h2> -->
-                <!--Ul Display images as list items? 
-                //or div containing the image for the restaurant and a section which takes input from the API for rating, expensive rating (currency),location and link for zomato?  -->
                 <ul class="recommendationDisplay">
-                    <!-- <li>
-                    <img src="https://place-puppy.com/300x300 " alt="#">
-                    
-                    <i class="fas fa-info-circle"></i>
-                    <a href="#">Cute Puppy</a>
-                    <div class="information hiddenInfo">
-                        <p><i class="fas fa-utensils"></i>Currency: "$"</p>
-                        <p><i class="fas fa-utensils"></i>Ratings: "3.9"</p>
-                        <p><i class="fas fa-utensils"></i>Location: 433 Queen st West</p>
-                    </div>
-                    </li>
-                    will be added through JS <li><img src="" alt=""></li> -->
+                    <!--will be added through JS  -->
                 </ul>
             </section>
         </div>
 
-        <div class="calendar hidden">
+        <div class="calendar hidden ">
             <div class="calendarNav">
                 <i class="fas fa-chevron-left"></i>
                 <h3></h3>
@@ -164,7 +150,6 @@
                 </div>
                 
             </div> <!-- closing calendarDisplay -->
-
             <div class="timeSelection hidden">
                 <label for="hourInput" class="srOnly">Choose event time - hours</label>
                 <input type="hourInput" min="0" step="1" name="hourInput" id="hourInput" placeholder="12">
@@ -177,8 +162,6 @@
                 <h3>Submit</h3>
             </div> <!-- closing submitButton -->
         </div> <!-- closing calendar -->
-
-
     </main>
 
     <footer>

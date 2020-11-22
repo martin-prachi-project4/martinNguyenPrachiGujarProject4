@@ -13,11 +13,23 @@
         grid-row-gap: 15px;
     }
 
-    .recommendation ul li {
-        width: calc((100% - 15px) / 2);
-        &:nth-of-type(2n) {
-            margin-right: 0;
+    .recommendation{
+        margin: 0;
+         ul li {
+            width: calc((100% - 15px) / 2);
+            &:nth-of-type(2n) {
+                margin-right: 0;
+            }
         }
+    }    
+
+    .recommendation li .information p{
+        font-size: 2rem;
+    }
+
+    .calendar{
+        left: 0;
+        width: calc(100vw - 50px);
     }
 
     footer p {
@@ -28,6 +40,7 @@
             border-bottom: 2px solid transparent;
         }
     }
+
     // Removing all hover styles:
     a:hover {
         padding: 5px 10px;
