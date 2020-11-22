@@ -363,8 +363,8 @@ bookingApp.appendImage = function (display, image, name, url,currency,userRating
         <i class="fas fa-info-circle"></i>
         <a href="${url}">${name}</a>
         <div class="information hiddenInfo">
-            <p><i class="fas fa-utensils"></i>Currency: ${currency}</p>
-            <p><i class="fas fa-utensils"></i>Ratings: ${userRatings}</p>
+            <p><i class="fas fa-utensils"></i> Currency: ${currency}</p>
+            <p><i class="fas fa-utensils"></i> Ratings: ${userRatings}</p>
         </div>
     </li>
     `)

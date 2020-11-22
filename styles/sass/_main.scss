@@ -103,7 +103,7 @@ main {
 // Recommendation section.....
 .recommendation {
     position: relative;
-    background-color: $primaryColor;
+    background-color: $firstAccentGradient;
     overflow: scroll;
     flex: 1;
     border-radius: 15px;
@@ -127,17 +127,21 @@ main {
 .recommendation li {
     position: relative;
     .information {
-        background-color: $firstAccentGradient;
-        width: 100%;
-        height: 85%;
-        position: absolute;
-        bottom: 15%;
-        left: 0;
-        padding: 10%;
+        background-color: $secondaryColor;
         border-radius: 30px;
+        position: absolute;
+        left: 0;
+        bottom: 15%;
+        height: 85%;
+        padding: 10%;
+        width: 100%;
         p {
+            color: $primaryColor;
             text-align: left;
             padding: 10px 0;
+            i{
+                color: $primaryColor;
+            }
         }
     }
 }
@@ -148,6 +152,12 @@ main {
 
 .hiddenInfo {
     display: none;
+}
+
+.flexInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .flexContainer {
