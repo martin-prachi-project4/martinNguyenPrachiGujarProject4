@@ -46,8 +46,16 @@ main div a{
     background-color: $primaryColor;
     border: 2px solid $firstAccentColor;
     box-shadow: 5px 5px $secondAccentColor;
+    &:hover,
+    &:focus,
+    &:active{
+        font-weight: bold;
+        color: $secondaryColor;
+        box-shadow: 0 0 $secondAccentColor;
+        background-color: $secondAccentColor;
+        border: 2px solid $secondAccentColor
+    }
 }
-
 
 footer p{
     text-align: right;
@@ -56,14 +64,14 @@ footer p{
 
 
 // HOVER styles....
-a:hover,
-a:focus,
-a:active{
-    // border-bottom: 2px solid $secondaryColor;
-    padding: 5px 10px;
-    background-color: $firstAccentGradient;
-    border-radius: 10px;
-}
+// a:hover,
+// a:focus,
+// a:active{
+//     // border-bottom: 2px solid $secondaryColor;
+//     padding: 5px 10px;
+//     background-color: $firstAccentGradient;
+//     border-radius: 10px;
+// }
 
 footer p a:hover,
 footer p a:focus,
@@ -73,27 +81,9 @@ footer p a:active{
     border-bottom: 2px solid $secondaryColor;
 }
 
-.recommendation ul li img{
-    border-radius: 50%;
-    transition: border-radius 0.5s;
-    margin: 10px 0;
-    &:hover,
-    &:active,
-    &:focus{
-        border-radius: 0;
-    }
-}
 
-.submit:hover,
-.submit:focus,
-.submit:active{
-    font-weight: bold;
-    color: $secondaryColor;
-    box-shadow: 0 0 $secondAccentColor;
-    background-color: $secondAccentColor;
-    border: 2px solid $secondAccentColor
 
-}
+
 
 
 

@@ -81,6 +81,7 @@ bookingApp.preferenceCheckbox=[
 bookingApp.citiesSelection = $('.cities');
 bookingApp.cuisineSelection = $('.cuisine');
 bookingApp.preferencesSelection = $('.preferences');
+bookingApp.submissionSection = $('.submission');
 bookingApp.submitButton = $('.submit');
 bookingApp.buttonClicked = false;
 bookingApp.recommendationSection = $('.recommendation')
@@ -170,44 +171,52 @@ bookingApp.handleButton = function(form, button, start) {
     });
     button.on('click', function () {
         if (!bookingApp.buttonClicked) {
-            bookingApp.displayErrorMessage(bookingApp.checkErrors());
+            bookingApp.displayErrorMessage(bookingApp.parseErrors(bookingApp.checkErrors()));
             if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
                 bookingApp.buttonClicked = true;
-                bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
-                // Toggle on/off loading animation
-                bookingApp.animations.handleAnimations();
-                bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
+                bookingApp.displayRecommendations(start);
                 // display: if else statement for media query: make it in a function and call it here
-                bookingApp.staticDiv.css({
-                    'width': '0'
-                });
-                bookingApp.slidingDiv.animate({
-                    'width': 'calc(100vw - 50px)',
-                    'opacity': 'show'
-                }, 500);
+                bookingApp.slideInRecommendation(bookingApp.staticDiv, bookingApp.slidingDiv);
+            }
+        } else {
+            bookingApp.displayErrorMessage(bookingApp.parseErrors(bookingApp.checkErrors()));
+            if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
+                start = 0;
+                bookingApp.clearRecommendation();
+                bookingApp.displayRecommendations(start);
             }
         }
     });   
 }
-// Process errors and display them in a grammatically correct sentence
-bookingApp.displayErrorMessage = function(errors) {
-    let message;
-    if (errors.length === 1) {
-        message = `Please select a ${errors[0]}.`;
-    } else if (errors.length === 2) {
-        message = `Please select a ${errors[0]} and a ${errors[1]}.`;
-    } else {
-        message = `Please select `;
-        errors.forEach( (error, index) => {
-            if (index === errors.length - 1) {
-                message += ' and a ' + error + '.';
-            } else {
-                message += ' a ' + error + ',';
-            }
-        });
-    }
-    console.log(message);
+bookingApp.displayRecommendations = function(start) {
+    bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
+    // Toggle on/off loading animation
+    bookingApp.animations.handleAnimations();
+    bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
 }
+bookingApp.clearRecommendation = function() {
+    bookingApp.recommendationDisplay.html('');
+}
+bookingApp.slideInRecommendation = function(staticDiv, slidingDiv) {
+    staticDiv.css({
+        'width': 'calc((100vw - 150px) / 2)'
+    });
+    slidingDiv.animate({
+        'width': 'calc((100vw - 150px) / 2)',
+        'opacity': 'show'
+    }, 500);
+}
+// Process errors and display them in a grammatically correct sentence
+bookingApp.displayErrorMessage = function(message) {
+    if (message) {
+        bookingApp.submissionSection.append(`
+        <div class="popUpError"> 
+            <h2>${message}</h2>
+        </div>
+    `);
+    } 
+}
+
 // Check for errors in the form of unselected options
 bookingApp.checkErrors = function() {
     let errors = [];
@@ -222,19 +231,35 @@ bookingApp.checkErrors = function() {
     }
     return errors;
 }
+bookingApp.parseErrors = function(errors) {
+    let message = '';
+    if (errors.length === 1 && errors !== []) {
+        message = `Please select a ${errors[0]}.`;
+    } else if (errors.length === 2) {
+        message = `Please select a ${errors[0]} and a ${errors[1]}.`;
+    } else if (errors.length > 2) {
+        message = `Please select `;
+        errors.forEach((error, index) => {
+            if (index === errors.length - 1) {
+                message += ' and a ' + error + '.';
+            } else {
+                message += ' a ' + error + ',';
+            }
+        });
+    }
+    return message;
+}
 // automatically append to the recommendation display when the scroll hits the bottom or when the display is longer than the origin 9 recommendations
 bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
     recommendationSection.on('scroll', () => {
-        if(recommendationSection[0].scrollTop + recommendationSection[0].clientHeight >= recommendationSection[0].scrollHeight) {
+        if(recommendationSection[0].scrollTop + recommendationSection[0].clientHeight >= recommendationSection[0].scrollHeight - 10) {
             start += 9;
-            console.log(start)
-            bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
+            // bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
+            setTimeout(bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start), 100);
         }
     });
-    console.log(recommendationSection[0].scrollTop)
     if (recommendationSection[0].scrollTop === 0 && 
         recommendationSection[0].scrollHeight === recommendationSection[0].clientHeight) {
-        console.log('here')
         start += 9;
         bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
     }
@@ -265,10 +290,11 @@ bookingApp.processRecommendation = function(recommendations) {
         const restaurant = value.restaurant;
         const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
-        const image = restaurant.thumb;
         const name = restaurant.name ;
         const url = restaurant.url ;
         const userRatings = restaurant.user_rating.aggregate_rating;
+        let image = restaurant.thumb;
+        image = bookingApp.checkImageError(image);
         bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
     });
     bookingApp.showInfo(bookingApp.slidingDiv, bookingApp.information);
@@ -283,10 +309,16 @@ bookingApp.appendImage = function(display, image, name, url) {
     </li>
     `)
 }
+bookingApp.checkImageError = function(image) {
+    if (image === "") {
+        image = `assets/id${bookingApp.cuisineId}.jpg`;
+    }
+    return image;
+}
 // to display the restaurant information when an icon is clicked
 bookingApp.showInfo = function(recommendationDisplay, informationTab){
-    recommendationDisplay.on('click', 'i', function () {
-        console.log("clicked");
+    recommendationDisplay.on('click', 'li', function () {
+        console.log('clicked')
         informationTab.toggleClass('hiddenInfo');
     })
 }
@@ -308,17 +340,11 @@ $(document).ready(() => {
 
 bookingApp.animations = {}
 bookingApp.animations.timeout;
-bookingApp.animations.isOn = false;
 bookingApp.animations.canvas;
 bookingApp.animations.elements = [];
 bookingApp.animations.handleAnimations = function () {
-  if (!bookingApp.animations.isOn) {
     bookingApp.animations.init();
     bookingApp.animations.timeoutTransition(1200);
-  } else {
-    bookingApp.animations.reset();
-  }
-  bookingApp.animations.isOn = !bookingApp.animations.isOn;
 }
 bookingApp.animations.init = function () {
   bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
@@ -326,7 +352,6 @@ bookingApp.animations.init = function () {
   bookingApp.recommendationSection.css({
     'overflow': 'hidden'
   });
-  console.log(bookingApp.animations.animatedElements[0])
   bookingApp.animations.animatedElements[0].animate({
     'transform': 'rotate(0deg)',
     'opacity': '0'
@@ -404,7 +429,6 @@ bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
     // $(calendar[0].children[2]).text(today.getMonth() + 1);
     // Function to handle clicks on the calendar icon; once clicked the calendar will be shown and user can select future dates from it; if clicked again, will close the display
     $('header').on('click', () => {
-        console.log('here')
         bookingApp.calendar.calendar.toggleClass('hidden');
         bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth()];
         bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');

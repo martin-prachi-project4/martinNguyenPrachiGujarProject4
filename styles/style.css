@@ -317,17 +317,18 @@ main div a {
           box-shadow: 5px 5px #6D6875;
 }
 
+.submit:hover, .submit:focus, .submit:active {
+  font-weight: bold;
+  color: #500808;
+  -webkit-box-shadow: 0 0 #6D6875;
+          box-shadow: 0 0 #6D6875;
+  background-color: #6D6875;
+  border: 2px solid #6D6875;
+}
+
 footer p {
   text-align: right;
   padding: 5px 0;
-}
-
-a:hover,
-a:focus,
-a:active {
-  padding: 5px 10px;
-  background-color: rgba(181, 131, 141, 0.8);
-  border-radius: 10px;
 }
 
 footer p a:hover,
@@ -336,28 +337,6 @@ footer p a:active {
   background-color: transparent;
   border-radius: 0;
   border-bottom: 2px solid #500808;
-}
-
-.recommendation ul li img {
-  border-radius: 50%;
-  -webkit-transition: border-radius 0.5s;
-  transition: border-radius 0.5s;
-  margin: 10px 0;
-}
-
-.recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
-  border-radius: 0;
-}
-
-.submit:hover,
-.submit:focus,
-.submit:active {
-  font-weight: bold;
-  color: #500808;
-  -webkit-box-shadow: 0 0 #6D6875;
-          box-shadow: 0 0 #6D6875;
-  background-color: #6D6875;
-  border: 2px solid #6D6875;
 }
 
 header {
@@ -372,28 +351,6 @@ header h1 {
 main {
   padding: 25px 0;
   position: relative;
-}
-
-main .icon a {
-  position: absolute;
-  top: -30px;
-  right: 100px;
-}
-
-main .icon a:hover, main .icon a:active, main .icon a:focus {
-  background-color: transparent;
-}
-
-main i {
-  font-size: 2.5rem;
-  text-align: center;
-  color: #500808;
-  background-color: rgba(181, 131, 141, 0.8);
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 50%;
-  padding: 10px;
 }
 
 .options {
@@ -439,6 +396,7 @@ main i {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  cursor: pointer;
 }
 
 .cities label h2,
@@ -449,41 +407,61 @@ main i {
 
 .cities {
   background-color: rgba(181, 131, 141, 0.8);
-  border-top-left-radius: 50px;
+  border-top-left-radius: 15px;
 }
 
 .cuisine {
   background-color: rgba(109, 104, 117, 0.8);
-  border-top-right-radius: 50px;
+  border-top-right-radius: 15px;
 }
 
 .preferences {
   background-color: rgba(109, 104, 117, 0.8);
-  border-bottom-left-radius: 50px;
+  border-bottom-left-radius: 15px;
   -ms-grid-columns: 100px;
       grid-template-columns: 100px;
 }
 
 .submission {
   background-color: rgba(181, 131, 141, 0.8);
-  border-bottom-right-radius: 50px;
+  border-bottom-right-radius: 15px;
   display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 150px 50px;
+      grid-template-columns: 150px 50px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -ms-flex-line-pack: center;
       align-content: center;
+  position: relative;
+}
+
+.submission .icon a i {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #500808;
+  background-color: rgba(181, 131, 141, 0.8);
+  border-radius: 50%;
+  padding: 10px;
+  -webkit-box-shadow: 5px 5px #6D6875;
+          box-shadow: 5px 5px #6D6875;
+}
+
+.submission .icon a i:hover, .submission .icon a i:focus, .submission .icon a i:active {
+  -webkit-box-shadow: 0 0 #6D6875;
+          box-shadow: 0 0 #6D6875;
+  background-color: #6D6875;
 }
 
 .recommendation {
   position: relative;
-  background-color: rgba(109, 104, 117, 0.9);
+  background-color: #E5989B;
   overflow: scroll;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  border-radius: 50px;
+  border-radius: 15px;
   height: calc(75vh - 40px);
   margin-left: 30px;
   padding: 15px;
@@ -499,10 +477,10 @@ main i {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  padding: 20px 0;
 }
 
 .recommendation ul li {
+  margin-bottom: 25px;
   margin-right: 15px;
   width: calc((100% - 30px) / 3);
 }
@@ -525,6 +503,21 @@ main i {
 .recommendation li .information p {
   text-align: left;
   padding: 10px 0;
+}
+
+.recommendation ul li img {
+  width: 100%;
+  height: calc((50vw - 80px)/3);
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  -webkit-transition: border-radius 0.5s;
+  transition: border-radius 0.5s;
+  margin: 10px 0;
+}
+
+.recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
+  border-radius: 10px;
 }
 
 .recommendation li:nth-of-type(3n) {
@@ -577,7 +570,7 @@ img#tomato {
 }
 
 .calendar {
-  width: calc(100vw - 30px);
+  width: calc((100vw - 110px)/2);
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -589,8 +582,8 @@ img#tomato {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  top: 0;
-  left: 15px;
+  top: 20px;
+  left: 25px;
   z-index: 1;
 }
 
@@ -609,7 +602,7 @@ img#tomato {
       -ms-flex-align: center;
           align-items: center;
   top: 0;
-  width: 50vw;
+  width: calc((100vw - 110px)/2);
   text-align: center;
   padding: 10px;
   margin: 2px;
@@ -631,7 +624,7 @@ img#tomato {
 }
 
 .calendarDisplay {
-  width: 50vw;
+  width: calc((100vw - 110px)/2);
   padding: 10px;
   border-radius: 5px;
   margin: 2px;
@@ -652,13 +645,13 @@ img#tomato {
 .calendarDisplay ul {
   margin: 0;
   padding: 0;
-  width: calc(50vw - 20px);
+  width: calc((100vw - 150px)/2);
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (calc(100%/7))[7];
       grid-template-columns: repeat(7, calc(100%/7));
-  -ms-grid-rows: (calc(50vw/7))[6];
-      grid-template-rows: repeat(6, calc(50vw/7));
+  -ms-grid-rows: (calc((100vw - 110px)/14))[6];
+      grid-template-rows: repeat(6, calc((100vw - 110px)/14));
   text-align: center;
 }
 

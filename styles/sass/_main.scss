@@ -1,30 +1,6 @@
 main{
     padding: 25px 0;
-    // margin-bottom: 20px;
-    // height: calc(75vh - 20px);
     position: relative;
-    .icon a{
-        position: absolute;
-        top: -30px;
-        right: 100px ;
-        &:hover,
-        &:active,
-        &:focus{
-            background-color: transparent;
-        }
-    }
-    i{
-        font-size: 2.5rem;
-        text-align: center;
-        color: $secondaryColor;
-        background-color: $firstAccentGradient;
-        position: absolute;
-        top:0;
-        right: 0 ;
-        border-radius: 50%;
-        padding: 10px;
-
-    }
 }
 
 .options {
@@ -33,7 +9,6 @@ main{
     grid-template-rows: repeat(2, calc((75vh - 50px)/2));
     grid-gap: 10px;
     flex: 1;
-    
 }
 
 .cities,
@@ -51,6 +26,7 @@ main{
         display:flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
         h2{
             padding: 5px;
         }    
@@ -59,39 +35,56 @@ main{
 
 .cities {
     background-color: $firstAccentGradient;
-    border-top-left-radius: 50px;
+    border-top-left-radius: 15px;
 }
-
-
 
 .cuisine {
     background-color: $secondAccentGradient;
-    border-top-right-radius: 50px;   
+    border-top-right-radius: 15px;   
 }
 
 .preferences {
     background-color: $secondAccentGradient;
-    border-bottom-left-radius: 50px;
+    border-bottom-left-radius: 15px;
     grid-template-columns: 100px;
 }
 
 
 .submission {
     background-color: $firstAccentGradient;
-    border-bottom-right-radius: 50px;
+    border-bottom-right-radius: 15px;
     display: grid;
+    grid-template-columns: 150px 50px;
     justify-content: center;
     align-content: center;
+    position: relative;
+    .icon a{
+        i {
+            font-size: 2.5rem;
+            text-align: center;
+            color: $secondaryColor;
+            background-color: $firstAccentGradient;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 5px 5px $secondAccentColor;
+            &:hover,
+            &:focus,
+            &:active{
+                box-shadow: 0 0 $secondAccentColor;
+                background-color: $secondAccentColor;
+            }
+        }
+    }
 }
 
 
 // Recommendation section.....
-.recommendation{
+.recommendation {
     position: relative;
-    background-color: $thirdAccentGradient;
+    background-color: $primaryColor;
     overflow: scroll;
     flex: 1;
-    border-radius: 50px;
+    border-radius: 15px;
     height: calc(75vh - 40px);
     margin-left: 30px;
     padding: 15px;
@@ -101,17 +94,17 @@ main{
     ul{
         display: flex;
         flex-wrap: wrap;
-        padding: 20px 0;
-        li{
+        li {
+            margin-bottom: 25px;
             margin-right: 15px;
             width: calc((100% - 30px) / 3);
         }
     }
 }
 
-.recommendation li{
+.recommendation li {
     position: relative;
-    .information{
+    .information {
         background-color: $firstAccentGradient;
         width: 100%;
         height: 85%;
@@ -124,6 +117,20 @@ main{
             text-align: left;
             padding: 10px 0;
         }
+    }
+}
+
+.recommendation ul li img{
+    width: 100%;
+    height: calc((50vw - 80px)/3);
+    object-fit: cover;
+    border-radius: 50%;
+    transition: border-radius 0.5s;
+    margin: 10px 0;
+    &:hover,
+    &:active,
+    &:focus{
+        border-radius: 10px;
     }
 }
 

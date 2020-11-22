@@ -1,11 +1,11 @@
 .calendar {
-    width: calc(100vw - 30px);
+    width: calc((100vw - 110px)/2);
     position: absolute;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    top: 0;
-    left: 15px;
+    top: 20px;
+    left: 25px;
     z-index: 1;
     a {
         color: whitesmoke;
@@ -17,7 +17,7 @@
     justify-content: space-between;
     align-items: center;
     top: 0;
-    width: 50vw;
+    width: calc((100vw - 110px)/2);
     text-align: center;
     padding: 10px;
     margin: 2px;
@@ -35,7 +35,7 @@
 }
 
 .calendarDisplay {
-    width: 50vw;
+    width: calc((100vw - 110px)/2);
     padding: 10px;
     border-radius: 5px;
     margin: 2px;
@@ -52,10 +52,10 @@
     ul {
         margin: 0;
         padding: 0;
-        width: calc(50vw - 20px);
+        width: calc((100vw - 150px)/2);
         display: grid;
         grid-template-columns: repeat(7, calc(100%/7));
-        grid-template-rows: repeat(6, calc(50vw/7));
+        grid-template-rows: repeat(6, calc((100vw - 110px)/14));
         text-align: center;
         li {
             align-content: center;
