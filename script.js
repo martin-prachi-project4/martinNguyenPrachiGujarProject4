@@ -91,6 +91,9 @@ bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
 bookingApp.resourceImage;
+// bookingApp.recommendationDisplay = $('.recommendation ul');
+bookingApp.information;
+
 
 bookingApp.getUserSelections = function () {
     bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
@@ -270,18 +273,22 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
     });
 };
 
-// location, currency, featured image, name, zomato url, userRatings.aggregate_rating......
-bookingApp.processRecommendation = function (recommendations) {
-    recommendations.forEach((value) => {
+// Function to get the location, currency, featured image, name, zomato url, userRatings.aggregate_rating.....
+
+bookingApp.processRecommendation = function(recommendations) {
+    recommendations.forEach( (value) => {
         const restaurant = value.restaurant;
         // const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
         const name = restaurant.name;
         const url = restaurant.url;
         const userRatings = restaurant.user_rating.aggregate_rating;
-        bookingApp.resourceImage = restaurant.thumb;
-        bookingApp.defaultImage(bookingApp.resourceImage);
-        
+        // bookingApp.resourceImage = restaurant.thumb;
+        // bookingApp.defaultImage(bookingApp.resourceImage);
+
+        let image = restaurant.thumb;
+        image = bookingApp.defaultImage(image);
+        console.log(image);
         bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings);
         // bookingApp.information = $('.information');
     });
@@ -289,14 +296,21 @@ bookingApp.processRecommendation = function (recommendations) {
 }
 
 // Function to check if the zomato API is returning an empty image, if yes then changing the image to default image.....
-bookingApp.defaultImage = function (resourceImg) {
-    if (resourceImg === "") {
-        image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
+// bookingApp.defaultImage = function (resourceImg) {
+//     if (resourceImg === "") {
+//         image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
+//     } else {
+//         image = resourceImg;
+//     }
+// }
+
+bookingApp.defaultImage = function (image) {
+    if (image === "") {
+        return `assets/id${bookingApp.cuisineId}.jpg`;
     } else {
-        image = resourceImg;
+        return image;
     }
 }
-
 
 // to display the image..........
 bookingApp.appendImage = function (display, image, name, url,currency,userRatings) {
