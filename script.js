@@ -83,7 +83,7 @@ bookingApp.preferencesSelection = $('.preferences');
 bookingApp.submitButton = $('.submit');
 bookingApp.buttonClicked = false;
 bookingApp.recommendationSection = $('.recommendation')
-bookingApp.recommendationDisplay = $('.recommendationDisplay');
+// bookingApp.recommendationDisplay = $('.recommendationDisplay');
 bookingApp.staticDiv = $('.options');
 bookingApp.heading = $('h2');
 bookingApp.information;
@@ -91,7 +91,7 @@ bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
 bookingApp.resourceImage;
-// bookingApp.recommendationDisplay = $('.recommendation ul');
+bookingApp.recommendationDisplay = $('.recommendation ul');
 bookingApp.information;
 
 
@@ -168,6 +168,7 @@ bookingApp.handleButton = function (form, button, start) {
             if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
                 bookingApp.buttonClicked = true;
                 bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
+                bookingApp.showInfo();
                 // Toggle on/off loading animation
                 bookingApp.animations.handleAnimations();
                 bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
@@ -181,7 +182,7 @@ bookingApp.handleButton = function (form, button, start) {
 
             }
         }
-    });
+    })
 }
 
 // Hiding the recommendation Section before seletion.....
@@ -283,26 +284,16 @@ bookingApp.processRecommendation = function(recommendations) {
         const name = restaurant.name;
         const url = restaurant.url;
         const userRatings = restaurant.user_rating.aggregate_rating;
-        // bookingApp.resourceImage = restaurant.thumb;
-        // bookingApp.defaultImage(bookingApp.resourceImage);
-
         let image = restaurant.thumb;
         image = bookingApp.defaultImage(image);
         console.log(image);
         bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings);
-        // bookingApp.information = $('.information');
+        
     });
-    bookingApp.showInfo();
+    
 }
 
 // Function to check if the zomato API is returning an empty image, if yes then changing the image to default image.....
-// bookingApp.defaultImage = function (resourceImg) {
-//     if (resourceImg === "") {
-//         image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
-//     } else {
-//         image = resourceImg;
-//     }
-// }
 
 bookingApp.defaultImage = function (image) {
     if (image === "") {
