@@ -347,7 +347,7 @@ footer p a:active {
 }
 
 .recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
-  border-radius: 0;
+  border-radius: 10px;
 }
 
 .submit:hover,

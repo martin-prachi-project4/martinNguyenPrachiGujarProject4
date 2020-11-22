@@ -166,6 +166,7 @@ bookingApp.handleButton = function (form, button, start) {
     button.on('click', function () {
         if (!bookingApp.buttonClicked) {
             bookingApp.displayErrorMessage(bookingApp.parseErrors(bookingApp.checkErrors()));
+            
             if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
                 bookingApp.buttonClicked = true;
                 bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
@@ -180,7 +181,16 @@ bookingApp.handleButton = function (form, button, start) {
                 else {
                     bookingApp.splitScreen('none', '0', '2rem', '100vw');
                 }
-
+            }
+        } else {
+            bookingApp.displayErrorMessage(bookingApp.parseErrors(bookingApp.checkErrors()));
+            if (bookingApp.citiesId && bookingApp.cuisineId && bookingApp.preferencesId) {
+                bookingApp.clearRecommendation();
+                bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
+                bookingApp.showInfo();
+                // Toggle on/off loading animation
+                bookingApp.animations.handleAnimations();
+                bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
             }
         }
     })
@@ -223,6 +233,7 @@ bookingApp.slideInRecommendation = function(staticDiv, slidingDiv) {
 }
 // Process errors and display them in a grammatically correct sentence
 bookingApp.displayErrorMessage = function(message) {
+    console.log('here')
     if (message) {
         bookingApp.submissionSection.append(`
         <div class="popUpError"> 
@@ -233,13 +244,13 @@ bookingApp.displayErrorMessage = function(message) {
 }
 
 // Process errors and display them in a grammatically correct sentence......
-bookingApp.displayErrorMessage = function (errors) {
+bookingApp.parseErrors = function (errors) {
     let message;
     if (errors.length === 1) {
         message = `Please select a ${errors[0]}.`;
     } else if (errors.length === 2) {
         message = `Please select a ${errors[0]} and a ${errors[1]}.`;
-    } else {
+    } else if (errors.lenghth > 2) {
         message = `Please select `;
         errors.forEach((error, index) => {
             if (index === errors.length - 1) {
@@ -249,7 +260,7 @@ bookingApp.displayErrorMessage = function (errors) {
             }
         });
     }
-    console.log(message);
+    return message;
 }
 // Check for errors in the form of unselected options........
 bookingApp.checkErrors = function () {
