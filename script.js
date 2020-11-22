@@ -174,7 +174,7 @@ bookingApp.handleButton = function (form, button, start) {
                 bookingApp.animations.handleAnimations();
                 bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
                 // display: if else statement for media query: make it in a function and call it here
-                if ($(window).width() > 890) {
+                if ($(window).width() > 900) {
                     bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
                 }
                 else {

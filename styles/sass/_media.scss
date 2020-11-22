@@ -1,4 +1,17 @@
 // Media Queries.....
+@media (max-width: 1320px){
+    .calendar{
+        width: calc(50vw - 55px);
+    }
+}
+
+@media (max-width: 900px){
+    .calendar{
+        left: 0;
+        width: calc(100vw - 50px);
+    }
+}
+
 @media (max-width: 790px) {
     h1 {
         font-size: 4.8rem;
