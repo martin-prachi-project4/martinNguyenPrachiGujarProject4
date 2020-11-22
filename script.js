@@ -86,7 +86,7 @@ bookingApp.recommendationSection = $('.recommendation')
 bookingApp.recommendationDisplay = $('.recommendationDisplay');
 bookingApp.staticDiv = $('.options');
 bookingApp.heading = $('h2');
-// bookingApp.information;
+bookingApp.information;
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
@@ -274,18 +274,18 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
 bookingApp.processRecommendation = function (recommendations) {
     recommendations.forEach((value) => {
         const restaurant = value.restaurant;
-        const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
+        // const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
         const name = restaurant.name;
         const url = restaurant.url;
         const userRatings = restaurant.user_rating.aggregate_rating;
         bookingApp.resourceImage = restaurant.thumb;
         bookingApp.defaultImage(bookingApp.resourceImage);
-        // bookingApp.information= $('.information');
-
-        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
+        
+        bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url, currency, userRatings);
+        // bookingApp.information = $('.information');
     });
-    bookingApp.showInfo(bookingApp.recommendationSection, bookingApp.information);
+    bookingApp.showInfo();
 }
 
 // Function to check if the zomato API is returning an empty image, if yes then changing the image to default image.....
@@ -299,22 +299,26 @@ bookingApp.defaultImage = function (resourceImg) {
 
 
 // to display the image..........
-bookingApp.appendImage = function (display, image, name, url) {
+bookingApp.appendImage = function (display, image, name, url,currency,userRatings) {
     display.append(`
     <li>
         <img src="${image}" alt="Featured image for ${name} restaurant from Zomato"/>
+        <i class="fas fa-info-circle"></i>
         <a href="${url}">${name}</a>
+        <div class="information hiddenInfo">
+            <p><i class="fas fa-utensils"></i>Currency: ${currency}</p>
+            <p><i class="fas fa-utensils"></i>Ratings: ${userRatings}</p>
+        </div>
     </li>
     `)
 }
 
 
-// to display the restaurant information when an icon is clicked........
-bookingApp.showInfo = function (recommendationDisplay, informationTab) {
-    recommendationDisplay.on('click', 'i', function () {
-        console.log("clicked");
-        informationTab.toggleClass('hiddenInfo');
-    })
+bookingApp.showInfo = function () {
+    bookingApp.recommendationDisplay.on('click', 'li', function () {
+        console.log("click");
+        $($(this)[0].childNodes[7]).toggleClass('hiddenInfo');
+    });
 }
 
 // init function to call the api function..........
