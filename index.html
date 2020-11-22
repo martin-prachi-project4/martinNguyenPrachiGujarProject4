@@ -16,13 +16,14 @@
 </head>
 
 <body>
-    <header>
+    <header class="wrapper">
         <h1>Restaurant App</h1>
     </header>
 
     <main>
         <!-- <i class="lni lni-restaurant"></i> -->
-        <div class = "icon"><a href="./index.html"><i class="fas fa-redo"></i></a></div>
+        <div class="icon"><i class="far fa-calendar-alt calendarIcon"></i></div>
+        <div class="icon"><a href="./index.html"><i class="fas fa-redo resetIcon"></i></a></div>
         <div class="wrapper flexContainer">
             <!-- preference selection// all 4 section take up same sizes and screen divides in 4  -->
             <form class="options">
@@ -146,18 +147,23 @@
                 <h3></h3>
                 <i class="fas fa-chevron-right"></i>
             </div> <!-- closing calendarNav -->
-        
+
             <div class="calendarDisplay">
-                <h3>Sun</h3>
-                <h3>Mon</h3>
-                <h3>Tue</h3>
-                <h3>Wed</h3>
-                <h3>Thu</h3>
-                <h3>Fri</h3>
-                <h3>Sat</h3>
-                <ul></ul>
+                <div class="dayHeading">
+                    <h3>Sun</h3>
+                    <h3>Mon</h3>
+                    <h3>Tue</h3>
+                    <h3>Wed</h3>
+                    <h3>Thu</h3>
+                    <h3>Fri</h3>
+                    <h3>Sat</h3>
+                </div>
+                <div class="dates">
+                    <ul></ul>
+                </div>
+                
             </div> <!-- closing calendarDisplay -->
-        
+
             <div class="timeSelection hidden">
                 <label for="hourInput" class="srOnly">Choose event time - hours</label>
                 <input type="hourInput" min="0" step="1" name="hourInput" id="hourInput" placeholder="12">

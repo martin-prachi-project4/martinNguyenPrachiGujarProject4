@@ -2,7 +2,6 @@ const bookingApp = {}
 bookingApp.zomatoURL = 'https://developers.zomato.com/api/v2.1/search';
 
 // cities.......
-
 bookingApp.cities = {
     toronto: 89,
     vancouver: 256,
@@ -10,14 +9,14 @@ bookingApp.cities = {
     montreal: 294,
     ottawa: 295
 };
-bookingApp.cityLabel=[
+bookingApp.cityLabel = [
     $('[for="toronto"] h2'),
     $('[for="vancouver"] h2'),
     $('[for="calgary"] h2'),
     $('[for="ottawa"] h2'),
     $('[for="montreal"] h2'),
 ];
-bookingApp.cityCheckbox=[
+bookingApp.cityCheckbox = [
     $('#toronto'),
     $('#vancouver'),
     $('#calgary'),
@@ -49,7 +48,7 @@ bookingApp.cuisineLabel = [
     $('[for="other"] h2'),
 ];
 
-bookingApp.cuisineCheckbox=[
+bookingApp.cuisineCheckbox = [
     $('#indian'),
     $('#pizza'),
     $('#chinese'),
@@ -61,7 +60,7 @@ bookingApp.cuisineCheckbox=[
 ]
 
 // Preferences........
-bookingApp.preferences ={
+bookingApp.preferences = {
     dineIn: 2,
     delivery: 1,
     takeout: 5
@@ -72,7 +71,7 @@ bookingApp.preferenceLabel = [
     $('[for="takeout"] h2'),
 
 ];
-bookingApp.preferenceCheckbox=[
+bookingApp.preferenceCheckbox = [
     $('#dineIn'),
     $('#delivery'),
     $('#takeout'),
@@ -93,13 +92,14 @@ bookingApp.cuisineId;
 bookingApp.preferencesId;
 bookingApp.resourceImage;
 
-bookingApp.getUserSelections = function() {
+bookingApp.getUserSelections = function () {
     bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
     bookingApp.select(bookingApp.cuisineSelection, 'cuisine', bookingApp.cuisineLabel, bookingApp.cuisineCheckbox);
     bookingApp.select(bookingApp.preferencesSelection, 'preferences', bookingApp.preferenceLabel, bookingApp.preferenceCheckbox);
 }
+
 // selection:cities, selectionLabel: bookingApp.citySelection , selectionCheckbox: bookingApp.cityCheckbox
-bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbox ){
+bookingApp.select = function (jquery, selection, selectionLabel, selectionCheckbox) {
     jquery.on('click', "label", function () {
         const selected = $(this).attr("for");
         selectionLabel.forEach(function (value, index) {
@@ -115,10 +115,10 @@ bookingApp.select = function(jquery, selection, selectionLabel, selectionCheckbo
                 selectionCheckbox[index].attr('checked', true);
                 bookingApp[`${selection}Id`] = bookingApp[selection][selected];
                 if (selection === 'cities') {
-                    bookingApp.highlightStyles(selectionLabel[index], '#6D6875')
+                    bookingApp.highlightStyles(selectionLabel[index], '#6D6875');
                 }
                 else {
-                    bookingApp.highlightStyles(selectionLabel[index], '#500808')
+                    bookingApp.highlightStyles(selectionLabel[index], '#500808');
                 }
             }
         });
@@ -142,20 +142,20 @@ bookingApp.highlightStyles = function (element, shadowColor) {
     });
 }
 // check if the selection is selected, if not then give an error to the user........
-bookingApp.checkSelection = function(selection, selectionCheckbox) {
+bookingApp.checkSelection = function (selection, selectionCheckbox) {
     let nothingSelected = true;
-    selectionCheckbox.forEach ( function(value) {
+    selectionCheckbox.forEach(function (value) {
         if (value.attr('checked')) {
             nothingSelected = false;
         }
     });
-    if (nothingSelected) { 
+    if (nothingSelected) {
         bookingApp[`${selection}Id`] = null;
     }
 }
 
 // Prevent default from form submission then handle click event from button.....
-bookingApp.handleButton = function(form, button, start) {
+bookingApp.handleButton = function (form, button, start) {
     form.on('submit', (e) => {
         e.preventDefault();
     });
@@ -178,7 +178,7 @@ bookingApp.handleButton = function(form, button, start) {
 
             }
         }
-    });   
+    });
 }
 
 // Hiding the recommendation Section before seletion.....
@@ -199,7 +199,7 @@ bookingApp.splitScreen = function (value1, width1, fontSize, width2) {
     }, 1000)
 }
 // Process errors and display them in a grammatically correct sentence......
-bookingApp.displayErrorMessage = function(errors) {
+bookingApp.displayErrorMessage = function (errors) {
     let message;
     if (errors.length === 1) {
         message = `Please select a ${errors[0]}.`;
@@ -207,7 +207,7 @@ bookingApp.displayErrorMessage = function(errors) {
         message = `Please select a ${errors[0]} and a ${errors[1]}.`;
     } else {
         message = `Please select `;
-        errors.forEach( (error, index) => {
+        errors.forEach((error, index) => {
             if (index === errors.length - 1) {
                 message += ' and a ' + error + '.';
             } else {
@@ -218,7 +218,7 @@ bookingApp.displayErrorMessage = function(errors) {
     console.log(message);
 }
 // Check for errors in the form of unselected options........
-bookingApp.checkErrors = function() {
+bookingApp.checkErrors = function () {
     let errors = [];
     if (!bookingApp.citiesId) {
         errors.push('city');
@@ -234,16 +234,16 @@ bookingApp.checkErrors = function() {
 
 
 // automatically append to the recommendation display when the scroll hits the bottom or when the display is longer than the origin 9 recommendations........
-bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
+bookingApp.handleRecommendationScroll = function (recommendationSection, start) {
     recommendationSection.on('scroll', () => {
-        if(recommendationSection[0].scrollTop + recommendationSection[0].clientHeight >= recommendationSection[0].scrollHeight) {
+        if (recommendationSection[0].scrollTop + recommendationSection[0].clientHeight >= recommendationSection[0].scrollHeight) {
             start += 9;
             console.log(start)
             bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
         }
     });
     console.log(recommendationSection[0].scrollTop)
-    if (recommendationSection[0].scrollTop === 0 && 
+    if (recommendationSection[0].scrollTop === 0 &&
         recommendationSection[0].scrollHeight === recommendationSection[0].clientHeight) {
         console.log('here')
         start += 9;
@@ -251,7 +251,7 @@ bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
     }
 }
 
-bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, selectedCategoryId, start){
+bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, selectedCategoryId, start) {
     $.ajax({
         url: bookingApp.zomatoURL,
         method: 'GET',
@@ -271,18 +271,18 @@ bookingApp.getRecommendation = function (selectedCityId, selectedCuisineId, sele
 };
 
 // location, currency, featured image, name, zomato url, userRatings.aggregate_rating......
-bookingApp.processRecommendation = function(recommendations) {
-    recommendations.forEach( (value) => {
+bookingApp.processRecommendation = function (recommendations) {
+    recommendations.forEach((value) => {
         const restaurant = value.restaurant;
         const location = [restaurant.location.address, restaurant.location.city, restaurant.location.zipcode];
         const currency = restaurant.currency;
-        const name = restaurant.name ;
-        const url = restaurant.url ;
+        const name = restaurant.name;
+        const url = restaurant.url;
         const userRatings = restaurant.user_rating.aggregate_rating;
         bookingApp.resourceImage = restaurant.thumb;
         bookingApp.defaultImage(bookingApp.resourceImage);
         // bookingApp.information= $('.information');
-        
+
         bookingApp.appendImage(bookingApp.recommendationDisplay, image, name, url);
     });
     bookingApp.showInfo(bookingApp.recommendationSection, bookingApp.information);
@@ -293,13 +293,13 @@ bookingApp.defaultImage = function (resourceImg) {
     if (resourceImg === "") {
         image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
     } else {
-       image = resourceImg;
+        image = resourceImg;
     }
 }
-// const image = `./assets/id${(bookingApp.cuisineId).toString()}.jpg`;
+
 
 // to display the image..........
-bookingApp.appendImage = function(display, image, name, url) {
+bookingApp.appendImage = function (display, image, name, url) {
     display.append(`
     <li>
         <img src="${image}" alt="Featured image for ${name} restaurant from Zomato"/>
@@ -310,7 +310,7 @@ bookingApp.appendImage = function(display, image, name, url) {
 
 
 // to display the restaurant information when an icon is clicked........
-bookingApp.showInfo = function(recommendationDisplay, informationTab){
+bookingApp.showInfo = function (recommendationDisplay, informationTab) {
     recommendationDisplay.on('click', 'i', function () {
         console.log("clicked");
         informationTab.toggleClass('hiddenInfo');
@@ -318,7 +318,7 @@ bookingApp.showInfo = function(recommendationDisplay, informationTab){
 }
 
 // init function to call the api function..........
-bookingApp.init = function() {
+bookingApp.init = function () {
     bookingApp.getUserSelections();
     bookingApp.handleButton(bookingApp.staticDiv, bookingApp.submitButton, 0);
 }
@@ -337,67 +337,67 @@ bookingApp.animations.isOn = false;
 bookingApp.animations.canvas;
 bookingApp.animations.elements = [];
 bookingApp.animations.handleAnimations = function () {
-  if (!bookingApp.animations.isOn) {
-    bookingApp.animations.init();
-    bookingApp.animations.timeoutTransition(1200);
-  } else {
-    bookingApp.animations.reset();
-  }
-  bookingApp.animations.isOn = !bookingApp.animations.isOn;
+    if (!bookingApp.animations.isOn) {
+        bookingApp.animations.init();
+        bookingApp.animations.timeoutTransition(1200);
+    } else {
+        bookingApp.animations.reset();
+    }
+    bookingApp.animations.isOn = !bookingApp.animations.isOn;
 }
 bookingApp.animations.init = function () {
-  bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
-  bookingApp.animations.appendElements('tomato');
-  bookingApp.recommendationSection.css({
-    'overflow': 'hidden'
-  });
-  console.log(bookingApp.animations.animatedElements[0])
-  bookingApp.animations.animatedElements[0].animate({
-    'transform': 'rotate(0deg)',
-    'opacity': '0'
-  }, {
-    'duration': 1500,
-    'step': function (now) {
-      bookingApp.animations.animatedElements[0].css({
-        'transform': `rotate(${now * 300}deg)`
-      });
-    }
-  })
+    bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
+    bookingApp.animations.appendElements('tomato');
+    bookingApp.recommendationSection.css({
+        'overflow': 'hidden'
+    });
+    console.log(bookingApp.animations.animatedElements[0])
+    bookingApp.animations.animatedElements[0].animate({
+        'transform': 'rotate(0deg)',
+        'opacity': '0'
+    }, {
+        'duration': 1500,
+        'step': function (now) {
+            bookingApp.animations.animatedElements[0].css({
+                'transform': `rotate(${now * 300}deg)`
+            });
+        }
+    })
 }
 bookingApp.animations.reset = function () {
-  bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
+    bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
 }
-bookingApp.animations.createCanvas = function(parentElement) {
+bookingApp.animations.createCanvas = function (parentElement) {
     parentElement.append(`
         <div class="animationCanvas">
         </div> <!-- closing animationCanvas -->
     `);
     bookingApp.animations.canvas = $('.animationCanvas');
 }
-bookingApp.animations.eraseCanvas = function(parentElement) {
+bookingApp.animations.eraseCanvas = function (parentElement) {
     parentElement.html('');
 }
-bookingApp.animations.timeoutTransition = function(timeoutDuration) {
+bookingApp.animations.timeoutTransition = function (timeoutDuration) {
     bookingApp.animations.timeout = setTimeout(() => {
-      bookingApp.recommendationSection.css({
-        'overflow': 'scroll'
-      });
-      bookingApp.animations.canvas.animate({
-        'width': '0',
-        'height': '0',
-        'top': '50%',
-        'left': '50%'
-      }, 700);
+        bookingApp.recommendationSection.css({
+            'overflow': 'scroll'
+        });
+        bookingApp.animations.canvas.animate({
+            'width': '0',
+            'height': '0',
+            'top': '50%',
+            'left': '50%'
+        }, 700);
     }, timeoutDuration);
 }
-bookingApp.animations.appendElements = function(...elements) {
-    bookingApp.animations.elements = elements.map( (value) => {
+bookingApp.animations.appendElements = function (...elements) {
+    bookingApp.animations.elements = elements.map((value) => {
         return `<img src="./assets/${value}.png" alt="picture of ${value}" id="${value}">`;
     });
-    bookingApp.animations.elements.forEach( (value) => {
+    bookingApp.animations.elements.forEach((value) => {
         bookingApp.animations.canvas.append(value);
     });
-    bookingApp.animations.animatedElements = elements.map( (value) => {
+    bookingApp.animations.animatedElements = elements.map((value) => {
         return $(`img#${value}`);
     });
 }
@@ -428,7 +428,7 @@ bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
     // $(calendar[0].children[1]).text(today.getDate());
     // $(calendar[0].children[2]).text(today.getMonth() + 1);
     // Function to handle clicks on the calendar icon; once clicked the calendar will be shown and user can select future dates from it; if clicked again, will close the display
-    $('header').on('click', () => {
+    $('.calendarIcon').on('click', () => {
         console.log('here')
         bookingApp.calendar.calendar.toggleClass('hidden');
         bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth()];

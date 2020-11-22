@@ -1,45 +1,44 @@
 // HEADING styles........
-h1{
+h1 {
     @include fontDef($headingFont, 6.4rem, 400, 1.6px);
     color: $secondaryColor;
     text-align: right;
 }
 
-
 h2,
 p,
 footer,
 .submit,
-.recommendation li{
-    @include fontDef($bodyFont, 2rem ,400 ,1.1px);
+.recommendation li {
+    @include fontDef($bodyFont, 2rem, 400, 1.1px);
     color: $optionalColor;
     text-align: center;
     list-style: none;
-    a{
+    a {
         padding: 5px 10px;
         text-decoration: none;
         color: $optionalColor;
     }
 }
 
-.recommendation li i{
+.recommendation li i {
     font-size: 2rem;
     background-color: transparent;
     color: $optionalColor;
     position: static;
 }
 
-main div a{
+main div a {
     padding: 5px 10px;
 }
 
-.recommendation li a{
+.recommendation li a {
     font-size: 1.8rem;
     border-radius: 10px;
-    margin-bottom:  10px;
+    margin-bottom: 10px;
 }
 
-.submit{
+.submit {
     font-size: 2rem;
     padding: 10px 40px;
     border-radius: 30px;
@@ -48,17 +47,15 @@ main div a{
     box-shadow: 5px 5px $secondAccentColor;
 }
 
-
-footer p{
+footer p {
     text-align: right;
     padding: 5px 0;
 }
 
-
 // HOVER styles....
 a:hover,
 a:focus,
-a:active{
+a:active {
     // border-bottom: 2px solid $secondaryColor;
     padding: 5px 10px;
     background-color: $firstAccentGradient;
@@ -67,33 +64,29 @@ a:active{
 
 footer p a:hover,
 footer p a:focus,
-footer p a:active{
+footer p a:active {
     background-color: transparent;
     border-radius: 0;
     border-bottom: 2px solid $secondaryColor;
 }
 
-.recommendation ul li img{
+.recommendation ul li img {
     border-radius: 50%;
     transition: border-radius 0.5s;
     margin: 10px 0;
     &:hover,
     &:active,
-    &:focus{
+    &:focus {
         border-radius: 0;
     }
 }
 
 .submit:hover,
 .submit:focus,
-.submit:active{
+.submit:active {
     font-weight: bold;
     color: $secondaryColor;
     box-shadow: 0 0 $secondAccentColor;
     background-color: $secondAccentColor;
-    border: 2px solid $secondAccentColor
-
+    border: 2px solid $secondAccentColor;
 }
-
-
-

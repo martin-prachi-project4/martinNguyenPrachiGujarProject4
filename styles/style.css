@@ -303,10 +303,10 @@ main div a {
   font-size: 2rem;
   padding: 10px 40px;
   border-radius: 30px;
-  background-color: #E5989B;
-  border: 2px solid #B5838D;
-  -webkit-box-shadow: 5px 5px #6D6875;
-          box-shadow: 5px 5px #6D6875;
+  background-color: #e5989b;
+  border: 2px solid #b5838d;
+  -webkit-box-shadow: 5px 5px #6d6875;
+          box-shadow: 5px 5px #6d6875;
 }
 
 footer p {
@@ -346,10 +346,10 @@ footer p a:active {
 .submit:active {
   font-weight: bold;
   color: #500808;
-  -webkit-box-shadow: 0 0 #6D6875;
-          box-shadow: 0 0 #6D6875;
-  background-color: #6D6875;
-  border: 2px solid #6D6875;
+  -webkit-box-shadow: 0 0 #6d6875;
+          box-shadow: 0 0 #6d6875;
+  background-color: #6d6875;
+  border: 2px solid #6d6875;
 }
 
 header {
@@ -366,26 +366,40 @@ main {
   position: relative;
 }
 
+main .icon {
+  position: relative;
+}
+
 main .icon a {
   position: absolute;
-  top: -30px;
-  right: 100px;
+  top: -60px;
+  right: 10%;
 }
 
 main .icon a:hover, main .icon a:active, main .icon a:focus {
   background-color: transparent;
 }
 
-main i {
+main .icon .resetIcon,
+main .icon .calendarIcon {
   font-size: 2.5rem;
   text-align: center;
   color: #500808;
   background-color: rgba(181, 131, 141, 0.8);
+  border-radius: 50%;
+  padding: 10px;
+}
+
+main .icon .calendarIcon {
+  position: absolute;
+  top: -60px;
+  right: 15%;
+}
+
+main .icon .resetIcon {
   position: absolute;
   top: 0;
   right: 0;
-  border-radius: 50%;
-  padding: 10px;
 }
 
 .options {
@@ -393,8 +407,8 @@ main i {
   display: grid;
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
-  -ms-grid-rows: (calc((75vh - 50px)/2))[2];
-      grid-template-rows: repeat(2, calc((75vh - 50px)/2));
+  -ms-grid-rows: (calc((75vh - 50px) / 2))[2];
+      grid-template-rows: repeat(2, calc((75vh - 50px) / 2));
   grid-gap: 10px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -466,6 +480,15 @@ main i {
           justify-content: center;
   -ms-flex-line-pack: center;
       align-content: center;
+  grid-row-gap: 10px;
+}
+
+.submission .calendarIcon {
+  text-align: center;
+}
+
+.submission .calendarIcon i {
+  position: static;
 }
 
 .recommendation {
@@ -503,6 +526,22 @@ main i {
   position: relative;
 }
 
+.recommendation li .information {
+  background-color: rgba(181, 131, 141, 0.8);
+  width: 100%;
+  height: 85%;
+  position: absolute;
+  bottom: 15%;
+  left: 0;
+  padding: 10%;
+  border-radius: 30px;
+}
+
+.recommendation li .information p {
+  text-align: left;
+  padding: 10px 0;
+}
+
 .recommendation li:nth-of-type(3n) {
   margin-right: 0;
 }
@@ -523,7 +562,7 @@ main i {
 
 footer {
   min-height: 5vh;
-  background-color: #E5989B;
+  background-color: #e5989b;
   opacity: 0.7;
 }
 
@@ -542,7 +581,7 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #E5989B;
+  background-color: #e5989b;
   border-radius: 50px;
   z-index: 1;
 }
@@ -553,8 +592,6 @@ img#tomato {
 }
 
 .calendar {
-  width: calc(100vw - 30px);
-  position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -565,16 +602,22 @@ img#tomato {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: absolute;
   top: 0;
   left: 15px;
   z-index: 1;
+  width: calc(100vw - 30px);
 }
 
 .calendar a {
-  color: whitesmoke;
+  font-family: "Raleway", sans-serif;
+  color: #f5f5f5;
 }
 
 .calendarNav {
+  text-align: center;
+  color: #f5f5f5;
+  background-color: #2c2c2e;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -585,18 +628,17 @@ img#tomato {
       -ms-flex-align: center;
           align-items: center;
   top: 0;
-  width: 50vw;
-  text-align: center;
+  border-radius: 5px;
   padding: 10px;
   margin: 2px;
-  border-radius: 5px;
-  color: whitesmoke;
-  background-color: #2c2c2c;
+  width: 50vw;
   cursor: default;
 }
 
 .calendarNav h3 {
-  background-color: #2c2c2c;
+  font-family: "Raleway", sans-serif;
+  font-size: 1.8rem;
+  background-color: #2c2c2e;
   -webkit-box-flex: 1;
       -ms-flex: 1 0 0px;
           flex: 1 0 0;
@@ -607,55 +649,86 @@ img#tomato {
 }
 
 .calendarDisplay {
-  width: 50vw;
-  padding: 10px;
+  color: #f5f5f5;
+  background-color: #3a3a3a;
   border-radius: 5px;
   margin: 2px;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (calc(100%/7))[7];
-      grid-template-columns: repeat(7, calc(100%/7));
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 10px;
+  height: 50vh;
+  width: 50vw;
+}
+
+.calendarDisplay .dayHeading {
+  height: 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.calendarDisplay .dayHeading h3 {
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
   background-color: #3a3a3a;
-  color: whitesmoke;
-}
-
-.calendarDisplay h3 {
-  text-align: center;
-  padding-bottom: 10px;
-  background-color: #3a3a3a;
-}
-
-.calendarDisplay ul {
-  margin: 0;
-  padding: 0;
-  width: calc(50vw - 20px);
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (calc(100%/7))[7];
-      grid-template-columns: repeat(7, calc(100%/7));
-  -ms-grid-rows: (calc(50vw/7))[6];
-      grid-template-rows: repeat(6, calc(50vw/7));
-  text-align: center;
-}
-
-.calendarDisplay ul li {
-  -ms-flex-line-pack: center;
-      align-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+}
+
+.calendarDisplay .dates {
+  height: 90%;
+}
+
+.calendarDisplay .dates ul {
   display: -ms-grid;
   display: grid;
+  -ms-grid-columns: (calc(100% / 7))[7];
+      grid-template-columns: repeat(7, calc(100% / 7));
+  text-align: center;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  width: calc(50vw - 20px);
+}
+
+.calendarDisplay li {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
   -ms-grid-columns: (12px)[2];
       grid-template-columns: repeat(2, 12px);
   cursor: pointer;
 }
 
-.calendarDisplay ul li:nth-child(n) {
+.calendarDisplay li:nth-child(n) {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.3rem;
   border: 1px solid #3a3a3a;
 }
 
-.calendarDisplay ul li .chosenDate {
+.calendarDisplay li .chosenDate {
   color: #2cac0c;
 }
 
@@ -671,21 +744,23 @@ img#tomato {
 }
 
 .timeSelection h3 {
-  display: block;
+  font-family: "Raleway", sans-serif;
   font-size: 4rem;
-  color: whitesmoke;
+  color: #f5f5f5;
   background-color: #3a3a3a;
+  display: block;
 }
 
 .timeSelection .meridiem {
   width: 80px;
 }
 
-#hourInput, #minuteInput {
+#hourInput,
+#minuteInput {
   font-size: 5rem;
   text-align: center;
-  width: 90px;
   height: 90px;
+  width: 90px;
 }
 
 #minuteInput {
@@ -702,18 +777,19 @@ img#tomato {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 200px;
-  height: 50px;
   border-radius: 5px;
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
   -webkit-transform: translateY(-170px);
           transform: translateY(-170px);
+  height: 50px;
+  width: 200px;
 }
 
 .submitButton h3 {
+  color: #3a3a3a;
+  font-family: "Quicksand", sans-serif;
   font-size: 3rem;
   text-transform: uppercase;
-  color: grey;
 }
 
 .hidden {
@@ -725,8 +801,8 @@ img#tomato {
     font-size: 4.8rem;
     padding: 40px;
   }
-  main a {
-    right: 50px;
+  main .icon .calendarIcon {
+    right: 20%;
   }
   .cuisine {
     grid-row-gap: 15px;
@@ -757,30 +833,33 @@ img#tomato {
     font-weight: 400;
     padding: 10px 40px;
     border-radius: 30px;
-    background-color: #E5989B;
-    border: 2px solid #B5838D;
-    -webkit-box-shadow: 5px 5px #6D6875;
-            box-shadow: 5px 5px #6D6875;
+    background-color: #e5989b;
+    border: 2px solid #b5838d;
+    -webkit-box-shadow: 5px 5px #6d6875;
+            box-shadow: 5px 5px #6d6875;
   }
 }
 
 @media (max-width: 500px) {
-  main i {
-    right: 200px;
+  main .icon a {
+    right: 65%;
   }
-  .cities,
-  .cuisine {
+  main .icon .calendarIcon {
+    right: 80%;
+  }
+  main .cities,
+  main .cuisine {
     -ms-flex-line-pack: justify;
         align-content: space-between;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     grid-row-gap: 5px;
   }
-  .submit,
-  .submit:hover {
+  main .submit,
+  main .submit:hover {
     padding: 10px 20px;
   }
-  .recommendation ul li {
+  main .recommendation ul li {
     padding: 15px;
     margin-right: 0;
     width: 100%;

@@ -1,35 +1,23 @@
 // Setting up SASS variables......
-$headingFont: 'Raleway', sans-serif;
-$bodyFont: 'Quicksand', sans-serif;
+$headingFont: "Raleway", sans-serif;
+$bodyFont: "Quicksand", sans-serif;
 // colors...
-$primaryColor: #E5989B;
+$primaryColor: #e5989b;
 $secondaryColor: #500808;
 $optionalColor: #200202;
-$firstAccentColor:#B5838D;
-$firstAccentGradient: rgba(181,131,141,0.8);
-$secondAccentColor: #6D6875;
-$secondAccentGradient: rgba(109,104,117,0.8);
-$thirdAccentGradient: rgba(109,104,117,0.9);
+$calendarPrimary: #f5f5f5;
+$calendarSecondary: #3a3a3a;
+$calendarTertiary: #2c2c2e;
+$firstAccentColor: #b5838d;
+$firstAccentGradient: rgba(181, 131, 141, 0.8);
+$secondAccentColor: #6d6875;
+$secondAccentGradient: rgba(109, 104, 117, 0.8);
+$thirdAccentGradient: rgba(109, 104, 117, 0.9);
 
-
-
- // MIXIN for fonts.........
-@mixin fontDef($family: $headingFont,
-$sizeValue: 2rem, 
-$weight: 400,  
-$letterSpacing: 1.1px) {
+// MIXIN for fonts.........
+@mixin fontDef($family: $headingFont, $sizeValue: 2rem, $weight: 400, $letterSpacing: 1.1px) {
     font-family: $family;
     font-size: $sizeValue;
     font-weight: $weight;
     letter-spacing: $letterSpacing;
 }
-// body{
-//     background-image: url('./assets/brookeLarkHeader.jpg');
-//     // Image credits: unsplash: Brooke Lark
-//     background-repeat: no-repeat;
-//     background-size: cover;
-//     background-position: center;
-//     background-attachment: fixed;
-// }
-
-
