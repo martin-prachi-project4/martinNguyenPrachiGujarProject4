@@ -193,7 +193,8 @@ main {
     }
 }
 
-.reserve {
+.reserve, 
+.cancelBooking {
     background-color: $secondaryColor;
     width: 250px;
     height: 150px;
@@ -205,4 +206,23 @@ main {
     align-items: center;
     justify-content: space-evenly;
     border-radius: 10px;
+}
+
+.cancelBooking {
+    background-color: $secondAccentColor;
+    z-index: 10;
+    button {
+        padding: 10px 20px;
+        margin: 0 20px;
+        border-radius: 10px;
+        color: whitesmoke;
+    }
+    #no {
+        background-color: $primaryColor;
+        border: 2px solid $primaryColor;
+    }
+    #yes {
+        background-color: $secondaryColor;
+        border: 2px solid $secondaryColor;
+    }
 }

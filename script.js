@@ -536,7 +536,11 @@ bookingApp.calendar.bookings = [];
 bookingApp.calendar.bookingInfoDisplay = $('.bookingInfo');
 bookingApp.calendar.dayHeadings = $('.dayHeading');
 bookingApp.calendar.reservedMessage = $('.reserve');
+bookingApp.calendar.cancellation = $('.cancelBooking');
+bookingApp.calendar.answerNo = $('#no');
+bookingApp.calendar.answerYes = $('#yes');
 bookingApp.calendar.viewOnly = false;
+bookingApp.calendar.makeBooking = true;
 // Function to display calendar icon
 bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
     $('.calendarIcon').on('click', () => {
@@ -689,13 +693,16 @@ bookingApp.calendar.getUserChosenDate = function () {
                 'color': 'crimson'
             });
             // Hide contents of calendar display
-            bookingApp.calendar.previousButton.addClass('hidden');
-            bookingApp.calendar.nextButton.addClass('hidden');
-            bookingApp.calendar.calendarDisplay.html('');
-            $(bookingApp.calendar.calendarDisplay.parent()).css('color', '#3a3a3a');
-            // Show contents of time selection and submit button
-            bookingApp.calendar.timeSelection.toggleClass('hidden');
-            bookingApp.calendar.submitButton.toggleClass('hidden');
+            if (jQuery.isEmptyObject(bookingApp.database.bookings)||
+                bookingApp.calendar.makeBooking) {
+                    bookingApp.calendar.previousButton.addClass('hidden');
+                    bookingApp.calendar.nextButton.addClass('hidden');
+                    bookingApp.calendar.calendarDisplay.html('');
+                    $(bookingApp.calendar.calendarDisplay.parent()).css('color', '#3a3a3a');
+                    // Show contents of time selection and submit button
+                    bookingApp.calendar.timeSelection.toggleClass('hidden');
+                    bookingApp.calendar.submitButton.toggleClass('hidden');
+            }
         } else {
             for (let booking in bookingApp.database.bookings) {
                 if (parseInt(bookingApp.calendar.chosenDate[2]) === parseInt(booking.slice(8, 10)) &&
@@ -709,6 +716,26 @@ bookingApp.calendar.getUserChosenDate = function () {
             }
         }  
     });
+}
+bookingApp.calendar.cancelReservedDate = function() {
+    for (let booking in bookingApp.database.bookings) {
+        if (parseInt(bookingApp.calendar.chosenDate[2]) === parseInt(booking.slice(8, 10)) &&
+            bookingApp.calendar.chosenDate[1] === parseInt(booking.slice(5, 7)) &&
+            bookingApp.calendar.chosenDate[0] === parseInt(booking.slice(0, 4))) {
+                bookingApp.calendar.cancellation.removeClass('hidden');
+                bookingApp.calendar.answerNo.on('click', function(event) {
+                    event.preventDefault();
+                    bookingApp.calendar.calendar.toggleClass('hidden');
+                    bookingApp.calendar.cancellation.toggleClass('hidden');
+                    bookingApp.calendar.makeeBooking = false;
+                });
+                bookingApp.calendar.answerYes.on('click', function(event) {
+                    event.preventDefault();
+                    bookingApp.calendar.cancellation.toggleClass('hidden');
+                    bookingApp.calendar.makeBooking = true;
+                });
+        }
+    }
 }
 bookingApp.calendar.displayBookingInfo = function(timeVenue) {
     if (bookingApp.calendar.bookingInfoDisplay.hasClass('hidden')) {
@@ -736,8 +763,12 @@ bookingApp.calendar.getUserChosenTime = function () {
         bookingApp.calendar.checkUserChosenTime();
         let meridiem = bookingApp.calendar.meridiem.text();
         let hour = parseInt(bookingApp.calendar.hourInput.val());
-        if (meridiem === 'PM' && hour !== 12) { hour += 12 }
-        if (!hour || (hour === 12 && meridiem === 'AM')) { hour = 0; }
+        if (!hour || (hour === 12 && meridiem === 'AM')) {
+            hour = 0;
+        }
+        if (meridiem === 'PM' && hour !== 12) {
+            hour += 12
+        }
         let minute = parseInt(bookingApp.calendar.minuteInput.val());
         if (!minute) { minute = 0; }
         bookingApp.calendar.chosenDate[3] = hour;
@@ -809,6 +840,7 @@ bookingApp.calendar.init = function () {
     bookingApp.calendar.getUserChosenDate();
     bookingApp.calendar.getUserChosenTime();
     bookingApp.calendar.toggleMeridiem();
+    bookingApp.calendar.cancelReservedDate();
 }
 
 // calling the API function once the document loads.......
