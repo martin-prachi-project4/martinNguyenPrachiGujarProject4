@@ -237,11 +237,22 @@ html {
 
 body {
   background-image: url("../assets/brookeLarkHeader.jpg");
+  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 img {
@@ -261,6 +272,8 @@ h1 {
 
 h2,
 p,
+a,
+li,
 footer,
 .submit,
 .recommendation li {
@@ -268,43 +281,29 @@ footer,
   font-size: 2rem;
   font-weight: 400;
   letter-spacing: 1.1px;
-  color: #200202;
+  color: whitesmoke;
   text-align: center;
   list-style: none;
-}
-
-h2 a,
-p a,
-footer a,
-.submit a,
-.recommendation li a {
-  padding: 5px 10px;
   text-decoration: none;
-  color: #200202;
 }
 
-.recommendation li i {
-  font-size: 2rem;
-  background-color: transparent;
-  color: #200202;
-  position: static;
-}
-
-main div a {
-  padding: 5px 10px;
-}
-
-.recommendation li a {
+h3 {
+  font-family: "Raleway", sans-serif;
   font-size: 1.8rem;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  font-weight: 400;
+  letter-spacing: 1.1px;
+  color: #f5f5f5;
+  text-align: center;
+}
+
+main .icon a {
+  padding: 5px 10px;
 }
 
 .submit {
-  font-size: 2rem;
   padding: 10px 40px;
-  border-radius: 30px;
   background-color: #e5989b;
+  border-radius: 30px;
   border: 2px solid #b5838d;
   -webkit-box-shadow: 5px 5px #6d6875;
           box-shadow: 5px 5px #6d6875;
@@ -319,6 +318,71 @@ main div a {
   border: 2px solid #6d6875;
 }
 
+.popUpError h2 {
+  font-size: 1.5rem;
+  padding: 15px 20px;
+}
+
+.recommendation li i {
+  font-size: 2rem;
+  background-color: transparent;
+  color: #200202;
+  position: static;
+}
+
+.recommendation li a {
+  font-size: 1.8rem;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+.calendar .calendarNav {
+  background-color: #2c2c2e;
+  border-radius: 5px;
+}
+
+.calendar .calendarNav i {
+  color: #f5f5f5;
+}
+
+.calendar .calendarDisplay {
+  background-color: #3a3a3a;
+  border-radius: 5px;
+}
+
+.calendar .calendarDisplay .dayHeading h3 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.calendar .calendarDisplay li:nth-child(n) {
+  font-family: "Quicksand", sans-serif;
+  color: #f5f5f5;
+  font-size: 1.3rem;
+  border: 1px solid #3a3a3a;
+}
+
+.calendar .timeSelection h3 {
+  font-size: 4rem;
+  background-color: #3a3a3a;
+}
+
+.calendar .submitButton h3 {
+  font-family: "Quicksand", sans-serif;
+  font-size: 3rem;
+  color: #3a3a3a;
+  text-transform: uppercase;
+}
+
+#hourInput,
+#minuteInput {
+  font-size: 5rem;
+  text-align: center;
+  height: 90px;
+  width: 90px;
+}
+
 footer p {
   text-align: right;
   padding: 5px 0;
@@ -328,7 +392,7 @@ a:hover,
 a:focus,
 a:active {
   padding: 5px 10px;
-  background-color: rgba(181, 131, 141, 0.8);
+  background-color: rgba(181, 131, 141, 0.9);
   border-radius: 10px;
 }
 
@@ -338,18 +402,6 @@ footer p a:active {
   background-color: transparent;
   border-radius: 0;
   border-bottom: 2px solid #500808;
-}
-
-.recommendation ul li img {
-  border-radius: 10px;
-  border: 5px solid #e5989b;
-  -webkit-transition: border 0.2s;
-  transition: border 0.2s;
-  margin: 10px 0;
-}
-
-.recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
-  border: 5px solid #500808;
 }
 
 .submit:hover,
@@ -364,12 +416,13 @@ footer p a:active {
 }
 
 header {
-  height: 20vh;
+  height: auto;
 }
 
 header h1 {
-  margin: 0;
-  padding: 30px;
+  padding: 0;
+  margin-top: 25px;
+  text-align: center;
 }
 
 main {
@@ -396,7 +449,7 @@ main .icon .calendarIcon {
   font-size: 2.5rem;
   text-align: center;
   color: #500808;
-  background-color: rgba(181, 131, 141, 0.8);
+  background-color: rgba(181, 131, 141, 0.9);
   border-radius: 50%;
   padding: 10px;
 }
@@ -404,7 +457,7 @@ main .icon .calendarIcon {
 main .icon .calendarIcon {
   position: absolute;
   top: -60px;
-  right: 15%;
+  right: 16%;
 }
 
 main .icon .resetIcon {
@@ -466,48 +519,49 @@ main .icon .resetIcon {
 }
 
 .cities {
-  background-color: rgba(181, 131, 141, 0.8);
+  background-color: rgba(181, 131, 141, 0.9);
   border-top-left-radius: 15px;
 }
 
 .cuisine {
-  background-color: rgba(109, 104, 117, 0.8);
+  background-color: rgba(109, 104, 117, 0.9);
   border-top-right-radius: 15px;
 }
 
 .preferences {
-  background-color: rgba(109, 104, 117, 0.8);
+  background-color: rgba(109, 104, 117, 0.9);
   border-bottom-left-radius: 15px;
   -ms-grid-columns: 100px;
       grid-template-columns: 100px;
 }
 
 .submission {
-  background-color: rgba(181, 131, 141, 0.8);
+  background-color: rgba(181, 131, 141, 0.9);
   border-bottom-right-radius: 15px;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 150px 50px;
-      grid-template-columns: 150px 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  grid-row-gap: 10px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
 }
 
-.submission .calendarIcon {
-  text-align: center;
-}
-
-.submission .calendarIcon i {
-  position: static;
+.submission .popUpError {
+  position: absolute;
+  bottom: 25px;
 }
 
 .recommendation {
   position: relative;
-  background-color: #e5989b;
+  background-color: rgba(181, 131, 141, 0.9);
   overflow: scroll;
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -530,30 +584,71 @@ main .icon .resetIcon {
       flex-wrap: wrap;
 }
 
-.recommendation ul li {
+.recommendation li {
   margin-bottom: 25px;
   margin-right: 15px;
   width: calc((100% - 30px) / 3);
-}
-
-.recommendation li {
   position: relative;
 }
 
+.recommendation li a {
+  color: #200202;
+}
+
 .recommendation li .information {
-  background-color: rgba(181, 131, 141, 0.8);
-  width: 100%;
-  height: 85%;
+  background-color: rgba(80, 8, 8, 0.9);
+  border-radius: 10px;
   position: absolute;
-  bottom: 15%;
   left: 0;
-  padding: 10%;
-  border-radius: 15px;
+  top: 0;
+  margin: 10px 0;
+  width: 100%;
 }
 
 .recommendation li .information p {
+  font-size: 1.6rem;
+  color: #e5989b;
+  text-align: center;
+  padding: 10px 20px;
+}
+
+.recommendation li .restaurantName {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.recommendation li .restaurantName a {
+  padding: 0;
+  width: 85%;
   text-align: left;
-  padding: 10px 0;
+}
+
+.recommendation li .restaurantName .fa-calendar-plus {
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.recommendation ul li img {
+  border-radius: 10px;
+  border: 5px solid rgba(181, 131, 141, 0.9);
+  -webkit-transition: border 0.2s;
+  transition: border 0.2s;
+  margin: 10px 0;
+}
+
+.recommendation ul li img:hover, .recommendation ul li img:active, .recommendation ul li img:focus {
+  border: 5px solid #500808;
+}
+
+.recommendation li .information i {
+  color: #e5989b;
 }
 
 .recommendation li:nth-of-type(3n) {
@@ -562,6 +657,19 @@ main .icon .resetIcon {
 
 .hiddenInfo {
   display: none;
+}
+
+.flexInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .flexContainer {
@@ -625,10 +733,6 @@ img#tomato {
           transform: translate(-6px, 11px);
 }
 
-.draggable {
-  position: absolute;
-}
-
 .calendar {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -641,21 +745,13 @@ img#tomato {
       -ms-flex-align: center;
           align-items: center;
   position: absolute;
-  top: 0;
-  left: 15px;
+  top: 23px;
+  left: 0;
   z-index: 1;
-  width: calc(100vw - 30px);
-}
-
-.calendar a {
-  font-family: "Raleway", sans-serif;
-  color: #f5f5f5;
+  width: calc(50vw - 108px);
 }
 
 .calendarNav {
-  text-align: center;
-  color: #f5f5f5;
-  background-color: #2c2c2e;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -666,17 +762,13 @@ img#tomato {
       -ms-flex-align: center;
           align-items: center;
   top: 0;
-  border-radius: 5px;
   padding: 10px;
   margin: 2px;
-  width: 50vw;
+  width: 100%;
   cursor: default;
 }
 
 .calendarNav h3 {
-  font-family: "Raleway", sans-serif;
-  font-size: 1.8rem;
-  background-color: #2c2c2e;
   -webkit-box-flex: 1;
       -ms-flex: 1 0 0px;
           flex: 1 0 0;
@@ -687,10 +779,6 @@ img#tomato {
 }
 
 .calendarDisplay {
-  color: #f5f5f5;
-  background-color: #3a3a3a;
-  border-radius: 5px;
-  margin: 2px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -698,9 +786,11 @@ img#tomato {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 10px;
   height: 50vh;
-  width: 50vw;
+  padding: 10px;
+  margin: 2px;
+  width: 100%;
+  position: relative;
 }
 
 .calendarDisplay .dayHeading {
@@ -717,9 +807,6 @@ img#tomato {
 }
 
 .calendarDisplay .dayHeading h3 {
-  font-family: "Raleway", sans-serif;
-  text-transform: uppercase;
-  background-color: #3a3a3a;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -744,7 +831,32 @@ img#tomato {
   height: 100%;
   padding: 0;
   margin: 0;
-  width: calc(50vw - 20px);
+}
+
+.calendarDisplay .bookingInfo {
+  position: absolute;
+  background-color: #6d6875;
+  min-height: 100px;
+  width: calc(100% - 20px);
+  bottom: -100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.calendarDisplay .bookingInfo h2 {
+  padding: 0 20px;
+  color: whitesmoke;
+}
+
+.calendarDisplay .bookingInfo.hidden {
+  display: none;
 }
 
 .calendarDisplay li {
@@ -760,14 +872,9 @@ img#tomato {
   cursor: pointer;
 }
 
-.calendarDisplay li:nth-child(n) {
-  font-family: "Quicksand", sans-serif;
-  font-size: 1.3rem;
-  border: 1px solid #3a3a3a;
-}
-
-.calendarDisplay li .chosenDate {
-  color: #2cac0c;
+.calendarDisplay li span {
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .timeSelection {
@@ -782,23 +889,11 @@ img#tomato {
 }
 
 .timeSelection h3 {
-  font-family: "Raleway", sans-serif;
-  font-size: 4rem;
-  color: #f5f5f5;
-  background-color: #3a3a3a;
   display: block;
 }
 
 .timeSelection .meridiem {
-  width: 80px;
-}
-
-#hourInput,
-#minuteInput {
-  font-size: 5rem;
-  text-align: center;
-  height: 90px;
-  width: 90px;
+  width: 70px;
 }
 
 #minuteInput {
@@ -806,6 +901,8 @@ img#tomato {
 }
 
 .submitButton {
+  border-radius: 5px;
+  background-color: #f5f5f5;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -815,23 +912,27 @@ img#tomato {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-radius: 5px;
-  background-color: #f5f5f5;
   -webkit-transform: translateY(-170px);
           transform: translateY(-170px);
   height: 50px;
   width: 200px;
 }
 
-.submitButton h3 {
-  color: #3a3a3a;
-  font-family: "Quicksand", sans-serif;
-  font-size: 3rem;
-  text-transform: uppercase;
-}
-
 .hidden {
   display: none;
+}
+
+@media (max-width: 1320px) {
+  .calendar {
+    width: calc(50vw - 55px);
+  }
+}
+
+@media (max-width: 900px) {
+  .calendar {
+    left: 0;
+    width: calc(100vw - 50px);
+  }
 }
 
 @media (max-width: 790px) {
@@ -845,11 +946,21 @@ img#tomato {
   .cuisine {
     grid-row-gap: 15px;
   }
+  .recommendation {
+    margin: 0;
+  }
   .recommendation ul li {
     width: calc((100% - 15px) / 2);
   }
   .recommendation ul li:nth-of-type(2n) {
     margin-right: 0;
+  }
+  .recommendation li .information p {
+    font-size: 2rem;
+  }
+  .calendar {
+    left: 0;
+    width: calc(100vw - 50px);
   }
   footer p {
     text-align: center;
@@ -883,7 +994,7 @@ img#tomato {
     right: 65%;
   }
   main .icon .calendarIcon {
-    right: 80%;
+    right: 85%;
   }
   main .cities,
   main .cuisine {
@@ -901,5 +1012,11 @@ img#tomato {
     padding: 15px;
     margin-right: 0;
     width: 100%;
+  }
+}
+
+@media (max-height: 812px) {
+  .popUpError {
+    display: none;
   }
 }

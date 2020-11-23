@@ -15,7 +15,7 @@ main {
         }
 
         .resetIcon,
-        .calendarIcon  {
+        .calendarIcon {
             font-size: 2.5rem;
             text-align: center;
             color: $secondaryColor;
@@ -24,13 +24,13 @@ main {
             padding: 10px;
         }
 
-        .calendarIcon{
+        .calendarIcon {
             position: absolute;
             top: -60px;
-            right: 15%;
+            right: 16%;
         }
 
-        .resetIcon{
+        .resetIcon {
             position: absolute;
             top: 0;
             right: 0;
@@ -75,7 +75,7 @@ main {
 
 .cuisine {
     background-color: $secondAccentGradient;
-    border-top-right-radius: 15px;   
+    border-top-right-radius: 15px;
 }
 
 .preferences {
@@ -87,23 +87,21 @@ main {
 .submission {
     background-color: $firstAccentGradient;
     border-bottom-right-radius: 15px;
-    display: grid;
-    grid-template-columns: 150px 50px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-content: center;
-    grid-row-gap: 10px;
-    .calendarIcon{
-        text-align: center;
-        i{
-            position: static;
-        }    
+    align-items: center;
+    position: relative;
+    .popUpError {
+        position: absolute;
+        bottom: 25px
     }
 }
 
 // Recommendation section.....
 .recommendation {
     position: relative;
-    background-color: $primaryColor;
+    background-color: $firstAccentGradient;
     overflow: scroll;
     flex: 1;
     border-radius: 15px;
@@ -116,30 +114,62 @@ main {
     ul {
         display: flex;
         flex-wrap: wrap;
-        li {
-            margin-bottom: 25px;
-            margin-right: 15px;
-            width: calc((100% - 30px) / 3);
-        }
     }
 }
 
 .recommendation li {
+    margin-bottom: 25px;
+    margin-right: 15px;
+    width: calc((100% - 30px) / 3);
     position: relative;
+    a{
+        color: $optionalColor;
+    }
     .information {
-        background-color: $firstAccentGradient;
-        width: 100%;
-        height: 85%;
+        background-color: rgba(80, 8, 8, 0.9);
+        border-radius: 10px;
         position: absolute;
-        bottom: 15%;
         left: 0;
-        padding: 10%;
-        border-radius: 15px;
+        top: 0;
+        margin: 10px 0;
+        width: 100%;
         p {
-            text-align: left;
-            padding: 10px 0;
+            font-size: 1.6rem;
+            color: $primaryColor;
+            text-align: center;
+            padding: 10px 20px;
         }
     }
+    .restaurantName {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        a {
+            padding: 0;
+            width: 85%;
+            text-align: left;
+        }
+        .fa-calendar-plus {
+            font-size: 3rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.recommendation ul li img {
+    border-radius: 10px;
+    border: 5px solid $firstAccentGradient;
+    transition: border 0.2s;
+    margin: 10px 0;
+    &:hover,
+    &:active,
+    &:focus {
+        border: 5px solid $secondaryColor;
+    }
+}
+
+.recommendation li .information i {
+    color: $primaryColor;
 }
 
 .recommendation li:nth-of-type(3n) {
@@ -148,6 +178,12 @@ main {
 
 .hiddenInfo {
     display: none;
+}
+
+.flexInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .flexContainer {

@@ -14,12 +14,16 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 }
 body {
     background-image: url('../assets/brookeLarkHeader.jpg');
+    min-height: 100vh;
     // Image credits: unsplash: Brooke Lark
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
 }
 
 img {

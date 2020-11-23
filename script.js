@@ -85,14 +85,15 @@ bookingApp.submitButton = $('.submit');
 bookingApp.buttonClicked = false;
 bookingApp.recommendationSection = $('.recommendation')
 bookingApp.recommendationDisplay = $('.recommendation ul');
+bookingApp.popUpError = $('.popUpError');
 bookingApp.staticDiv = $('.options');
 bookingApp.heading = $('h2');
-bookingApp.information;
+bookingApp.selectedRestaurant;
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
 bookingApp.restaurants = [];
-
+bookingApp.bookingIcons = [];
 
 bookingApp.getUserSelections = function () {
     bookingApp.select(bookingApp.citiesSelection, 'cities', bookingApp.cityLabel, bookingApp.cityCheckbox);
@@ -169,11 +170,12 @@ bookingApp.handleButton = function (form, button, start) {
                 bookingApp.buttonClicked = true;
                 bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
                 bookingApp.showInfo();
+                bookingApp.handleBooking();
                 // Toggle on/off loading animation
                 bookingApp.animations.init();
                 bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
                 // display: if else statement for media query: make it in a function and call it here
-                if ($(window).width() > 890) {
+                if ($(window).width() > 900) {
                     bookingApp.splitScreen('grid', '50vw', '1.7rem', '50vw');
                 } else {
                     bookingApp.splitScreen('none', '0', '2rem', '100vw');
@@ -190,7 +192,8 @@ bookingApp.handleButton = function (form, button, start) {
                 bookingApp.handleRecommendationScroll(bookingApp.recommendationSection, start);
             }
         }
-    })
+    });
+    
 }
 
 // Hiding the recommendation Section before seletion.....
@@ -230,12 +233,11 @@ bookingApp.slideInRecommendation = function(staticDiv, slidingDiv) {
 }
 // Process errors and display them in a grammatically correct sentence
 bookingApp.displayErrorMessage = function(message) {
+    bookingApp.popUpError.html('');
     if (message) {
-        bookingApp.submissionSection.append(`
-        <div class="popUpError"> 
-            <h2>${message}</h2>
-        </div>
-    `);
+        bookingApp.popUpError.append(`
+            <h2>** ${message}</h2>
+        `);
     } 
 }
 
@@ -295,7 +297,6 @@ bookingApp.handleRecommendationScroll = function(recommendationSection, start) {
     recommendationSection.on('scroll', () => {
         if(recommendationSection[0].scrollTop + recommendationSection[0].clientHeight >= recommendationSection[0].scrollHeight - 10) {
             start += 9;
-            // bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start);
             setTimeout(bookingApp.getRecommendation(bookingApp.citiesId, bookingApp.cuisineId, bookingApp.preferencesId, start), 100);
         }
     });
@@ -357,24 +358,45 @@ bookingApp.appendImage = function (index, display, image, name, url, currency, u
     display.append(`
         <li id="restaurant${index}" >
             <img src="${image}" alt="Featured image for ${name} restaurant from Zomato" id="${name}"/>
-            <i class="fas fa-info-circle"></i>
-            <a href="${url}">${name}</a>
+            <div class="restaurantName">
+                <a href="${url}">${name}</a>
+                <i class="far fa-calendar-plus" id="icon${index}"></i>
+            </div>
             <div class="information hiddenInfo">
                 <p>Ratings: ${userRatings}/5.0 | ${currency}</p>
-                <i class="far fa-calendar-plus"></i>
             </div>
         </li>
     `);
-    bookingApp.restaurants.push($(`#restaurant${index}`));
+    const bookingIcon = $(`#icon${index}`);
+    bookingApp.bookingIcons.push(bookingIcon);
 }
 
 bookingApp.showInfo = function () {
-    bookingApp.recommendationDisplay.on('click', 'li', function () {
-        $($(this)[0].childNodes[7]).toggleClass('hiddenInfo');
+    bookingApp.recommendationDisplay.on('click', 'img', function () {
+        const informationTab = $(this.nextElementSibling.nextElementSibling);
+        informationTab.css({
+            'height': `${informationTab.width()}px`
+        });
+        informationTab.toggleClass('hiddenInfo flexInfo');
+    });
+    bookingApp.recommendationDisplay.on('click', '.information', function () {
+        $(this).toggleClass('hiddenInfo flexInfo');
     });
 }
 
-
+bookingApp.handleBooking = function () {
+    bookingApp.recommendationDisplay.on('click', '.fa-calendar-plus', function () {
+        bookingApp.selectedRestaurant = this.previousElementSibling.innerText;
+        bookingApp.calendar.viewOnly = false;
+        bookingApp.calendar.calendar.toggleClass('hidden');
+        bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth()];
+        bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
+        bookingApp.calendar.show(bookingApp.calendar.calendarDisplay);
+        bookingApp.calendar.timeSelection.addClass('hidden');
+        bookingApp.calendar.submitButton.addClass('hidden');
+        bookingApp.calendar.bookingInfoDisplay.addClass('hidden');
+    });
+}
 
 // init function to call the api function..........
 bookingApp.init = function () {
@@ -383,14 +405,10 @@ bookingApp.init = function () {
 }
 
 
-// calling the API function once the document loads.......
-$(document).ready(() => {
-    bookingApp.init();
-    bookingApp.calendar.init();
-});
 
+// Setting up database to store booking information
 bookingApp.database = {};
-
+bookingApp.database.bookings = {};
 
 
 
@@ -403,11 +421,22 @@ bookingApp.animations.init = function () {
     bookingApp.animations.timeoutTransition(1200);
 }
 bookingApp.animations.start = function () {
-  bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
-  bookingApp.animations.appendElements('tomato');
-  bookingApp.recommendationSection.css({
-    'overflow': 'hidden'
-  });
+    bookingApp.animations.createCanvas(bookingApp.recommendationDisplay);
+    bookingApp.animations.appendElements('tomato');
+    bookingApp.recommendationSection.css({
+        'overflow': 'hidden'
+    });
+    bookingApp.animations.animatedElements[0].animate({
+        'transform': 'rotate(0deg)',
+        'opacity': '0'
+    }, {
+        'duration': 1500,
+        'step': function (now) {
+            bookingApp.animations.animatedElements[0].css({
+                'transform': `rotate(${now * 300}deg)`
+            });
+        }
+    })
 }
 bookingApp.animations.reset = function () {
     bookingApp.animations.eraseCanvas(bookingApp.animations.canvas);
@@ -434,6 +463,7 @@ bookingApp.animations.timeoutTransition = function (timeoutDuration) {
             });
         }
     });
+    
     bookingApp.animations.timeout = setTimeout(() => {
         bookingApp.recommendationSection.css({
             'overflow-y': 'scroll',
@@ -484,21 +514,35 @@ bookingApp.calendar.today = new Date();
 bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth(), null, null, null];
 bookingApp.calendar.userChosenDate;
 bookingApp.calendar.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+bookingApp.calendar.bookings = [];
+bookingApp.calendar.bookingInfoDisplay = $('.bookingInfo');
+bookingApp.calendar.dayHeadings = $('.dayHeading')
+bookingApp.calendar.viewOnly = false;
 // Function to display calendar icon
 bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
-    // put current date details on calendar icon to make it dynamic
-    // $(calendar[0].children[0]).text(bookingApp.calendar.months[today.getMonth()]);
-    // $(calendar[0].children[1]).text(today.getDate());
-    // $(calendar[0].children[2]).text(today.getMonth() + 1);
-    // Function to handle clicks on the calendar icon; once clicked the calendar will be shown and user can select future dates from it; if clicked again, will close the display
-    $('header').on('click', () => {
+    $('.calendarIcon').on('click', () => {
+        bookingApp.calendar.viewOnly = true;
         bookingApp.calendar.calendar.toggleClass('hidden');
         bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth()];
         bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
         bookingApp.calendar.show(bookingApp.calendar.calendarDisplay);
         bookingApp.calendar.timeSelection.addClass('hidden');
         bookingApp.calendar.submitButton.addClass('hidden');
+        bookingApp.calendar.bookingInfoDisplay.addClass('hidden');
     });
+}
+bookingApp.calendar.displayDayHeadings = function() {
+    if ($(window).width() < 500) {
+        bookingApp.calendar.dayHeadings.html(`
+            <h3>S</h3>
+            <h3>M</h3>
+            <h3>T</h3>
+            <h3>W</h3>
+            <h3>T</h3>
+            <h3>F</h3>
+            <h3>S</h3>
+        `);
+    }
 }
 // Function to navigate calendar
 bookingApp.calendar.changeMonth = function () {
@@ -544,6 +588,8 @@ bookingApp.calendar.toString = function (numericalValue) {
 bookingApp.calendar.show = function (calendarDisplay) {
     // clear calendar display for the new month
     calendarDisplay.html('');
+    bookingApp.calendar.bookingInfoDisplay.html('');
+    bookingApp.calendar.displayDayHeadings();
     $(bookingApp.calendar.calendarDisplay.parent()).css('color', 'whitesmoke');
     // gather information about the new month
     let year = bookingApp.calendar.chosenDate[0];
@@ -568,11 +614,20 @@ bookingApp.calendar.show = function (calendarDisplay) {
             bookingApp.calendar.fillDays(calendarDisplay, stringDate);
             day++;
         }
+        for (let booking in bookingApp.database.bookings) {
+            if (day === parseInt(booking.slice(8, 10)) + 1 &&
+                month === parseInt(booking.slice(5, 7)) &&
+                year === parseInt(booking.slice(0, 4))) {
+                $(calendarDisplay[0].children[i].children).css({
+                    'color': 'crimson'
+                });
+            }
+        }
         if (day === (bookingApp.calendar.today.getDate() + 1) &&
             month === bookingApp.calendar.today.getMonth() &&
             year === bookingApp.calendar.today.getFullYear()) {
             $(calendarDisplay[0].children[i].children).css({
-                'color': 'crimson'
+                'color': 'rgb(39,39,39)'
             });
             $(calendarDisplay[0].children[i]).css({
                 'background-color': '#E5989B'
@@ -599,20 +654,40 @@ bookingApp.calendar.searchDate = function (year, month, day) {
 // Function to handle user selection from calendar and start event countdown from current moment to selected future date and time
 bookingApp.calendar.getUserChosenDate = function () {
     bookingApp.calendar.calendarDisplay.on('click', 'li', function () {
-        // Get user's chosen date and record it as new Date object
+        // Get Day
         bookingApp.calendar.chosenDate[2] = bookingApp.calendar.parseUserChoice($(this));
-        // Insert chosen day into calendar nav
-        bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ' + bookingApp.calendar.chosenDate[2] + ' ');
-        // Hide contents of calendar display
-        bookingApp.calendar.previousButton.addClass('hidden');
-        bookingApp.calendar.nextButton.addClass('hidden');
-        bookingApp.calendar.calendarDisplay.html('');
-        $(bookingApp.calendar.calendarDisplay.parent()).css('color', '#3a3a3a');
-        // Show contents of time selection and submit button
-        bookingApp.calendar.timeSelection.toggleClass('hidden');
-        bookingApp.calendar.submitButton.toggleClass('hidden');
-
+        if (!bookingApp.calendar.viewOnly) {
+            // Insert chosen day into calendar nav
+            bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ' + bookingApp.calendar.chosenDate[2] + ' ');
+            // Hide contents of calendar display
+            bookingApp.calendar.previousButton.addClass('hidden');
+            bookingApp.calendar.nextButton.addClass('hidden');
+            bookingApp.calendar.calendarDisplay.html('');
+            $(bookingApp.calendar.calendarDisplay.parent()).css('color', '#3a3a3a');
+            // Show contents of time selection and submit button
+            bookingApp.calendar.timeSelection.toggleClass('hidden');
+            bookingApp.calendar.submitButton.toggleClass('hidden');
+        } else {
+            for (let booking in bookingApp.database.bookings) {
+                if (parseInt(bookingApp.calendar.chosenDate[2]) === parseInt(booking.slice(8, 10)) &&
+                    bookingApp.calendar.chosenDate[1] === parseInt(booking.slice(5, 7)) &&
+                    bookingApp.calendar.chosenDate[0] === parseInt(booking.slice(0, 4))) {
+                    // Display restaurant name and booking hours
+                    const timeVenue = bookingApp.database.bookings[booking];
+                    bookingApp.calendar.bookingInfoDisplay.html('');
+                    bookingApp.calendar.displayBookingInfo(timeVenue);
+                }
+            }
+        }  
     });
+}
+bookingApp.calendar.displayBookingInfo = function(timeVenue) {
+    bookingApp.calendar.bookingInfoDisplay.toggleClass('hidden');
+    for (let time in timeVenue) {
+        bookingApp.calendar.bookingInfoDisplay.append(`
+            <h2>${timeVenue[time]} at ${time}</h2>
+        `);
+    }
 }
 // Function to check user's chosen time
 bookingApp.calendar.checkUserChosenTime = function () {
@@ -637,15 +712,10 @@ bookingApp.calendar.getUserChosenTime = function () {
         bookingApp.calendar.chosenDate[3] = hour;
         bookingApp.calendar.chosenDate[4] = minute;
         bookingApp.calendar.userChosenDate = new Date(bookingApp.calendar.chosenDate[0], bookingApp.calendar.chosenDate[1], bookingApp.calendar.chosenDate[2], bookingApp.calendar.chosenDate[3], bookingApp.calendar.chosenDate[4], 0);
-        // user timer.start() method to start the countdown timer if the countdown display is off. otherwise, clear the old setTimeout and start a new timer without toggling the countdown display
-        bookingApp.calendar.today = new Date();
-        if (bookingApp.timer.Off) {
-            bookingApp.timer.start(bookingApp.timer.convertUnits((bookingApp.calendar.userChosenDate - bookingApp.calendar.today.getTime()) / 1000));
-        } else {
-            bookingApp.timer.timeValues = bookingApp.timer.convertUnits((bookingApp.calendar.userChosenDate - bookingApp.calendar.today.getTime()) / 1000);
-            clearTimeout(bookingApp.timer.myTimer);
-            bookingApp.timer.startTimer(bookingApp.timer.timeValues);
-        }
+        let time = `${bookingApp.calendar.toString(hour)}:${bookingApp.calendar.toString(minute)} ${meridiem}`;
+        let timeVenue = {};
+        timeVenue[`${time}`] = `${bookingApp.selectedRestaurant}`;
+        bookingApp.database.bookings[`${bookingApp.calendar.chosenDate[0]} ${bookingApp.calendar.chosenDate[1]} ${bookingApp.calendar.chosenDate[2]}`] = timeVenue;
         bookingApp.calendar.resetDisplay();
     });
 }
@@ -687,3 +757,9 @@ bookingApp.calendar.init = function () {
     bookingApp.calendar.getUserChosenTime();
     bookingApp.calendar.toggleMeridiem();
 }
+
+// calling the API function once the document loads.......
+$(document).ready(() => {
+    bookingApp.init();
+    bookingApp.calendar.init();
+});
