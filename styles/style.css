@@ -296,8 +296,9 @@ h3 {
   text-align: center;
 }
 
-main .icon a {
+main .icon a, .icon {
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 .submit {

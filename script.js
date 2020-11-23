@@ -840,7 +840,7 @@ bookingApp.calendar.init = function () {
     bookingApp.calendar.getUserChosenDate();
     bookingApp.calendar.getUserChosenTime();
     bookingApp.calendar.toggleMeridiem();
-    bookingApp.calendar.cancelReservedDate();
+    // bookingApp.calendar.cancelReservedDate();
 }
 
 // calling the API function once the document loads.......

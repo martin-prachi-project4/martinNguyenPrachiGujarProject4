@@ -29,8 +29,9 @@ h3 {
 // MAIN styles.........
 
 // MAIN icons........
-main .icon a {
+main .icon a, .icon {
     padding: 5px 10px;
+    cursor: pointer;
 }
 
 // SUBMIT section.......
