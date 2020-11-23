@@ -61,7 +61,7 @@
     }
     .bookingInfo {
         position: absolute;
-        background-color: $secondAccentColor;
+        background-color: $primaryColor;
         min-height: 100px;
         width: calc(100% - 20px);
         bottom: -100px;
@@ -93,7 +93,7 @@
 .timeSelection {
     display: flex;
     align-items: center;
-    transform: translateY(-200px);
+    transform: translateY(-300px);
     h3 {
         display: block;
     }

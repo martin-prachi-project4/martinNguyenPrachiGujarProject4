@@ -682,6 +682,29 @@ main .icon .resetIcon {
   width: 100vw;
 }
 
+.reserve {
+  background-color: #500808;
+  width: 250px;
+  height: 150px;
+  position: absolute;
+  top: 30%;
+  left: calc(50% - 125px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  border-radius: 10px;
+}
+
 footer {
   min-height: 5vh;
   background-color: #e5989b;
@@ -835,7 +858,7 @@ img#tomato {
 
 .calendarDisplay .bookingInfo {
   position: absolute;
-  background-color: #6d6875;
+  background-color: #e5989b;
   min-height: 100px;
   width: calc(100% - 20px);
   bottom: -100px;
@@ -884,8 +907,8 @@ img#tomato {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-transform: translateY(-200px);
-          transform: translateY(-200px);
+  -webkit-transform: translateY(-300px);
+          transform: translateY(-300px);
 }
 
 .timeSelection h3 {
@@ -955,6 +978,9 @@ img#tomato {
   .recommendation ul li:nth-of-type(2n) {
     margin-right: 0;
   }
+  .recommendation li:nth-of-type(3n) {
+    margin-right: auto;
+  }
   .recommendation li .information p {
     font-size: 2rem;
   }
@@ -974,9 +1000,6 @@ img#tomato {
     padding: 5px 10px;
     background-color: transparent;
     border-radius: 10px;
-  }
-  .recommendation ul li img:hover {
-    border-radius: 50%;
   }
   .submit:hover {
     font-weight: 400;

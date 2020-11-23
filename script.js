@@ -88,7 +88,7 @@ bookingApp.recommendationDisplay = $('.recommendation ul');
 bookingApp.popUpError = $('.popUpError');
 bookingApp.staticDiv = $('.options');
 bookingApp.heading = $('h2');
-bookingApp.selectedRestaurant;
+bookingApp.selectedRestaurant = [];
 bookingApp.citiesId;
 bookingApp.cuisineId;
 bookingApp.preferencesId;
@@ -359,7 +359,7 @@ bookingApp.appendImage = function (index, display, image, name, url, currency, u
         <li id="restaurant${index}" >
             <img src="${image}" alt="Featured image for ${name} restaurant from Zomato" id="${name}"/>
             <div class="restaurantName">
-                <a href="${url}">${name}</a>
+                <a href="${url}" target="_blank">${name}</a>
                 <i class="far fa-calendar-plus" id="icon${index}"></i>
             </div>
             <div class="information hiddenInfo">
@@ -386,9 +386,11 @@ bookingApp.showInfo = function () {
 
 bookingApp.handleBooking = function () {
     bookingApp.recommendationDisplay.on('click', '.fa-calendar-plus', function () {
-        bookingApp.selectedRestaurant = this.previousElementSibling.innerText;
+        bookingApp.selectedRestaurant = [this.previousElementSibling.innerText, this.previousElementSibling.href];
         bookingApp.calendar.viewOnly = false;
-        bookingApp.calendar.calendar.toggleClass('hidden');
+        if (bookingApp.calendar.calendar.hasClass('hidden')) {
+            bookingApp.calendar.calendar.toggleClass('hidden');
+        }
         bookingApp.calendar.chosenDate = [bookingApp.calendar.today.getFullYear(), bookingApp.calendar.today.getMonth()];
         bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ');
         bookingApp.calendar.show(bookingApp.calendar.calendarDisplay);
@@ -494,6 +496,22 @@ bookingApp.animations.appendElements = function (...elements) {
         return $(`.${value}Container`);
     });
 }
+bookingApp.animations.reservedMessage = function() {
+    bookingApp.calendar.reservedMessage.animate({
+        'opacity': '0',
+        'z-index': '-1'
+    }, {
+        duration: 1500,
+        step: function(now) {
+            bookingApp.calendar.reservedMessage.css({
+                'transform': `translateX(${now * 100}px)`
+            })
+        }
+    });
+    setTimeout(() => {
+        bookingApp.calendar.reservedMessage.addClass('hidden')
+    }, 1000);
+}
 
 
 
@@ -516,7 +534,8 @@ bookingApp.calendar.userChosenDate;
 bookingApp.calendar.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 bookingApp.calendar.bookings = [];
 bookingApp.calendar.bookingInfoDisplay = $('.bookingInfo');
-bookingApp.calendar.dayHeadings = $('.dayHeading')
+bookingApp.calendar.dayHeadings = $('.dayHeading');
+bookingApp.calendar.reservedMessage = $('.reserve');
 bookingApp.calendar.viewOnly = false;
 // Function to display calendar icon
 bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
@@ -532,6 +551,11 @@ bookingApp.calendar.calendarIconDisplay = function (calendar, today) {
     });
 }
 bookingApp.calendar.displayDayHeadings = function() {
+    for (let i = 0; i < 7; i++) {
+        $(bookingApp.calendar.dayHeadings[0].children[i]).css({
+            'color': 'whitesmoke'
+        })
+    }
     if ($(window).width() < 500) {
         bookingApp.calendar.dayHeadings.html(`
             <h3>S</h3>
@@ -659,6 +683,11 @@ bookingApp.calendar.getUserChosenDate = function () {
         if (!bookingApp.calendar.viewOnly) {
             // Insert chosen day into calendar nav
             bookingApp.calendar.calendarNavControl(bookingApp.calendar.calendarNav, ' ' + bookingApp.calendar.chosenDate[2] + ' ');
+            // Highlight the day in the week that was selected
+            // bookingApp.calendar.dayHeadings[new Date(bookingApp.calendar.chosenDate[0], bookingApp.calendar.chosenDate[1], bookingApp.chosenDate[0]).getDay()];
+            $(bookingApp.calendar.dayHeadings[0].children[new Date(bookingApp.calendar.chosenDate[0], bookingApp.calendar.chosenDate[1], bookingApp.calendar.chosenDate[2]).getDay()]).css({
+                'color': 'crimson'
+            });
             // Hide contents of calendar display
             bookingApp.calendar.previousButton.addClass('hidden');
             bookingApp.calendar.nextButton.addClass('hidden');
@@ -682,10 +711,12 @@ bookingApp.calendar.getUserChosenDate = function () {
     });
 }
 bookingApp.calendar.displayBookingInfo = function(timeVenue) {
-    bookingApp.calendar.bookingInfoDisplay.toggleClass('hidden');
+    if (bookingApp.calendar.bookingInfoDisplay.hasClass('hidden')) {
+        bookingApp.calendar.bookingInfoDisplay.removeClass('hidden');
+    }
     for (let time in timeVenue) {
         bookingApp.calendar.bookingInfoDisplay.append(`
-            <h2>${timeVenue[time]} at ${time}</h2>
+            <h2><a href="${timeVenue[time][1]}" target="_blank">${timeVenue[time][0]}</a> at ${time}</h2>
         `);
     }
 }
@@ -712,12 +743,34 @@ bookingApp.calendar.getUserChosenTime = function () {
         bookingApp.calendar.chosenDate[3] = hour;
         bookingApp.calendar.chosenDate[4] = minute;
         bookingApp.calendar.userChosenDate = new Date(bookingApp.calendar.chosenDate[0], bookingApp.calendar.chosenDate[1], bookingApp.calendar.chosenDate[2], bookingApp.calendar.chosenDate[3], bookingApp.calendar.chosenDate[4], 0);
-        let time = `${bookingApp.calendar.toString(hour)}:${bookingApp.calendar.toString(minute)} ${meridiem}`;
+        let time = `${bookingApp.calendar.toString(hour)}:${bookingApp.calendar.toString(minute)} on ${bookingApp.calendar.months[bookingApp.calendar.chosenDate[1]]} ${bookingApp.calendar.chosenDate[2]}`;
         let timeVenue = {};
-        timeVenue[`${time}`] = `${bookingApp.selectedRestaurant}`;
+        timeVenue[`${time}`] = bookingApp.selectedRestaurant;
+        // Record information in database
         bookingApp.database.bookings[`${bookingApp.calendar.chosenDate[0]} ${bookingApp.calendar.chosenDate[1]} ${bookingApp.calendar.chosenDate[2]}`] = timeVenue;
+        // Display 'reserved' message
+        bookingApp.calendar.displayReservedMessage(timeVenue);
+        bookingApp.animations.reservedMessage();
         bookingApp.calendar.resetDisplay();
     });
+}
+bookingApp.calendar.displayReservedMessage = function (timeVenue) {
+    bookingApp.calendar.reservedMessage.html('');
+    if (timeVenue) {
+        bookingApp.calendar.reservedMessage.css({
+            'z-index': '1',
+            'opacity': '1'
+        });
+        bookingApp.calendar.reservedMessage.removeClass('hidden');
+        bookingApp.calendar.reservedMessage.append(`
+            <h2>Reserved!</h2>
+        `);
+        for (let time in timeVenue) {
+            bookingApp.calendar.reservedMessage.append(`
+                <h2>${timeVenue[time][0]} at ${time}</h2>
+            `);
+        }
+    }
 }
 // Function to reset calendar display after picking a future time
 bookingApp.calendar.resetDisplay = function () {
